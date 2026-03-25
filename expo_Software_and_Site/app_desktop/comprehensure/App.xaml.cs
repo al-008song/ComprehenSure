@@ -11,14 +11,7 @@ namespace comprehensure
             Connectivity.Current.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
-        protected override async void OnStart()
-        {
-            base.OnStart();
-
-            await Task.Delay(500);
-
-            
-        }
+       
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
@@ -35,7 +28,7 @@ namespace comprehensure
             }
             else
             {
-                await Shell.Current.DisplayAlert("Connection Lost", "You are now offline.", "OK");
+                await Shell.Current.DisplayAlert("Connection Lost", "You are now offline. You can still use the app", "OK");
             }
 
 

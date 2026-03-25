@@ -19,7 +19,7 @@ public partial class SignUpPage : ContentPage
     private async void SignUpButton_Clicked(object sender, EventArgs e)
     {
         // await DisplayAlert("Sign Up", "Sign up button clicked!", "OK");
-        SwitchOffline.Checker();
+       // SwitchOffline.Checker();
 
 
     }
