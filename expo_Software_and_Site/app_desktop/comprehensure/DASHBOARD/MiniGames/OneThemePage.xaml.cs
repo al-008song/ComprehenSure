@@ -8,16 +8,14 @@ public partial class OneThemePage : ContentPage
 
     private class ThemeQuestion
     {
-        public string ModuleName   { get; set; } = "";   // e.g. "Module 1 · The Forgotten Library"
-        public string Answer       { get; set; } = "";   // e.g. "CURIOSITY"
-        public string ShuffledWord { get; set; } = "";   // e.g. "SIORUCITY"
-        public string Hint         { get; set; } = "";   // short description
-        // Image sources — replace with real asset names in your project
+        public string ModuleName   { get; set; } = "";
+        public string Answer       { get; set; } = "";
+        public string ShuffledWord { get; set; } = "";
+        public string Hint         { get; set; } = "";
         public string Img1         { get; set; } = "";
         public string Img2         { get; set; } = "";
         public string Img3         { get; set; } = "";
         public string Img4         { get; set; } = "";
-
     }
 
     private readonly List<ThemeQuestion> _allQuestions = new()
@@ -80,35 +78,33 @@ public partial class OneThemePage : ContentPage
             Img3 = "m2_wisdom_3.jpg", Img4 = "m2_wisdom_4.jpg",
         },
 
-        // ── MODULE 3 · THE OBSERVATORY ON THE HILL ──────────────────────
+        // ── MODULE 3 · THE OBSERVATORY ON THE HILL ────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 3 · The Observatory on the Hill",
             Answer       = "VISION",
             ShuffledWord = "NOISIV",
-            Hint         = "The bridge between what the eyes see and what the mind unerstands from a higher ground.",
-            Img1         = "m3_vision_1.jpg", Img2 = "m3_vision_2.jpg",
-            Img3         = "m3_vision_3.jpg", Img4 = "m3_vision_4.jpg",
+            Hint         = "The bridge between what the eyes see and what the mind understands from a higher ground.",
+            Img1 = "m3_vision_1.jpg", Img2 = "m3_vision_2.jpg",
+            Img3 = "m3_vision_3.jpg", Img4 = "m3_vision_4.jpg",
         },
-
         new ThemeQuestion
         {
             ModuleName   = "Module 3 · The Observatory on the Hill",
             Answer       = "BALANCE",
             ShuffledWord = "ECNALAB",
-            Hint         = "The silent weight of a thousand pieces fitting toegther so perfectly that nothing falls.",
-            Img1         = "m3_balance_1.jpg", Img2 = "m3_balance_2.jpg",
-            Img3         = "m3_balance_3.jpg", Img4 = "m3_balance_4.jpg",
+            Hint         = "The silent weight of a thousand pieces fitting together so perfectly that nothing falls.",
+            Img1 = "m3_balance_1.jpg", Img2 = "m3_balance_2.jpg",
+            Img3 = "m3_balance_3.jpg", Img4 = "m3_balance_4.jpg",
         },
-
         new ThemeQuestion
         {
             ModuleName   = "Module 3 · The Observatory on the Hill",
             Answer       = "HIDDEN",
             ShuffledWord = "NEDDIH",
             Hint         = "A truth that stands in plain sight but wears a cloak of shadows until you change your height.",
-            Img1         = "m3_hidden_1.jpg", Img2 = "m3_hidden_2.jpg",
-            Img3         = "m3_hidden_3.jpg", Img4 = "m3_hidden_4.jpg",
+            Img1 = "m3_hidden_1.jpg", Img2 = "m3_hidden_2.jpg",
+            Img3 = "m3_hidden_3.jpg", Img4 = "m3_hidden_4.jpg",
         },
 
         // ── MODULE 4 · THE GARDEN OF HIDDEN PATTERNS ──────────────
@@ -261,11 +257,29 @@ public partial class OneThemePage : ContentPage
     //  STATE
     // ═══════════════════════════════════════════════════════════════
 
-    private List<ThemeQuestion> _questions = new();
-    private int    _currentIndex  = 0;
-    private int    _attemptsLeft  = 3;
-    private int    _score         = 0;
-    private bool   _roundFinished = false;
+    private List<ThemeQuestion> _questions     = new();
+    private int  _currentIndex  = 0;
+    private int  _attemptsLeft  = 3;
+    private int  _score         = 0;
+    private int  _correctCount  = 0;
+    private int  _skippedCount  = 0;
+    private bool _roundFinished = false;
+
+    // Cached green styling so OnNextClicked can restore it
+    private static readonly SolidColorBrush GreenStroke = new(Color.FromArgb("#B8E6D4"));
+    private static readonly LinearGradientBrush GreenBackground = new()
+    {
+        StartPoint = new Point(0, 0),
+        EndPoint   = new Point(1, 0),
+        GradientStops = new GradientStopCollection
+        {
+            new GradientStop { Color = Color.FromArgb("#E6F5EF"), Offset = 0 },
+            new GradientStop { Color = Color.FromArgb("#EAF7F2"), Offset = 1 },
+        }
+    };
+
+    private static readonly SolidColorBrush RedStroke = new(Color.FromArgb("#FCA5A5"));
+    private static readonly SolidColorBrush RedBackground = new(Color.FromArgb("#FEF2F2"));
 
     // ═══════════════════════════════════════════════════════════════
     //  INIT
@@ -275,15 +289,28 @@ public partial class OneThemePage : ContentPage
     {
         InitializeComponent();
         StartNewGame();
+
+        Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
+        Shell.SetNavBarIsVisible(this, false);
+        Shell.SetNavBarHasShadow(this, false);
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+        {
+            IsVisible = false,
+            IsEnabled = false
+        });
     }
 
     private void StartNewGame()
     {
-        // Shuffle all questions
-        var rng = new Random();
-        _questions = _allQuestions.OrderBy(_ => rng.Next()).ToList();
-        _currentIndex = 0;
-        _score        = 0;
+        var rng        = new Random();
+        _questions     = _allQuestions.OrderBy(_ => rng.Next()).ToList();
+        _currentIndex  = 0;
+        _score         = 0;
+        _correctCount  = 0;
+        _skippedCount  = 0;
+        _roundFinished = false;
+
+        ResultsPanel.IsVisible = false;
         UpdateScoreLabel();
         LoadQuestion();
     }
@@ -296,7 +323,7 @@ public partial class OneThemePage : ContentPage
     {
         if (_currentIndex >= _questions.Count)
         {
-            ShowGameOver();
+            ShowResults();
             return;
         }
 
@@ -305,13 +332,9 @@ public partial class OneThemePage : ContentPage
 
         var q = _questions[_currentIndex];
 
-        // Round pills
         UpdateRoundPills();
-
-        // Module label
         ModuleLabel.Text = q.ModuleName;
 
-        // Set images directly — bypasses binding and uses MAUI's ImageSource converter explicitly
         SetImage(Img1, ImgLabel1, q.Img1);
         SetImage(Img2, ImgLabel2, q.Img2);
         SetImage(Img3, ImgLabel3, q.Img3);
@@ -322,17 +345,26 @@ public partial class OneThemePage : ContentPage
         Heart2.Text = "❤️";
         Heart3.Text = "❤️";
 
-        // Reset hint
-        HintBorder.IsVisible   = false;
-        HintContentLabel.Text  = "";
-        HintDescLabel.Text     = "";
+        // Reset hint panel
+        HintBorder.IsVisible  = false;
+        HintContentLabel.Text = "";
+        HintDescLabel.Text    = "";
 
-        // Reset feedback & entry
-        FeedbackLabel.Text     = "";
-        AnswerEntry.Text       = "";
-        AnswerEntry.IsEnabled  = true;
-        SubmitButton.IsVisible = true;
-        NextButton.IsVisible   = false;
+        // Reset input
+        AnswerEntry.Text      = "";
+        AnswerEntry.IsEnabled = true;
+
+        // Hide feedback card; restore green style for next correct answer
+        FeedbackBorder.IsVisible   = false;
+        FeedbackBorder.Stroke      = GreenStroke;
+        FeedbackBorder.Background  = GreenBackground;
+        FeedbackIcon.Text          = "✓";
+        FeedbackLabel.Text         = "Correct!";
+        PointsLabel.Text           = "+ 5 points";
+
+        // Show submit & skip
+        SubmitButton.IsVisible     = true;
+        SkipButtonBorder.IsVisible = true;
     }
 
     private static void SetImage(Image img, Label label, string source)
@@ -346,9 +378,6 @@ public partial class OneThemePage : ContentPage
                 img.Opacity     = 1;
                 label.IsVisible = false;
 
-                // On Windows (WinUI), the parent Border's LinearGradientBrush background
-                // renders on top of the Image control and hides it. Clear it once we have
-                // a real image so the photo is actually visible.
                 if (img.Parent is Grid grid && grid.Parent is Border border)
                     border.Background = new SolidColorBrush(Colors.Transparent);
             }
@@ -359,18 +388,8 @@ public partial class OneThemePage : ContentPage
                 img.Opacity     = 0;
                 label.IsVisible = true;
 
-                // Restore the placeholder gradient background
                 if (img.Parent is Grid grid && grid.Parent is Border border)
-                    border.Background = new LinearGradientBrush
-                    {
-                        StartPoint = new Point(0, 0),
-                        EndPoint   = new Point(1, 1),
-                        GradientStops = new GradientStopCollection
-                        {
-                            new GradientStop { Color = Color.FromArgb("#1A3A6B"), Offset = 0 },
-                            new GradientStop { Color = Color.FromArgb("#112554"), Offset = 1 },
-                        }
-                    };
+                    border.Background = new SolidColorBrush(Color.FromArgb("#EFF4FB"));
             }
         });
     }
@@ -379,64 +398,70 @@ public partial class OneThemePage : ContentPage
     //  SUBMIT
     // ═══════════════════════════════════════════════════════════════
 
-    private async void OnSubmitClicked(object sender, EventArgs e)
+    private void OnSubmitClicked(object sender, EventArgs e)
     {
         if (_roundFinished) return;
 
-        var q      = _questions[_currentIndex];
-        var answer = (AnswerEntry.Text ?? "").Trim().ToUpperInvariant();
+        var q       = _questions[_currentIndex];
+        var answer  = (AnswerEntry.Text ?? "").Trim().ToUpperInvariant();
         var correct = q.Answer.ToUpperInvariant();
 
         if (answer == correct)
         {
             _score        += 5;
+            _correctCount++;
             _roundFinished = true;
             UpdateScoreLabel();
-            FeedbackLabel.TextColor = Color.FromArgb("#22C55E");
-            FeedbackLabel.Text      = $"✅  Correct! +5 points";
-            AnswerEntry.IsEnabled   = false;
-            SubmitButton.IsVisible  = false;
-            NextButton.IsVisible    = true;
-            await Task.Delay(200);
-            return;
-        }
 
-        // Wrong answer
-        _attemptsLeft--;
-        LoseHeart();
+            // Show green correct feedback card — Next button lives inside it
+            FeedbackBorder.Stroke      = GreenStroke;
+            FeedbackBorder.Background  = GreenBackground;
+            FeedbackIcon.Text          = "✓";
+            FeedbackLabel.Text         = "Correct!";
+            PointsLabel.Text           = "+ 5 points";
+            FeedbackBorder.IsVisible   = true;
 
-        if (_attemptsLeft == 2)
-        {
-            // After 1st wrong — show blank hint (letter count)
-            ShowBlankHint(q);
-            FeedbackLabel.TextColor = Color.FromArgb("#F59E0B");
-            FeedbackLabel.Text      = "❌  Incorrect. Here's a hint — count the letters!";
-        }
-        else if (_attemptsLeft == 1)
-        {
-            // After 2nd wrong — show shuffled word
-            ShowShuffledHint(q);
-            FeedbackLabel.TextColor = Color.FromArgb("#F59E0B");
-            FeedbackLabel.Text      = "❌  Try again! The letters are shuffled above.";
+            // Hide submit & skip
+            SubmitButton.IsVisible     = false;
+            SkipButtonBorder.IsVisible = false;
+            AnswerEntry.IsEnabled      = false;
         }
         else
         {
-            // No attempts left
-            _roundFinished = true;
-            ShowAnswer(q);
-            FeedbackLabel.TextColor = Color.FromArgb("#EF4444");
-            FeedbackLabel.Text      = $"💔  Out of tries! The answer was: {q.Answer}";
-            AnswerEntry.IsEnabled   = false;
-            SubmitButton.IsVisible  = false;
-            NextButton.IsVisible    = true;
-        }
+            _attemptsLeft--;
+            LoseHeart();
+            AnswerEntry.Text = "";
 
-        AnswerEntry.Text = "";
+            if (_attemptsLeft == 2)
+            {
+                ShowBlankHint(q);
+            }
+            else if (_attemptsLeft == 1)
+            {
+                ShowShuffledHint(q);
+            }
+            else
+            {
+                // Out of tries — reveal answer, show red feedback card with Next
+                _roundFinished = true;
+                ShowAnswer(q);
+
+                FeedbackBorder.Stroke      = RedStroke;
+                FeedbackBorder.Background  = RedBackground;
+                FeedbackIcon.Text          = "✕";
+                FeedbackLabel.Text         = $"The answer was: {q.Answer}";
+                PointsLabel.Text           = "No points this round";
+                FeedbackBorder.IsVisible   = true;
+
+                SubmitButton.IsVisible     = false;
+                SkipButtonBorder.IsVisible = false;
+                AnswerEntry.IsEnabled      = false;
+            }
+        }
     }
 
-    // ─── Hint helpers ───────────────────────────────────────────
+    // ─── Hint helpers ─────────────────────────────────────────────
 
-    /// After 1st wrong: show blank underscores + description
     private void ShowBlankHint(ThemeQuestion q)
     {
         HintBorder.IsVisible  = true;
@@ -445,7 +470,6 @@ public partial class OneThemePage : ContentPage
         HintDescLabel.Text    = q.Hint;
     }
 
-    /// After 2nd wrong: replace underscores with shuffled word
     private void ShowShuffledHint(ThemeQuestion q)
     {
         HintBorder.IsVisible  = true;
@@ -454,7 +478,6 @@ public partial class OneThemePage : ContentPage
         HintDescLabel.Text    = q.Hint;
     }
 
-    /// After 3 wrong: reveal full answer in hint area
     private void ShowAnswer(ThemeQuestion q)
     {
         HintBorder.IsVisible  = true;
@@ -463,7 +486,7 @@ public partial class OneThemePage : ContentPage
         HintDescLabel.Text    = q.Hint;
     }
 
-    // ─── Heart tracker ───────────────────────────────────────────
+    // ─── Heart tracker ────────────────────────────────────────────
 
     private void LoseHeart()
     {
@@ -473,7 +496,7 @@ public partial class OneThemePage : ContentPage
         if (lost >= 3) Heart3.Text = "🖤";
     }
 
-    // ─── Round pills ─────────────────────────────────────────────
+    // ─── Round pills ──────────────────────────────────────────────
 
     private void UpdateRoundPills()
     {
@@ -482,18 +505,16 @@ public partial class OneThemePage : ContentPage
         void SetPill(Border pill, Label lbl, int num)
         {
             bool active = num == display;
-            pill.BackgroundColor = active
-                ? Color.FromArgb("#1565C0")
-                : Color.FromArgb("#1A3A6B");
-            lbl.TextColor = active
-                ? Colors.White
-                : Color.FromArgb("#93C5FD");
+            pill.BackgroundColor = active ? Color.FromArgb("#0F2D4A") : Colors.White;
+            pill.Stroke = active
+                ? new SolidColorBrush(Colors.Transparent)
+                : new SolidColorBrush(Color.FromArgb("#CBDCEB"));
+            lbl.TextColor = active ? Colors.White : Color.FromArgb("#6B8CAE");
         }
 
-        // The round pills hold a single child Label — access via content
-        var p1l = (Label)((Border)Round1Pill).Content;
-        var p2l = (Label)((Border)Round2Pill).Content;
-        var p3l = (Label)((Border)Round3Pill).Content;
+        var p1l = (Label)Round1Pill.Content;
+        var p2l = (Label)Round2Pill.Content;
+        var p3l = (Label)Round3Pill.Content;
 
         SetPill(Round1Pill, p1l, 1);
         SetPill(Round2Pill, p2l, 2);
@@ -502,7 +523,7 @@ public partial class OneThemePage : ContentPage
 
     private void UpdateScoreLabel()
     {
-        ScoreLabel.Text = $"{_score} pts";
+        ScoreLabel.Text = $"{_score}";
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -517,23 +538,36 @@ public partial class OneThemePage : ContentPage
 
     private void OnSkipClicked(object sender, EventArgs e)
     {
-        // Skip counts as a loss for this round — no points
+        _skippedCount++;
         _currentIndex++;
         LoadQuestion();
     }
 
-    private async void ShowGameOver()
-    {
-        bool playAgain = await DisplayAlert(
-            "Game Over! 🎉",
-            $"You completed all rounds!\nFinal Score: {_score} pts",
-            "Play Again",
-            "Exit");
+    // ═══════════════════════════════════════════════════════════════
+    //  RESULTS PANEL
+    // ═══════════════════════════════════════════════════════════════
 
-        if (playAgain)
-            StartNewGame();
-        else
-            await Shell.Current.GoToAsync("..");
+    private void ShowResults()
+    {
+        ResultsPanel.IsVisible = true;
+
+        int total    = _questions.Count;
+        int accuracy = total > 0 ? (int)Math.Round(_correctCount * 100.0 / total) : 0;
+
+        ResultsTrophyLabel.Text = _correctCount >= total * 0.8 ? "🏆" :
+                                  _correctCount >= total * 0.5 ? "🥈" : "🎯";
+        ResultsTitleLabel.Text  = _correctCount >= total * 0.8 ? "Outstanding!" :
+                                  _correctCount >= total * 0.5 ? "Well Done!"   : "Keep Practicing!";
+
+        ResultsScoreLabel.Text = $"{_score}";
+        StatCorrectLabel.Text  = $"{_correctCount}";
+        StatSkippedLabel.Text  = $"{_skippedCount}";
+        StatAccuracyLabel.Text = $"{accuracy}%";
+    }
+
+    private void OnPlayAgainClicked(object sender, EventArgs e)
+    {
+        StartNewGame();
     }
 
     private async void OnExitClicked(object sender, EventArgs e)

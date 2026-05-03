@@ -2,324 +2,542 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="comprehensure.DASHBOARD.MiniGames.OneThemePage"
-             BackgroundColor="#0B1D3A"
-             Title="4 Pics 1 Theme">
+             BackgroundColor="#F2F6FB"
+             Shell.NavBarIsVisible="False">
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!--  Background cloud ellipses                   -->
-    <!-- ═══════════════════════════════════════════ -->
     <Grid>
-        <Grid HorizontalOptions="Fill" InputTransparent="True" VerticalOptions="Fill">
-            <Ellipse Margin="-100,-60,0,0" Fill="White" HeightRequest="240"
-                     HorizontalOptions="Start" Opacity="0.06" VerticalOptions="Start" WidthRequest="360"/>
-            <Ellipse Margin="80,-100,0,0" Fill="White" HeightRequest="160"
-                     HorizontalOptions="Start" Opacity="0.04" VerticalOptions="Start" WidthRequest="220"/>
-            <Ellipse Margin="0,-50,-80,0" Fill="White" HeightRequest="220"
-                     HorizontalOptions="End" Opacity="0.06" VerticalOptions="Start" WidthRequest="320"/>
-            <Ellipse Margin="0,0,-100,-60" Fill="White" HeightRequest="260"
-                     HorizontalOptions="End" Opacity="0.05" VerticalOptions="End" WidthRequest="380"/>
-            <Ellipse Margin="-80,0,0,-80" Fill="White" HeightRequest="200"
-                     HorizontalOptions="Start" Opacity="0.04" VerticalOptions="End" WidthRequest="300"/>
-            <Ellipse Margin="0,-180,0,0" Fill="#3B82F6" HeightRequest="300"
-                     HorizontalOptions="Center" Opacity="0.08" VerticalOptions="Start" WidthRequest="500"/>
+
+        <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
+            <Ellipse Fill="White"
+                     WidthRequest="580" HeightRequest="440"
+                     HorizontalOptions="Start" VerticalOptions="Start"
+                     Margin="-140,-110,0,0" Opacity="0.75" />
+            <Ellipse Fill="#D6EAFF"
+                     WidthRequest="460" HeightRequest="380"
+                     HorizontalOptions="End" VerticalOptions="End"
+                     Margin="0,0,-110,-60" Opacity="0.45" />
         </Grid>
 
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <!--  Main layout — 4 rows, no ScrollView, fits full screen  -->
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16,8,16,10" RowSpacing="8">
+        <ScrollView>
+            <VerticalStackLayout Padding="28,24,28,40" Spacing="18">
 
-            <!-- ── ROW 0: TOP BAR ── -->
-            <Border Grid.Row="0"
-                    Padding="12,8"
-                    Stroke="Transparent" StrokeThickness="0">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Offset="0" Color="#FFFFFF"/>
-                        <GradientStop Offset="1" Color="#EEF4FF"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20"/>
-                </Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow Brush="#000000" Opacity="0.15" Radius="16" Offset="0,4"/>
-                </Border.Shadow>
-
+                <!-- ══════════════════════════════════════ -->
+                <!-- TOP BAR: Back button + title + score   -->
+                <!-- ══════════════════════════════════════ -->
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                    <Button Grid.Column="0"
-                            Text="← EXIT"
-                            BackgroundColor="Transparent"
-                            TextColor="#1565C0"
-                            FontAttributes="Bold"
-                            FontSize="12"
-                            BorderColor="#DBEAFE"
-                            BorderWidth="1.5"
-                            CornerRadius="16"
-                            HeightRequest="36"
-                            WidthRequest="80"
-                            Clicked="OnExitClicked"/>
 
-                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="1" VerticalOptions="Center">
-                        <Label Text="4 PICS 1 THEME"
-                               FontAttributes="Bold" FontSize="17"
-                               HorizontalOptions="Center" TextColor="#0B1D3A"
-                               CharacterSpacing="2.0"/>
-                        <Label x:Name="ModuleLabel"
-                               Text="Module 1 · The Forgotten Library"
-                               FontSize="10" FontAttributes="Italic"
-                               HorizontalOptions="Center" TextColor="#1565C0"/>
-                    </VerticalStackLayout>
-
-                    <Border Grid.Column="2"
-                            Padding="12,6"
-                            BackgroundColor="#0B1D3A"
-                            Stroke="#1A3A6B" StrokeThickness="1.5">
+                    <!-- Back button — pill, top-left, matches SynonymHunt -->
+                    <Border Grid.Column="0"
+                            BackgroundColor="White"
+                            Stroke="#CBDCEB" StrokeThickness="1"
+                            VerticalOptions="Center">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="14"/>
+                            <RoundRectangle CornerRadius="22" />
                         </Border.StrokeShape>
-                        <VerticalStackLayout HorizontalOptions="Center" Spacing="0">
-                            <Label x:Name="ScoreLabel"
-                                   Text="0 pts"
-                                   FontAttributes="Bold" FontSize="15"
-                                   HorizontalOptions="Center" TextColor="White"/>
-                            <Label Text="SCORE" CharacterSpacing="1.5"
-                                   FontSize="7" FontAttributes="Bold"
-                                   HorizontalOptions="Center" TextColor="#93C5FD"/>
+                        <Border.Shadow>
+                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.07" />
+                        </Border.Shadow>
+                        <Button Text="← Back"
+                                Clicked="OnExitClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="#0F2D4A"
+                                BorderWidth="0"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                HeightRequest="44"
+                                Padding="20,0" />
+                    </Border>
+
+                    <!-- Centre: icon + title -->
+                    <HorizontalStackLayout Grid.Column="1" Spacing="10"
+                                           HorizontalOptions="Center" VerticalOptions="Center">
+                        <Border BackgroundColor="#D6EAFF"
+                                HeightRequest="40" WidthRequest="40"
+                                Stroke="#CBDCEB" StrokeThickness="1.5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20" />
+                            </Border.StrokeShape>
+                            <Label Text="🖼️" FontSize="18"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Spacing="0" VerticalOptions="Center">
+                            <Label Text="MINI-GAME" FontSize="8" FontAttributes="Bold"
+                                   CharacterSpacing="2.0" TextColor="#6B8CAE" />
+                            <Label Text="4 Pics 1 Theme" FontSize="17" FontAttributes="Bold"
+                                   TextColor="#0F2D4A" />
                         </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <!-- Right: score pill -->
+                    <Border Grid.Column="2"
+                            BackgroundColor="#0F2D4A"
+                            Stroke="Transparent" StrokeThickness="0"
+                            Padding="14,8" VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="50" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
+                        </Border.Shadow>
+                        <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                            <Label Text="Score" FontSize="11" FontAttributes="Bold"
+                                   TextColor="#6B8CAE" VerticalOptions="Center" />
+                            <Label x:Name="ScoreLabel" Text="0" FontSize="20" FontAttributes="Bold"
+                                   TextColor="White" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
                     </Border>
+
                 </Grid>
-            </Border>
 
-            <!-- ── ROW 1: ROUND + TRIES ── -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
-                    <Label Text="ROUND" CharacterSpacing="2.0" FontAttributes="Bold"
-                           FontSize="9" TextColor="#93C5FD" VerticalOptions="Center"/>
-                    <Border x:Name="Round1Pill" Padding="9,3" BackgroundColor="#1565C0" Stroke="Transparent" StrokeThickness="0">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="9"/></Border.StrokeShape>
-                        <Label Text="1" FontAttributes="Bold" FontSize="11" TextColor="White"/>
-                    </Border>
-                    <Border x:Name="Round2Pill" Padding="9,3" BackgroundColor="#1A3A6B" Stroke="#2A5BAD" StrokeThickness="1">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="9"/></Border.StrokeShape>
-                        <Label Text="2" FontAttributes="Bold" FontSize="11" TextColor="#93C5FD"/>
-                    </Border>
-                    <Border x:Name="Round3Pill" Padding="9,3" BackgroundColor="#1A3A6B" Stroke="#2A5BAD" StrokeThickness="1">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="9"/></Border.StrokeShape>
-                        <Label Text="3" FontAttributes="Bold" FontSize="11" TextColor="#93C5FD"/>
-                    </Border>
-                </HorizontalStackLayout>
+                <!-- ══════════════════════════════════════ -->
+                <!-- MODULE + ROUND + TRIES ROW             -->
+                <!-- ══════════════════════════════════════ -->
+                <VerticalStackLayout Spacing="8">
 
-                <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
-                    <Label Text="TRIES" CharacterSpacing="1.5" FontAttributes="Bold"
-                           FontSize="9" TextColor="#93C5FD" VerticalOptions="Center"/>
-                    <Label x:Name="Heart1" Text="❤️" FontSize="16"/>
-                    <Label x:Name="Heart2" Text="❤️" FontSize="16"/>
-                    <Label x:Name="Heart3" Text="❤️" FontSize="16"/>
-                </HorizontalStackLayout>
-            </Grid>
+                    <!-- Module label -->
+                    <Label x:Name="ModuleLabel"
+                           Text="Module 1 · The Forgotten Library"
+                           FontSize="11" FontAttributes="Bold"
+                           TextColor="#6B8CAE"
+                           CharacterSpacing="0.5" />
+                    <BoxView BackgroundColor="#CBDCEB" HeightRequest="1" Margin="0,0,0,2" />
 
-            <!-- ── ROW 2: IMAGE COLLAGE (stretches to fill available space) ── -->
-            <Border Grid.Row="2"
-                    Padding="0" Margin="0"
-                    BackgroundColor="#0F1E3A"
-                    Stroke="#1A3A6B" StrokeThickness="1.5">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="22"/>
-                </Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow Brush="#000000" Opacity="0.28" Radius="18" Offset="0,6"/>
-                </Border.Shadow>
+                    <!-- Round pills + tries -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <HorizontalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
+                            <Label Text="ROUND" CharacterSpacing="2.0" FontAttributes="Bold"
+                                   FontSize="9" TextColor="#6B8CAE" VerticalOptions="Center" />
+                            <Border x:Name="Round1Pill" Padding="10,4"
+                                    BackgroundColor="#0F2D4A" Stroke="Transparent" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                <Label Text="1" FontAttributes="Bold" FontSize="11" TextColor="White" />
+                            </Border>
+                            <Border x:Name="Round2Pill" Padding="10,4"
+                                    BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                <Label Text="2" FontAttributes="Bold" FontSize="11" TextColor="#6B8CAE" />
+                            </Border>
+                            <Border x:Name="Round3Pill" Padding="10,4"
+                                    BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                <Label Text="3" FontAttributes="Bold" FontSize="11" TextColor="#6B8CAE" />
+                            </Border>
+                        </HorizontalStackLayout>
 
-                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" ColumnSpacing="3" RowSpacing="3" Padding="3">
-                    <Border Grid.Row="0" Grid.Column="0" Stroke="Transparent" StrokeThickness="0">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="19,0,0,0"/></Border.StrokeShape>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Offset="0" Color="#1A3A6B"/>
-                                <GradientStop Offset="1" Color="#112554"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Image x:Name="Img1" Aspect="AspectFill" Opacity="1"/>
-                            <Label x:Name="ImgLabel1" Text="🖼" FontSize="36"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Grid>
-                    </Border>
+                        <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="TRIES" CharacterSpacing="1.5" FontAttributes="Bold"
+                                   FontSize="9" TextColor="#6B8CAE" VerticalOptions="Center" />
+                            <Label x:Name="Heart1" Text="❤️" FontSize="15" />
+                            <Label x:Name="Heart2" Text="❤️" FontSize="15" />
+                            <Label x:Name="Heart3" Text="❤️" FontSize="15" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
 
-                    <Border Grid.Row="0" Grid.Column="1" Stroke="Transparent" StrokeThickness="0">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="0,19,0,0"/></Border.StrokeShape>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Offset="0" Color="#1A3A6B"/>
-                                <GradientStop Offset="1" Color="#112554"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Image x:Name="Img2" Aspect="AspectFill" Opacity="1"/>
-                            <Label x:Name="ImgLabel2" Text="🖼" FontSize="36"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Grid>
-                    </Border>
-
-                    <Border Grid.Row="1" Grid.Column="0" Stroke="Transparent" StrokeThickness="0">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="0,0,0,19"/></Border.StrokeShape>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Offset="0" Color="#1A3A6B"/>
-                                <GradientStop Offset="1" Color="#112554"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Image x:Name="Img3" Aspect="AspectFill" Opacity="1"/>
-                            <Label x:Name="ImgLabel3" Text="🖼" FontSize="36"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Grid>
-                    </Border>
-
-                    <Border Grid.Row="1" Grid.Column="1" Stroke="Transparent" StrokeThickness="0">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="0,0,19,0"/></Border.StrokeShape>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Offset="0" Color="#1A3A6B"/>
-                                <GradientStop Offset="1" Color="#112554"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Grid>
-                            <Image x:Name="Img4" Aspect="AspectFill" Opacity="1"/>
-                            <Label x:Name="ImgLabel4" Text="🖼" FontSize="36"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Grid>
-                    </Border>
-                </Grid>
-            </Border>
-
-            <!-- ── ROW 3: HINT + FEEDBACK + INPUT (anchored to bottom) ── -->
-            <VerticalStackLayout Grid.Row="3" Spacing="6">
-
-                <!-- HINT AREA -->
-                <Border x:Name="HintBorder"
-                        Padding="14,10"
-                        IsVisible="False"
-                        Stroke="#2A5BAD" StrokeThickness="1.5">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="#0F1E3A"/>
-                            <GradientStop Offset="1" Color="#112554"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <!-- ══════════════════════════════════════ -->
+                <!-- 4-IMAGE COLLAGE CARD                   -->
+                <!-- ══════════════════════════════════════ -->
+                <Border Padding="0" Margin="0"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB" StrokeThickness="1"
+                        HeightRequest="280">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="16"/>
+                        <RoundRectangle CornerRadius="24" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*"
+                          ColumnSpacing="4" RowSpacing="4" Padding="4">
+
+                        <!-- Top-left -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                BackgroundColor="#EFF4FB"
+                                Stroke="Transparent" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="20,0,0,0" />
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image x:Name="Img1" Aspect="AspectFill" Opacity="1" />
+                                <Label x:Name="ImgLabel1" Text="🖼" FontSize="34"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Top-right -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                BackgroundColor="#EFF4FB"
+                                Stroke="Transparent" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,20,0,0" />
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image x:Name="Img2" Aspect="AspectFill" Opacity="1" />
+                                <Label x:Name="ImgLabel2" Text="🖼" FontSize="34"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Bottom-left -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                BackgroundColor="#EFF4FB"
+                                Stroke="Transparent" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,0,0,20" />
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image x:Name="Img3" Aspect="AspectFill" Opacity="1" />
+                                <Label x:Name="ImgLabel3" Text="🖼" FontSize="34"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Bottom-right -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                BackgroundColor="#EFF4FB"
+                                Stroke="Transparent" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,0,20,0" />
+                            </Border.StrokeShape>
+                            <Grid>
+                                <Image x:Name="Img4" Aspect="AspectFill" Opacity="1" />
+                                <Label x:Name="ImgLabel4" Text="🖼" FontSize="34"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+                    </Grid>
+                </Border>
+
+                <!-- ══════════════════════════════════════ -->
+                <!-- HINT PANEL (hidden until used)         -->
+                <!-- ══════════════════════════════════════ -->
+                <Border x:Name="HintBorder"
+                        Padding="16,14"
+                        BackgroundColor="#F2F6FB"
+                        Stroke="#CBDCEB" StrokeThickness="1"
+                        IsVisible="False">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
                     </Border.StrokeShape>
                     <VerticalStackLayout Spacing="4">
-                        <Label x:Name="HintTitleLabel"
-                               Text="💡  HINT"
-                               FontAttributes="Bold" FontSize="10"
-                               CharacterSpacing="2.0" TextColor="#93C5FD"/>
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="💡" FontSize="14" VerticalOptions="Center" />
+                            <Label x:Name="HintTitleLabel"
+                                   Text="HINT"
+                                   FontAttributes="Bold" FontSize="10"
+                                   CharacterSpacing="2.0" TextColor="#6B8CAE"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
                         <Label x:Name="HintContentLabel"
                                Text=""
                                FontAttributes="Bold" FontSize="18"
-                               TextColor="White" CharacterSpacing="6.0"
-                               HorizontalOptions="Center"/>
+                               TextColor="#0F2D4A" CharacterSpacing="6.0"
+                               HorizontalOptions="Center" />
                         <Label x:Name="HintDescLabel"
                                Text=""
-                               FontSize="11" FontAttributes="Italic"
-                               TextColor="#A0C4FF"
-                               LineBreakMode="WordWrap"/>
+                               FontSize="12" FontAttributes="Italic"
+                               TextColor="#6B8CAE"
+                               LineBreakMode="WordWrap" />
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- FEEDBACK LABEL -->
-                <Label x:Name="FeedbackLabel"
-                       Text=""
-                       FontAttributes="Bold" FontSize="13"
-                       HorizontalOptions="Center"
-                       TextColor="#60A5FA"/>
-
-                <!-- INPUT + BUTTONS CARD -->
-                <Border Padding="12,10"
-                        BackgroundColor="White"
-                        Stroke="#DBEAFE" StrokeThickness="1.5">
+                <!-- ══════════════════════════════════════ -->
+                <!-- FEEDBACK BANNER                        -->
+                <!-- ══════════════════════════════════════ -->
+                <Border x:Name="FeedbackBorder"
+                        Padding="0"
+                        Stroke="#B8E6D4" StrokeThickness="1.5"
+                        IsVisible="False">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#E6F5EF" Offset="0" />
+                            <GradientStop Color="#EAF7F2" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="22"/>
+                        <RoundRectangle CornerRadius="20" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#000000" Opacity="0.10" Radius="16" Offset="0,4"/>
+                        <Shadow Brush="#1e8a5e" Offset="0,6" Radius="18" Opacity="0.12" />
                     </Border.Shadow>
 
-                    <VerticalStackLayout Spacing="7">
-                        <Border Padding="4,0"
-                                BackgroundColor="#F0F6FF"
-                                Stroke="#DBEAFE" StrokeThickness="1.5">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="16"/>
-                            </Border.StrokeShape>
-                            <Entry x:Name="AnswerEntry"
-                                   Placeholder="Type the theme word..."
-                                   PlaceholderColor="#93C5FD"
-                                   HorizontalTextAlignment="Center"
-                                   TextColor="#0B1D3A"
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   BackgroundColor="Transparent"/>
-                        </Border>
+                    <VerticalStackLayout Spacing="0">
 
-                        <Border Stroke="Transparent" StrokeThickness="0">
+                        <!-- Green accent strip at top -->
+                        <Border HeightRequest="4" Margin="0">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Offset="0" Color="#1565C0"/>
-                                    <GradientStop Offset="1" Color="#1E7BE0"/>
+                                    <GradientStop Color="#1e8a5e" Offset="0" />
+                                    <GradientStop Color="#059669" Offset="1" />
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="18"/>
+                                <RoundRectangle CornerRadius="20,20,0,0" />
+                            </Border.StrokeShape>
+                        </Border>
+
+                        <VerticalStackLayout Padding="20,16,20,18" Spacing="10">
+
+                            <!-- Icon + "Correct!" row -->
+                            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                                <Border BackgroundColor="#1e8a5e"
+                                        HeightRequest="36" WidthRequest="36"
+                                        Stroke="Transparent" StrokeThickness="0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="18" />
+                                    </Border.StrokeShape>
+                                    <Label x:Name="FeedbackIcon" Text="✓"
+                                           FontSize="18" FontAttributes="Bold"
+                                           TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label x:Name="FeedbackLabel"
+                                       Text="Correct!"
+                                       FontSize="20" FontAttributes="Bold"
+                                       TextColor="#1e8a5e"
+                                       VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+
+                            <!-- +5 points badge -->
+                            <Border x:Name="PointsBadge"
+                                    HorizontalOptions="Center"
+                                    Padding="18,6"
+                                    Stroke="#B8E6D4" StrokeThickness="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#1e8a5e" Offset="0" />
+                                        <GradientStop Color="#059669" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="50" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#1e8a5e" Offset="0,4" Radius="12" Opacity="0.3" />
+                                </Border.Shadow>
+                                <Label x:Name="PointsLabel"
+                                       Text="+ 5 points"
+                                       FontSize="14" FontAttributes="Bold"
+                                       TextColor="White"
+                                       CharacterSpacing="0.5"
+                                       HorizontalOptions="Center" />
+                            </Border>
+
+                            <!-- Next button inside feedback card -->
+                            <Border x:Name="FeedbackNextBorder"
+                                    BackgroundColor="#0F2D4A"
+                                    Stroke="Transparent" StrokeThickness="0"
+                                    Margin="0,4,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="26" />
+                                </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
+                                </Border.Shadow>
+                                <Button x:Name="FeedbackNextButton"
+                                        Text="Next →"
+                                        BackgroundColor="Transparent"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        FontSize="13"
+                                        CharacterSpacing="0.8"
+                                        HeightRequest="50"
+                                        BorderWidth="0"
+                                        Clicked="OnNextClicked" />
+                            </Border>
+
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ══════════════════════════════════════ -->
+                <!-- INPUT + ACTION CARD                    -->
+                <!-- ══════════════════════════════════════ -->
+                <Border Padding="22,20"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="14">
+
+                        <!-- Prompt label -->
+                        <Label Text="What one word connects all 4 images?"
+                               FontSize="14" FontAttributes="Bold"
+                               TextColor="#0F2D4A"
+                               HorizontalTextAlignment="Center" />
+
+                        <!-- Answer entry -->
+                        <Border Padding="4,0"
+                                BackgroundColor="#F2F6FB"
+                                Stroke="#CBDCEB" StrokeThickness="1.5">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="16" />
+                            </Border.StrokeShape>
+                            <Entry x:Name="AnswerEntry"
+                                   Placeholder="Type the theme word…"
+                                   PlaceholderColor="#6B8CAE"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="#0F2D4A"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   BackgroundColor="Transparent" />
+                        </Border>
+
+                        <!-- Submit button -->
+                        <Border BackgroundColor="#0F2D4A"
+                                Stroke="Transparent" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="26" />
                             </Border.StrokeShape>
                             <Border.Shadow>
-                                <Shadow Brush="#1565C0" Opacity="0.35" Radius="12" Offset="0,4"/>
+                                <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
                             </Border.Shadow>
                             <Button x:Name="SubmitButton"
                                     Text="SUBMIT ANSWER"
                                     BackgroundColor="Transparent"
                                     TextColor="White"
                                     FontAttributes="Bold"
-                                    FontSize="14"
-                                    CharacterSpacing="2.0"
-                                    HeightRequest="42"
+                                    FontSize="13"
+                                    CharacterSpacing="1.5"
+                                    HeightRequest="52"
                                     BorderWidth="0"
-                                    Clicked="OnSubmitClicked"/>
+                                    Clicked="OnSubmitClicked" />
                         </Border>
 
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
-                            <Button x:Name="NextButton"
-                                    Grid.Column="0"
-                                    Text="NEXT  ›"
-                                    BackgroundColor="#0B1D3A"
-                                    TextColor="White"
-                                    FontAttributes="Bold"
-                                    FontSize="12"
-                                    CharacterSpacing="1.5"
-                                    HeightRequest="36"
-                                    CornerRadius="16"
-                                    IsVisible="False"
-                                    Clicked="OnNextClicked"/>
+                        <!-- Skip button (full width; hidden after correct answer) -->
+                        <Border x:Name="SkipButtonBorder"
+                                BackgroundColor="White"
+                                Stroke="#CBDCEB" StrokeThickness="1">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="26" /></Border.StrokeShape>
                             <Button x:Name="SkipButton"
-                                    Grid.Column="1"
-                                    Text="SKIP"
+                                    Text="Skip"
                                     BackgroundColor="Transparent"
-                                    TextColor="#1565C0"
+                                    TextColor="#0F2D4A"
                                     FontAttributes="Bold"
-                                    FontSize="12"
-                                    BorderColor="#DBEAFE"
-                                    BorderWidth="1.5"
-                                    HeightRequest="36"
-                                    CornerRadius="16"
-                                    Clicked="OnSkipClicked"/>
+                                    FontSize="13"
+                                    HeightRequest="50"
+                                    BorderWidth="0"
+                                    Clicked="OnSkipClicked" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ══════════════════════════════════════ -->
+                <!-- RESULTS PANEL (hidden until done)      -->
+                <!-- ══════════════════════════════════════ -->
+                <Border x:Name="ResultsPanel"
+                        Padding="24,28"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB" StrokeThickness="1"
+                        IsVisible="False">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24" />
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="14" HorizontalOptions="Center">
+
+                        <Label x:Name="ResultsTrophyLabel" Text="🏆" FontSize="48"
+                               HorizontalOptions="Center" />
+                        <Label x:Name="ResultsTitleLabel" Text="Outstanding!"
+                               FontSize="26" FontAttributes="Bold" TextColor="#0F2D4A"
+                               HorizontalOptions="Center" />
+                        <Label Text="You've completed 4 Pics 1 Theme"
+                               FontSize="14" TextColor="#6B8CAE"
+                               HorizontalOptions="Center" />
+
+                        <Label x:Name="ResultsScoreLabel" Text="0"
+                               FontSize="54" FontAttributes="Bold" TextColor="#0F2D4A"
+                               HorizontalOptions="Center" />
+                        <Label Text="TOTAL POINTS"
+                               FontSize="11" FontAttributes="Bold" CharacterSpacing="2.0"
+                               TextColor="#6B8CAE" HorizontalOptions="Center" />
+
+                        <!-- Stat row -->
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,8,0,8">
+                            <Border Grid.Column="0" BackgroundColor="#F2F6FB"
+                                    Stroke="#CBDCEB" StrokeThickness="1" Padding="12,12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                                    <Label x:Name="StatCorrectLabel" Text="0" FontSize="22"
+                                           FontAttributes="Bold" TextColor="#0F2D4A"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="CORRECT" FontSize="9" FontAttributes="Bold"
+                                           CharacterSpacing="1.5" TextColor="#6B8CAE"
+                                           HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="1" BackgroundColor="#F2F6FB"
+                                    Stroke="#CBDCEB" StrokeThickness="1" Padding="12,12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                                    <Label x:Name="StatSkippedLabel" Text="0" FontSize="22"
+                                           FontAttributes="Bold" TextColor="#0F2D4A"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="SKIPPED" FontSize="9" FontAttributes="Bold"
+                                           CharacterSpacing="1.5" TextColor="#6B8CAE"
+                                           HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+                            <Border Grid.Column="2" BackgroundColor="#F2F6FB"
+                                    Stroke="#CBDCEB" StrokeThickness="1" Padding="12,12">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="14" /></Border.StrokeShape>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                                    <Label x:Name="StatAccuracyLabel" Text="0%" FontSize="22"
+                                           FontAttributes="Bold" TextColor="#0F2D4A"
+                                           HorizontalOptions="Center" />
+                                    <Label Text="ACCURACY" FontSize="9" FontAttributes="Bold"
+                                           CharacterSpacing="1.5" TextColor="#6B8CAE"
+                                           HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                            </Border>
                         </Grid>
+
+                        <!-- Play Again / Back buttons -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <Border Grid.Column="0" BackgroundColor="White"
+                                    Stroke="#CBDCEB" StrokeThickness="1">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="26" /></Border.StrokeShape>
+                                <Button Text="Play Again"
+                                        BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        TextColor="#0F2D4A"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        HeightRequest="50"
+                                        Clicked="OnPlayAgainClicked" />
+                            </Border>
+                            <Border Grid.Column="1" BackgroundColor="#0F2D4A"
+                                    Stroke="Transparent" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="26" /></Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
+                                </Border.Shadow>
+                                <Button Text="← Dashboard"
+                                        BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        TextColor="White"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        HeightRequest="50"
+                                        Clicked="OnExitClicked" />
+                            </Border>
+                        </Grid>
+
                     </VerticalStackLayout>
                 </Border>
 
             </VerticalStackLayout>
-
-        </Grid>
+        </ScrollView>
     </Grid>
+
 </ContentPage>
