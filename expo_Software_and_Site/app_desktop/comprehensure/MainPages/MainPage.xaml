@@ -102,7 +102,7 @@
                                VerticalOptions="Start"
                                Margin="0,-6,0,0" />
                         <Label Grid.Column="1"
-                               Text="Important truths can be found through curiosity and effort."
+                               Text="”You grow with every page.”"
                                FontAttributes="Italic" FontSize="13"
                                TextColor="#3a2e00"
                                LineBreakMode="WordWrap"

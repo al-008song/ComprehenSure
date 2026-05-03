@@ -497,7 +497,7 @@
                                             FontAttributes="Bold"
                                             FontSize="13"
                                             HeightRequest="52"
-                                            Text="GUESS"
+                                            Text="PLAY"
                                             TextColor="White" />
                                     </Border>
                                 </VerticalStackLayout>
@@ -532,7 +532,7 @@
                                 FontAttributes="Italic"
                                 FontSize="14"
                                 LineBreakMode="WordWrap"
-                                Text="placeholder"
+                                Text="”Master reading comprehension with ease.”"
                                 TextColor="#6B8CAE"
                                 VerticalOptions="Center" />
                         </Grid>
