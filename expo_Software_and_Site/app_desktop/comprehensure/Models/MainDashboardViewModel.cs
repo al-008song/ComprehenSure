@@ -1,9 +1,10 @@
+using System.Text.Json;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using comprehensure.DASHBOARD;
-using System.Text.Json;
+using comprehensure.Models;
 
 namespace comprehensure.DataBaseControl.Models
 {
@@ -15,41 +16,70 @@ namespace comprehensure.DataBaseControl.Models
             $"https://firestore.googleapis.com/v1/projects/{projectId}/databases/(default)/documents";
         private readonly HttpClient client = new HttpClient();
 
-        // ─── Leaderboard cache ───────────────────────────────────────────────
-        // Leaderboard is cached in memory and only refreshed every 5 minutes,
-        // or immediately after the current user changes their own score.
+      
         private List<(string Name, int Score)> _cachedLeaderboard = new();
         private DateTime _leaderboardFetchedAt = DateTime.MinValue;
         private static readonly TimeSpan LeaderboardTtl = TimeSpan.FromMinutes(5);
 
-        // ─── User-profile cache ──────────────────────────────────────────────
-        // Username + ModuleFinished are fetched together in ONE read per session
-        // and stored here so every other method can read from memory.
+      
         private string _cachedUsername = null;
-        private int    _cachedModuleFinished = -1;   // -1 = not yet loaded
+        private int _cachedModuleFinished = -1; // -1 = not yet loaded
 
-        [ObservableProperty] private string firstPlayerName  = "—";
-        [ObservableProperty] private string firstPlayerScore = "0 pts";
-        [ObservableProperty] private string secondPlayerName  = "—";
-        [ObservableProperty] private string secondPlayerScore = "0 pts";
-        [ObservableProperty] private string thirdPlayerName  = "—";
-        [ObservableProperty] private string thirdPlayerScore = "0 pts";
+        [ObservableProperty]
+        private string firstPlayerName = "—";
 
-        [ObservableProperty] private string _UsernameEdit;
-        [ObservableProperty] private int    _score;
-        [ObservableProperty] public  bool   firstlogin = false;
-        [ObservableProperty] private double _strokeOffset = 100;
-        [ObservableProperty] private int    _moduleFinished;
-        [ObservableProperty] private string _displayPercentage = "0%";
+        [ObservableProperty]
+        private string firstPlayerScore = "0 pts";
 
-        private readonly int _moduleCount    = 8;
+        [ObservableProperty]
+        private string secondPlayerName = "—";
+
+        [ObservableProperty]
+        private string secondPlayerScore = "0 pts";
+
+        [ObservableProperty]
+        private string thirdPlayerName = "—";
+
+        [ObservableProperty]
+        private string thirdPlayerScore = "0 pts";
+
+        [ObservableProperty]
+        private string _UsernameEdit;
+
+        [ObservableProperty]
+        private int _score;
+
+        [ObservableProperty]
+        public bool firstlogin = false;
+
+        [ObservableProperty]
+        private double _strokeOffset = 100;
+
+        [ObservableProperty]
+        private int _moduleFinished;
+
+        [ObservableProperty]
+        private string _displayPercentage = "0%";
+
+        // ── Minigame lock ─────────────────────────────────────────────────────
+        [ObservableProperty]
+        private bool _isMinigameLocked = true;
+
+        // Notifies XAML Opacity binding whenever the lock state changes
+        partial void OnIsMinigameLockedChanged(bool value)
+        {
+            OnPropertyChanged(nameof(MinigameOpacity));
+            OnPropertyChanged(nameof(IsMinigameUnlocked)); // add this line
+        }
+
+        public double MinigameOpacity => _isMinigameLocked ? 0.45 : 1.0;
+        public bool IsMinigameUnlocked => !_isMinigameLocked;  // add this;
+        // ─────────────────────────────────────────────────────────────────────
+
+        private readonly int _moduleCount = 8;
         private readonly int score_count_max = 80;
 
-        // ─────────────────────────────────────────────────────────────────────
-        // AutoRefresh has been REMOVED.
-        // It was hitting Firestore every second (2 reads/s = ~172,800 reads/day
-        // per active user). Progress and leaderboard are now updated on-demand.
-        // ─────────────────────────────────────────────────────────────────────
+       
 
         [RelayCommand]
         public async Task modules()
@@ -75,9 +105,7 @@ namespace comprehensure.DataBaseControl.Models
             _ = CalculateProgress();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // Firestore helper
-        // ─────────────────────────────────────────────────────────────────────
+       
         private static int ReadFirestoreInt(JsonElement integerValueElement)
         {
             if (integerValueElement.ValueKind == JsonValueKind.String)
@@ -90,40 +118,69 @@ namespace comprehensure.DataBaseControl.Models
             return 0;
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // OnAppearing  –  single entry point, minimised to 2 reads total:
-        //   Read 1: userdata/{uid}  (redirect check + username + moduleFinished)
-        //   Read 2: userdata        (leaderboard collection — skipped if cached)
-        // ─────────────────────────────────────────────────────────────────────
+
         public async Task OnAppearing()
         {
             await Task.Delay(650);
 
-            // READ 1 – fetch user doc once; result shared with all callers below
-            bool redirected = await RedirectIfNoUsername();
-            if (redirected) return;
 
-            // Username and ModuleFinished are now in _cachedUsername /
-            // _cachedModuleFinished — no extra network call needed.
+            bool redirected = await RedirectIfNoUsername();
+            if (redirected)
+                return;
+
+
+            _ = QuizFunc.InitializeLockFieldsAsync();
+
+
             ApplyCachedProfile();
 
-            await showloginwelcome();   // uses _cachedUsername — no read
+            await showloginwelcome(); // uses _cachedUsername — no read
+
+            // Load minigame lock state from Firestore
+            IsMinigameLocked = await checkforminigameunlock();
 
             await Task.Delay(1050);
 
-            // READ 2 – leaderboard (skipped entirely if still within TTL)
+
             await scoreboard();
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // RedirectIfNoUsername
-        // Fetches the user doc ONCE and populates the profile cache so no
-        // subsequent method needs to hit Firestore for the same data.
-        // ─────────────────────────────────────────────────────────────────────
+        // ── Reads isminigamelocked from Firestore for the current user ────────
+        public async Task<bool> checkforminigameunlock()
+        {
+            string uid = Preferences.Default.Get("SavedUserUid", "");
+            if (string.IsNullOrWhiteSpace(uid)) return true; // fail-safe: locked
+
+            try
+            {
+                string url = $"{BaseUrl}/StoryPage/{uid}";
+                var response = await client.GetAsync(url);
+
+                if (!response.IsSuccessStatusCode) return true;
+
+                var json = await response.Content.ReadAsStringAsync();
+                var doc = JsonSerializer.Deserialize<JsonElement>(json);
+
+                if (doc.TryGetProperty("fields", out var fields) &&
+                    fields.TryGetProperty("isminigamelocked", out var field) &&
+                    field.TryGetProperty("booleanValue", out var boolVal))
+                {
+                    return boolVal.GetBoolean();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[checkforminigameunlock] Exception: {ex.Message}");
+            }
+
+            return true; // default locked on any error
+        }
+
         private async Task<bool> RedirectIfNoUsername()
         {
-            string uid   = Preferences.Default.Get("SavedUserUid",    "");
-            string email = Preferences.Default.Get("SavedUserEmail",   "");
+            string uid = Preferences.Default.Get("SavedUserUid", "");
+            string email = Preferences.Default.Get("SavedUserEmail", "");
+
 
             if (string.IsNullOrEmpty(uid))
             {
@@ -148,7 +205,10 @@ namespace comprehensure.DataBaseControl.Models
 
                 // ── Redirect checks ──────────────────────────────────────────
                 if (fields.TryGetProperty("UserHasUserName", out var hasUserNameProp))
-                    if (hasUserNameProp.TryGetProperty("booleanValue", out var boolVal) && !boolVal.GetBoolean())
+                    if (
+                        hasUserNameProp.TryGetProperty("booleanValue", out var boolVal)
+                        && !boolVal.GetBoolean()
+                    )
                     {
                         await Shell.Current.GoToAsync($"///UsernameReq?email={email}&uid={uid}");
                         return true;
@@ -168,8 +228,10 @@ namespace comprehensure.DataBaseControl.Models
                 }
 
                 // Cache ModuleFinished from the same read
-                if (fields.TryGetProperty("ModuleFinished", out var moduleProp) &&
-                    moduleProp.TryGetProperty("integerValue", out var modVal))
+                if (
+                    fields.TryGetProperty("ModuleFinished", out var moduleProp)
+                    && moduleProp.TryGetProperty("integerValue", out var modVal)
+                )
                 {
                     _cachedModuleFinished = ReadFirestoreInt(modVal);
                 }
@@ -223,14 +285,17 @@ namespace comprehensure.DataBaseControl.Models
         // ─────────────────────────────────────────────────────────────────────
         public async Task scoreboard(bool forceRefresh = false)
         {
-            bool cacheValid = !forceRefresh &&
-                              _cachedLeaderboard.Count > 0 &&
-                              (DateTime.UtcNow - _leaderboardFetchedAt) < LeaderboardTtl;
+            bool cacheValid =
+                !forceRefresh
+                && _cachedLeaderboard.Count > 0
+                && (DateTime.UtcNow - _leaderboardFetchedAt) < LeaderboardTtl;
 
             if (cacheValid)
             {
                 ApplyLeaderboard(_cachedLeaderboard);
-                System.Diagnostics.Debug.WriteLine("[scoreboard] Served from cache — no Firestore read.");
+                System.Diagnostics.Debug.WriteLine(
+                    "[scoreboard] Served from cache — no Firestore read."
+                );
                 return;
             }
 
@@ -240,7 +305,9 @@ namespace comprehensure.DataBaseControl.Models
                 var response = await client.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
-                    System.Diagnostics.Debug.WriteLine($"[scoreboard] HTTP {(int)response.StatusCode}");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[scoreboard] HTTP {(int)response.StatusCode}"
+                    );
                     return;
                 }
 
@@ -257,31 +324,41 @@ namespace comprehensure.DataBaseControl.Models
 
                 foreach (var document in documents.EnumerateArray())
                 {
-                    if (!document.TryGetProperty("fields", out var fields)) continue;
+                    if (!document.TryGetProperty("fields", out var fields))
+                        continue;
 
-                    if (!fields.TryGetProperty("Username", out var usernameProp) ||
-                        !usernameProp.TryGetProperty("stringValue", out var nameVal))
+                    if (
+                        !fields.TryGetProperty("Username", out var usernameProp)
+                        || !usernameProp.TryGetProperty("stringValue", out var nameVal)
+                    )
                         continue;
 
                     string name = nameVal.GetString() ?? "";
-                    if (string.IsNullOrWhiteSpace(name)) continue;
+                    if (string.IsNullOrWhiteSpace(name))
+                        continue;
 
                     int score = 0;
-                    if (fields.TryGetProperty("ScoreOfTotal", out var sotProp) &&
-                        sotProp.TryGetProperty("integerValue", out var sotVal))
+                    if (
+                        fields.TryGetProperty("ScoreOfTotal", out var sotProp)
+                        && sotProp.TryGetProperty("integerValue", out var sotVal)
+                    )
                         score = ReadFirestoreInt(sotVal);
-                    else if (fields.TryGetProperty("ModuleFinished", out var mfProp) &&
-                             mfProp.TryGetProperty("integerValue", out var mfVal))
+                    else if (
+                        fields.TryGetProperty("ModuleFinished", out var mfProp)
+                        && mfProp.TryGetProperty("integerValue", out var mfVal)
+                    )
                         score = ReadFirestoreInt(mfVal);
 
                     entries.Add((name, score));
                 }
 
-                _cachedLeaderboard  = entries.OrderByDescending(e => e.Score).Take(3).ToList();
+                _cachedLeaderboard = entries.OrderByDescending(e => e.Score).Take(3).ToList();
                 _leaderboardFetchedAt = DateTime.UtcNow;
 
                 ApplyLeaderboard(_cachedLeaderboard);
-                System.Diagnostics.Debug.WriteLine("[scoreboard] Fetched from Firestore and cached.");
+                System.Diagnostics.Debug.WriteLine(
+                    "[scoreboard] Fetched from Firestore and cached."
+                );
             }
             catch (Exception ex)
             {
@@ -291,11 +368,11 @@ namespace comprehensure.DataBaseControl.Models
 
         private void ApplyLeaderboard(List<(string Name, int Score)> top3)
         {
-            FirstPlayerName  = top3.Count >= 1 ? top3[0].Name  : "—";
+            FirstPlayerName = top3.Count >= 1 ? top3[0].Name : "—";
             FirstPlayerScore = top3.Count >= 1 ? $"{top3[0].Score} pts" : "0 pts";
-            SecondPlayerName  = top3.Count >= 2 ? top3[1].Name  : "—";
+            SecondPlayerName = top3.Count >= 2 ? top3[1].Name : "—";
             SecondPlayerScore = top3.Count >= 2 ? $"{top3[1].Score} pts" : "0 pts";
-            ThirdPlayerName  = top3.Count >= 3 ? top3[2].Name  : "—";
+            ThirdPlayerName = top3.Count >= 3 ? top3[2].Name : "—";
             ThirdPlayerScore = top3.Count >= 3 ? $"{top3[2].Score} pts" : "0 pts";
         }
 
@@ -321,7 +398,8 @@ namespace comprehensure.DataBaseControl.Models
         public async Task modulescoredb()
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
-            if (string.IsNullOrEmpty(uid)) return;
+            if (string.IsNullOrEmpty(uid))
+                return;
 
             valuecheck();
             await CalculateProgress();
@@ -333,14 +411,11 @@ namespace comprehensure.DataBaseControl.Models
             string url = $"{BaseUrl}/userdata/{uid}?updateMask.fieldPaths=ModuleFinished";
             var data = new
             {
-                fields = new
-                {
-                    ModuleFinished = new { integerValue = ModuleFinished.ToString() }
-                }
+                fields = new { ModuleFinished = new { integerValue = ModuleFinished.ToString() } },
             };
 
             var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
-            var json    = JsonSerializer.Serialize(data, options);
+            var json = JsonSerializer.Serialize(data, options);
 
             try
             {
@@ -356,7 +431,9 @@ namespace comprehensure.DataBaseControl.Models
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"[modulescoredb] Saved ModuleFinished = {ModuleFinished}");
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[modulescoredb] Saved ModuleFinished = {ModuleFinished}"
+                    );
                     // NOTE: scoreboard() is intentionally NOT called here.
                     // The cache is already updated in-memory above.
                 }
@@ -373,7 +450,8 @@ namespace comprehensure.DataBaseControl.Models
         /// </summary>
         private void UpdateLeaderboardCacheForCurrentUser(int newScore)
         {
-            if (_cachedLeaderboard == null || string.IsNullOrEmpty(_cachedUsername)) return;
+            if (_cachedLeaderboard == null || string.IsNullOrEmpty(_cachedUsername))
+                return;
 
             // Replace or insert the current user's entry
             var updated = _cachedLeaderboard
@@ -393,8 +471,10 @@ namespace comprehensure.DataBaseControl.Models
         // ─────────────────────────────────────────────────────────────────────
         public int valuecheck()
         {
-            if (ModuleFinished < 0) ModuleFinished = 0;
-            else if (ModuleFinished > _moduleCount) ModuleFinished = 8;
+            if (ModuleFinished < 0)
+                ModuleFinished = 0;
+            else if (ModuleFinished > _moduleCount)
+                ModuleFinished = 8;
             return ModuleFinished;
         }
 
@@ -402,8 +482,8 @@ namespace comprehensure.DataBaseControl.Models
         {
             valuecheck();
             float resultModule = ((float)ModuleFinished / _moduleCount) * 100;
-            StrokeOffset       = -ModuleFinished * 4.9;
-            DisplayPercentage  = $"{resultModule}%";
+            StrokeOffset = -ModuleFinished * 4.9;
+            DisplayPercentage = $"{resultModule}%";
         }
 
         [RelayCommand]
@@ -419,23 +499,27 @@ namespace comprehensure.DataBaseControl.Models
         public async Task LoadModuleFinishedFromDb()
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
-            if (string.IsNullOrEmpty(uid)) return;
+            if (string.IsNullOrEmpty(uid))
+                return;
 
             string url = $"{BaseUrl}/userdata/{uid}";
             try
             {
                 var response = await client.GetAsync(url);
-                if (!response.IsSuccessStatusCode) return;
+                if (!response.IsSuccessStatusCode)
+                    return;
 
                 var json = await response.Content.ReadAsStringAsync();
                 using var doc = JsonDocument.Parse(json);
                 var fields = doc.RootElement.GetProperty("fields");
 
-                if (fields.TryGetProperty("ModuleFinished", out var moduleProp) &&
-                    moduleProp.TryGetProperty("integerValue", out var modVal))
+                if (
+                    fields.TryGetProperty("ModuleFinished", out var moduleProp)
+                    && moduleProp.TryGetProperty("integerValue", out var modVal)
+                )
                 {
                     int value = ReadFirestoreInt(modVal);
-                    ModuleFinished        = value;
+                    ModuleFinished = value;
                     _cachedModuleFinished = value;
                     await CalculateProgress();
                 }
