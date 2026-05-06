@@ -101,7 +101,7 @@
                             <!--  Settings icon  -->
                             <ImageButton
                                 Margin="4,0,0,0"
-                                Command="{Binding SettingsCommand}"
+                               
                                 HeightRequest="32"
                                 Opacity="0.45"
                                 Source="settings.png"
@@ -332,7 +332,7 @@
                 </Border>
 
                 <!--  ══════════════════════════════════════════  -->
-                <!--  ROW 2 — CHALLENGE ZONE (left+mid cols)     -->
+                <!--  ROW 3 — CHALLENGE ZONE (left+mid cols)     -->
                 <!--  ══════════════════════════════════════════  -->
                 <VerticalStackLayout
                     Grid.Row="3"
@@ -357,7 +357,25 @@
                             VerticalOptions="Center" />
                     </HorizontalStackLayout>
 
-                    <!--  Challenge cards row  -->
+                    <!--  Lock notice — only shown when minigames are locked  -->
+                    <Border
+                        IsVisible="{Binding IsMinigameLocked}"
+                        Padding="16,10"
+                        BackgroundColor="#FFF3E0"
+                        Stroke="#FFCC80"
+                        StrokeThickness="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="14"/>
+                        </Border.StrokeShape>
+                        <Label
+                            Text="🔒  Complete Module 3 to unlock Mini-Games"
+                            FontSize="12"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            TextColor="#E65100"/>
+                    </Border>
+
+                    <!--  Challenge cards row — dimmed + non-interactive when locked  -->
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="16">
 
                         <!--  SYNONYM HUNT card  -->
@@ -366,7 +384,9 @@
                             Padding="0,0,0,24"
                             BackgroundColor="White"
                             Stroke="#CBDCEB"
-                            StrokeThickness="1">
+                            StrokeThickness="1"
+                           IsEnabled="{Binding IsMinigameUnlocked}"
+                            Opacity="{Binding MinigameOpacity}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="28" />
                             </Border.StrokeShape>
@@ -438,7 +458,9 @@
                             Padding="0,0,0,24"
                             BackgroundColor="White"
                             Stroke="#CBDCEB"
-                            StrokeThickness="1">
+                            StrokeThickness="1"
+                            IsEnabled="{Binding IsMinigameLocked, Converter={x:StaticResource InverseBoolConverter}}"
+                            Opacity="{Binding MinigameOpacity}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="28" />
                             </Border.StrokeShape>
@@ -532,7 +554,7 @@
                                 FontAttributes="Italic"
                                 FontSize="14"
                                 LineBreakMode="WordWrap"
-                                Text="”Master reading comprehension with ease.”"
+                                Text="&#x201C;Master reading comprehension with ease.&#x201D;"
                                 TextColor="#6B8CAE"
                                 VerticalOptions="Center" />
                         </Grid>
@@ -541,7 +563,7 @@
                 </VerticalStackLayout>
 
                 <!--  ══════════════════════════════════════════  -->
-                <!--  ROW 2 — LEADERBOARD (right col)            -->
+                <!--  ROW 3 — LEADERBOARD (right col)            -->
                 <!--  ══════════════════════════════════════════  -->
                 <Border
                     Grid.Row="3"

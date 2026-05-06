@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Firebase.Auth;
 using System.Text.Json;
+using comprehensure.Models;
 
 namespace comprehensure.DataBaseControl.Models
 {
@@ -188,6 +189,7 @@ namespace comprehensure.DataBaseControl.Models
                 if (UserCache.IsCached(uid))
                 {
                     await Shell.Current.DisplayAlert("Login Complete", "Welcome back, " + UserCache.Username, "OK");
+                    await QuizFunc.InitializeLockFieldsAsync();
                     await Shell.Current.GoToAsync("///MainDashboard");
                     return;
                 }
@@ -198,6 +200,7 @@ namespace comprehensure.DataBaseControl.Models
                 if (hasUsername)
                 {
                     await Shell.Current.DisplayAlert("Login Complete", "Welcome, " + emailcl, "OK");
+                    await QuizFunc.InitializeLockFieldsAsync();
                     await Shell.Current.GoToAsync("///MainDashboard");
                 }
                 else

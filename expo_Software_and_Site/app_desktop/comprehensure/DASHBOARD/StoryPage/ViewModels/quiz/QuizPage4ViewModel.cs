@@ -107,7 +107,8 @@ namespace comprehensure.DASHBOARD.StoryPage
                     fields = new
                     {
                         ModuleFinished = new { integerValue = (currentModuleFinished + 1).ToString() },
-                        ScoreOfTotal   = new { integerValue = (currentScore + Score).ToString() }
+                        ScoreOfTotal   = new { integerValue = (currentScore + Score).ToString() },
+                        
                     }
                 };
 

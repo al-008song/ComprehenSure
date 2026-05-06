@@ -34,11 +34,15 @@ public partial class MainDashboard : ContentPage
 
     private async void OnSynonymHuntClicked(object sender, EventArgs e)
     {
+        // Safety net: block navigation if mini-games are still locked
+        if (_viewModel.IsMinigameLocked) return;
         await Navigation.PushAsync(new MiniGames.SynonymHuntPage());
     }
 
     private async void OnOneWordClicked(object sender, EventArgs e)
     {
+        // Safety net: block navigation if mini-games are still locked
+        if (_viewModel.IsMinigameLocked) return;
         await Navigation.PushAsync(new MiniGames.OneThemePage());
     }
 }
