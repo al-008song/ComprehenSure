@@ -101,7 +101,7 @@
                             <!--  Settings icon  -->
                             <ImageButton
                                 Margin="4,0,0,0"
-                               
+                                Command="{Binding ProfileDashboardCommand}"
                                 HeightRequest="32"
                                 Opacity="0.45"
                                 Source="settings.png"
@@ -698,52 +698,6 @@
                                     TextColor="#6B8CAE"
                                     VerticalOptions="Center" />
                             </Grid>
-                        </Border>
-
-                        <!--  Divider  -->
-                        <BoxView BackgroundColor="#CBDCEB" HeightRequest="1" />
-
-                        <!--  Increase Score  -->
-                        <Border
-                            BackgroundColor="#0F2D4A"
-                            Stroke="Transparent"
-                            StrokeThickness="0">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="26" />
-                            </Border.StrokeShape>
-                            <Border.Shadow>
-                                <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
-                            </Border.Shadow>
-                            <Button
-                                BackgroundColor="Transparent"
-                                BorderWidth="0"
-                                CharacterSpacing="0.8"
-                                Command="{Binding AddValueCommand}"
-                                FontAttributes="Bold"
-                                FontSize="13"
-                                HeightRequest="52"
-                                Text="▲  Increase Score"
-                                TextColor="White" />
-                        </Border>
-
-                        <!--  Decrease Score  -->
-                        <Border
-                            BackgroundColor="White"
-                            Stroke="#CBDCEB"
-                            StrokeThickness="1">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="26" />
-                            </Border.StrokeShape>
-                            <Button
-                                BackgroundColor="Transparent"
-                                BorderWidth="0"
-                                CharacterSpacing="0.8"
-                                Command="{Binding SubtractValueCommand}"
-                                FontAttributes="Bold"
-                                FontSize="13"
-                                HeightRequest="52"
-                                Text="▼  Decrease Score"
-                                TextColor="#0F2D4A" />
                         </Border>
 
                     </VerticalStackLayout>

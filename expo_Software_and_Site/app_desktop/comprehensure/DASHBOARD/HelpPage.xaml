@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="comprehensure.DASHBOARD.HelpPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#F2F6FB"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+
+        <!-- Background decorative blobs -->
+        <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
+            <Ellipse Fill="White"    WidthRequest="580" HeightRequest="440"
+                     HorizontalOptions="Start" VerticalOptions="Start"
+                     Margin="-140,-110,0,0" Opacity="0.75" />
+            <Ellipse Fill="#D6EAFF" WidthRequest="460" HeightRequest="380"
+                     HorizontalOptions="End" VerticalOptions="End"
+                     Margin="0,0,-110,-60" Opacity="0.45" />
+        </Grid>
+
+        <ScrollView VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Padding="40,36,40,56" Spacing="28">
+
+                <!-- ══════════════════════════════════════ -->
+                <!--  HEADER BAR                           -->
+                <!-- ══════════════════════════════════════ -->
+                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16">
+
+                    <!-- Back button -->
+                    <Border Grid.Column="0"
+                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.07" />
+                        </Border.Shadow>
+                        <Button Text="← Back"
+                                Clicked="BackButton_Clicked"
+                                BackgroundColor="Transparent"
+                                TextColor="#0F2D4A"
+                                BorderWidth="0"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                HeightRequest="44"
+                                Padding="20,0" />
+                    </Border>
+
+                    <!-- Title + subtitle -->
+                    <VerticalStackLayout Grid.Column="1"
+                                         HorizontalOptions="Center"
+                                         VerticalOptions="Center"
+                                         Spacing="2">
+                        <Label Text="FREQUENTLY ASKED QUESTIONS"
+                               TextColor="#0F2D4A"
+                               FontSize="30" FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               CharacterSpacing="1.5" />
+                        <Label Text="ComprehenSure"
+                               TextColor="#6B8CAE" FontSize="13"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Spacer to balance back button -->
+                    <BoxView Grid.Column="2" WidthRequest="90" BackgroundColor="Transparent" />
+                </Grid>
+
+                <!-- ══════════════════════════════════════ -->
+                <!--  FAQ SECTION LABEL                    -->
+                <!-- ══════════════════════════════════════ -->
+                <Border Padding="16,10"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB" StrokeThickness="1"
+                        HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="14"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,4" Radius="10" Opacity="0.05" />
+                    </Border.Shadow>
+                    <Label Text="❓  Click a question to reveal the answer."
+                           FontSize="12" FontAttributes="Bold"
+                           TextColor="#6B8CAE" />
+                </Border>
+
+                <!-- ══════════════════════════════════════ -->
+                <!--  FAQ CARDS                            -->
+                <!-- ══════════════════════════════════════ -->
+
+                <!-- ── FAQ 1 ── -->
+                <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- Question row (tappable) -->
+                        <Grid ColumnDefinitions="*, Auto" Padding="24,20">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FAQ1_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   x:Name="FAQ1Question"
+                                   Text="1. How does ComprehenSure work?"
+                                   FontSize="15" FontAttributes="Bold"
+                                   TextColor="#0F2D4A"
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap" />
+                            <Label Grid.Column="1"
+                                   x:Name="FAQ1Chevron"
+                                   Text="›"
+                                   FontSize="22" FontAttributes="Bold"
+                                   TextColor="#6B8CAE"
+                                   VerticalOptions="Center"
+                                   Margin="12,0,0,0"
+                                   Rotation="90" />
+                        </Grid>
+
+                        <!-- Divider (only visible when expanded) -->
+                        <BoxView x:Name="FAQ1Divider"
+                                 HeightRequest="1"
+                                 BackgroundColor="#EAF1F8"
+                                 IsVisible="False"
+                                 Margin="24,0" />
+
+                        <!-- Answer -->
+                        <Label x:Name="FAQ1Answer"
+                               Text="ComprehenSure provides reading passages followed by comprehension quiz. Users complete the tasks and review their results to monitor their understanding and progress."
+                               FontSize="14"
+                               TextColor="#4A6A8A"
+                               LineBreakMode="WordWrap"
+                               IsVisible="False"
+                               Padding="24,14,24,22" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ── FAQ 2 ── -->
+                <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid ColumnDefinitions="*, Auto" Padding="24,20">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FAQ2_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   x:Name="FAQ2Question"
+                                   Text="2. What types of reading materials are included in the app?"
+                                   FontSize="15" FontAttributes="Bold"
+                                   TextColor="#0F2D4A"
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap" />
+                            <Label Grid.Column="1"
+                                   x:Name="FAQ2Chevron"
+                                   Text="›"
+                                   FontSize="22" FontAttributes="Bold"
+                                   TextColor="#6B8CAE"
+                                   VerticalOptions="Center"
+                                   Margin="12,0,0,0"
+                                   Rotation="90" />
+                        </Grid>
+
+                        <BoxView x:Name="FAQ2Divider"
+                                 HeightRequest="1"
+                                 BackgroundColor="#EAF1F8"
+                                 IsVisible="False"
+                                 Margin="24,0" />
+
+                        <Label x:Name="FAQ2Answer"
+                               Text="The application includes texts like short stories appropriate for senior high school students."
+                               FontSize="14"
+                               TextColor="#4A6A8A"
+                               LineBreakMode="WordWrap"
+                               IsVisible="False"
+                               Padding="24,14,24,22" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ── FAQ 3 ── -->
+                <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid ColumnDefinitions="*, Auto" Padding="24,20">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FAQ3_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   x:Name="FAQ3Question"
+                                   Text="3. Does ComprehenSure track user progress?"
+                                   FontSize="15" FontAttributes="Bold"
+                                   TextColor="#0F2D4A"
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap" />
+                            <Label Grid.Column="1"
+                                   x:Name="FAQ3Chevron"
+                                   Text="›"
+                                   FontSize="22" FontAttributes="Bold"
+                                   TextColor="#6B8CAE"
+                                   VerticalOptions="Center"
+                                   Margin="12,0,0,0"
+                                   Rotation="90" />
+                        </Grid>
+
+                        <BoxView x:Name="FAQ3Divider"
+                                 HeightRequest="1"
+                                 BackgroundColor="#EAF1F8"
+                                 IsVisible="False"
+                                 Margin="24,0" />
+
+                        <Label x:Name="FAQ3Answer"
+                               Text="Yes, ComprehenSure tracks user performance, including completed activities and scores, allowing users to see their improvement over time."
+                               FontSize="14"
+                               TextColor="#4A6A8A"
+                               LineBreakMode="WordWrap"
+                               IsVisible="False"
+                               Padding="24,14,24,22" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ── FAQ 4 ── -->
+                <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid ColumnDefinitions="*, Auto" Padding="24,20">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FAQ4_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   x:Name="FAQ4Question"
+                                   Text="4. Is ComprehenSure suitable for classroom and independent learning?"
+                                   FontSize="15" FontAttributes="Bold"
+                                   TextColor="#0F2D4A"
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap" />
+                            <Label Grid.Column="1"
+                                   x:Name="FAQ4Chevron"
+                                   Text="›"
+                                   FontSize="22" FontAttributes="Bold"
+                                   TextColor="#6B8CAE"
+                                   VerticalOptions="Center"
+                                   Margin="12,0,0,0"
+                                   Rotation="90" />
+                        </Grid>
+
+                        <BoxView x:Name="FAQ4Divider"
+                                 HeightRequest="1"
+                                 BackgroundColor="#EAF1F8"
+                                 IsVisible="False"
+                                 Margin="24,0" />
+
+                        <Label x:Name="FAQ4Answer"
+                               Text="Yes, the application can be used both in the classroom with teacher guidance and independently by students for self-paced learning."
+                               FontSize="14"
+                               TextColor="#4A6A8A"
+                               LineBreakMode="WordWrap"
+                               IsVisible="False"
+                               Padding="24,14,24,22" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ── FAQ 5 ── -->
+                <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid ColumnDefinitions="*, Auto" Padding="24,20">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FAQ5_Tapped" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   x:Name="FAQ5Question"
+                                   Text="5. On what devices can I use ComprehenSure?"
+                                   FontSize="15" FontAttributes="Bold"
+                                   TextColor="#0F2D4A"
+                                   VerticalOptions="Center"
+                                   LineBreakMode="WordWrap" />
+                            <Label Grid.Column="1"
+                                   x:Name="FAQ5Chevron"
+                                   Text="›"
+                                   FontSize="22" FontAttributes="Bold"
+                                   TextColor="#6B8CAE"
+                                   VerticalOptions="Center"
+                                   Margin="12,0,0,0"
+                                   Rotation="90" />
+                        </Grid>
+
+                        <BoxView x:Name="FAQ5Divider"
+                                 HeightRequest="1"
+                                 BackgroundColor="#EAF1F8"
+                                 IsVisible="False"
+                                 Margin="24,0" />
+
+                        <Label x:Name="FAQ5Answer"
+                               Text="ComprehenSure is accessible on both desktop and mobile devices, making it convenient for users to learn anytime and anywhere."
+                               FontSize="14"
+                               TextColor="#4A6A8A"
+                               LineBreakMode="WordWrap"
+                               IsVisible="False"
+                               Padding="24,14,24,22" />
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

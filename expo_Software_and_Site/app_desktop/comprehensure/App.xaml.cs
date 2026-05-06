@@ -12,30 +12,35 @@ namespace comprehensure
         public App()
         {
             InitializeComponent();
+            // Removed: MainPage = new SplashScreenPage(); — conflicts with CreateWindow
             Connectivity.Current.ConnectivityChanged += Connectivity_ConnectivityChanged;
+        }
+
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new AppShell());
         }
 
         protected override async void OnStart()
         {
-            Connectivity.Current.ConnectivityChanged += Connectivity_ConnectivityChanged;
+            // Wait for splash screen display before navigating
+            await Task.Delay(2000);
+
             string savedUid = Preferences.Default.Get("SavedUserUid", "");
             string savedEmail = Preferences.Default.Get("SavedUserEmail", "");
 
             if (string.IsNullOrEmpty(savedUid))
             {
+                await Shell.Current.GoToAsync("///Login");
                 return;
             }
 
             bool hasUsername = await CheckHasUsername(savedUid);
 
             if (hasUsername)
-            {
                 await Shell.Current.GoToAsync("///MainDashboard");
-            }
             else
-            {
                 await Shell.Current.GoToAsync($"///UsernameReq?email={savedEmail}&uid={savedUid}");
-            }
         }
 
         private async Task<bool> CheckHasUsername(string uid)
@@ -43,7 +48,7 @@ namespace comprehensure
             string url = $"{BaseUrl}/userdata/{uid}";
             try
             {
-                var response = await client.GetAsync(url); // fix this part for no connection
+                var response = await client.GetAsync(url);
 
                 if (!response.IsSuccessStatusCode)
                     return false;
@@ -70,23 +75,14 @@ namespace comprehensure
             }
         }
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
-
         public static async Task HandleConnectivityAsync(NetworkAccess networkAccess)
         {
-            Boolean isnetwork;
-
             if (networkAccess == NetworkAccess.Internet)
             {
-                isnetwork = true;
                 await Shell.Current.DisplayAlert("Connected", "You are now online.", "OK");
             }
             else if (networkAccess == NetworkAccess.None)
             {
-                isnetwork = false;
                 await Shell.Current.DisplayAlert(
                     "Connection Lost",
                     "Network is required to use this app",

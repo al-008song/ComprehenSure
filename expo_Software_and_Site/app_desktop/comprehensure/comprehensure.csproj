@@ -42,7 +42,7 @@
 	<ItemGroup>
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" />
 
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\appicon.svg" Color="#F2F6FB" BaseSize="128,128" />
 
 		<MauiImage Include="Resources\Images\**\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
@@ -379,6 +379,9 @@
 		<MauiXaml Update="DASHBOARD\AllAboutUS_Dashboard.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="DASHBOARD\ChangePassword.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="DASHBOARD\DictionaryPage3.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
@@ -397,13 +400,25 @@
 		<MauiXaml Update="DASHBOARD\DictionaryPage8.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="DASHBOARD\FlashScreen.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="DASHBOARD\HelpPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="DASHBOARD\MainDashboard.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="DASHBOARD\MiniGames\OneThemePage.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="DASHBOARD\MiniGames\OneThemeWindow.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="DASHBOARD\MiniGames\SynonymHuntPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="DASHBOARD\MiniGames\SynonymHuntWindow.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="DASHBOARD\ModulesDashboard.xaml">
@@ -442,11 +457,17 @@
 		<MauiXaml Update="DASHBOARD\UsernameReq.xaml">
 		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+		<MauiXaml Update="FlashScreen.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="MainPages\LoginPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="MainPages\SignUpPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="SplashScreenPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 	</ItemGroup>
 
