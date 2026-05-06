@@ -10,16 +10,16 @@ public partial class SignUpPage : ContentPage
         Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
         Shell.SetNavBarIsVisible(this, false);
         Shell.SetNavBarHasShadow(this, false);
-        /*
+        
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior
         {
             IsVisible = false,
             IsEnabled = false
         });
-    }  i commented it out its causing errors
+    }  
 
-        */
-    }
+        
+    
 
     private async void SignUpButton_Clicked(object sender, EventArgs e)
     {
