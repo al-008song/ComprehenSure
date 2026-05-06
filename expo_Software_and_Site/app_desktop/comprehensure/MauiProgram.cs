@@ -52,6 +52,10 @@ namespace comprehensure
             builder.Services.AddTransient<ModulesDashboardViewModel>();
             builder.Services.AddTransient<ModulesDashboard>();
 
+            // ── ADDED: ChangePassword ────────────────────────────────────────
+            builder.Services.AddTransient<ChangePasswordViewModel>();
+            builder.Services.AddTransient<ChangePassword>();
+
             builder.Services.AddTransient<StoryPage1>();
             builder.Services.AddTransient<StoryPage2>();
             builder.Services.AddTransient<StoryPage3>();

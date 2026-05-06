@@ -11,6 +11,7 @@ namespace comprehensure
         private Grid? _popupOverlay;
         private TaskCompletionSource<bool>? _popupTcs;
 
+
         public AppShell()
         {
             BindingContext = new AppShellViewModel();
@@ -39,6 +40,8 @@ namespace comprehensure
             Routing.RegisterRoute(nameof(QuizPage6), typeof(QuizPage6));
             Routing.RegisterRoute(nameof(QuizPage7), typeof(QuizPage7));
             Routing.RegisterRoute(nameof(QuizPage8), typeof(QuizPage8));
+            Routing.RegisterRoute("HelpPage", typeof(HelpPage));
+            Routing.RegisterRoute("ChangePassword", typeof(ChangePassword));
 
             _popupOverlay = BuildPopupOverlay();
         }
@@ -51,7 +54,11 @@ namespace comprehensure
 
             bool confirmed = await ShowLogoutPopup();
             if (confirmed)
-                await GoToAsync("//MainPage");
+            {
+                Preferences.Default.Remove("SavedUserUid");
+                Preferences.Default.Remove("SavedUserEmail");
+                await GoToAsync("///Login");
+            }
         }
 
         // ── Show / hide popup ─────────────────────────────────────────────────
@@ -101,7 +108,7 @@ namespace comprehensure
 
         // ── Popup button handlers ─────────────────────────────────────────────
         private void OnLogoutConfirm(object sender, EventArgs e) => HidePopup(true);
-        private void OnLogoutCancel(object sender, EventArgs e)  => HidePopup(false);
+        private void OnLogoutCancel(object sender, EventArgs e) => HidePopup(false);
 
         // ── Find the visible ContentPage ──────────────────────────────────────
         private static ContentPage? GetCurrentPage()
