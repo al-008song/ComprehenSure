@@ -11,14 +11,12 @@ namespace comprehensure.DataBaseControl.Models
 {
     public partial class ModulesDashboardViewModel : ObservableObject
     {
-        // ── Firestore config (mirrors QuizFunc) ───────────────────────────
         private const string ProjectId  = "comprehensuredb-f9f7c";
         private const string Collection = "StoryPage";
         private static string BaseUrl =>
             $"https://firestore.googleapis.com/v1/projects/{ProjectId}/databases/(default)/documents";
         private static readonly HttpClient _http = new HttpClient();
 
-        // ── Lock state (true = locked) ────────────────────────────────────
         [ObservableProperty] private bool isModule1Locked = false;
         [ObservableProperty] private bool isModule2Locked = true;
         [ObservableProperty] private bool isModule3Locked = true;
@@ -28,7 +26,6 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty] private bool isModule7Locked = true;
         [ObservableProperty] private bool isModule8Locked = true;
 
-        // ── Progress (0.0–1.0 for ProgressBar) ───────────────────────────
         [ObservableProperty] private double module1Progress;
         [ObservableProperty] private double module2Progress;
         [ObservableProperty] private double module3Progress;
@@ -38,7 +35,6 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty] private double module7Progress;
         [ObservableProperty] private double module8Progress;
 
-        // ── Progress label text ───────────────────────────────────────────
         [ObservableProperty] private string module1ProgressText = "0%";
         [ObservableProperty] private string module2ProgressText = "0%";
         [ObservableProperty] private string module3ProgressText = "0%";
@@ -48,7 +44,6 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty] private string module7ProgressText = "0%";
         [ObservableProperty] private string module8ProgressText = "0%";
 
-        // ── Navigation commands ───────────────────────────────────────────
         [RelayCommand] public async Task startmodule1() => await Shell.Current.GoToAsync("StoryPage1");
         [RelayCommand] public async Task startmodule2() => await Shell.Current.GoToAsync("StoryPage2");
         [RelayCommand] public async Task startmodule3() => await Shell.Current.GoToAsync("StoryPage3");
@@ -58,7 +53,6 @@ namespace comprehensure.DataBaseControl.Models
         [RelayCommand] public async Task startmodule7() => await Shell.Current.GoToAsync("StoryPage7");
         [RelayCommand] public async Task startmodule8() => await Shell.Current.GoToAsync("StoryPage8");
 
-        // ── Load lock state + progress from Firestore ─────────────────────
         /// <summary>
         /// Reads islockedmoduleN and calculatedprogN for all 8 modules
         /// from the user's Firestore document and updates bound properties.
@@ -71,7 +65,6 @@ namespace comprehensure.DataBaseControl.Models
 
             try
             {
-                // ── Pass 1: read progress values and check unlock eligibility ─
                 int[] prog = new int[9]; // index 1–8
                 bool anyUnlocked = false;
 
@@ -86,9 +79,7 @@ namespace comprehensure.DataBaseControl.Models
                     for (int i = 1; i <= 8; i++)
                         prog[i] = ReadInt(fields, $"calculatedprog{i}", 0);
                 }
-                // doc is disposed here — safe to await below
 
-                // ── Unlock next module for any qualifying score ───────────
                 for (int i = 1; i <= 7; i++)
                 {
                     if (prog[i] >= 88)
@@ -98,7 +89,6 @@ namespace comprehensure.DataBaseControl.Models
                     }
                 }
 
-                // ── Pass 2: re-fetch ONLY if a write happened, else reuse ─
                 string jsonForLocks = anyUnlocked
                     ? await (await _http.GetAsync($"{BaseUrl}/{Collection}/{uid}")).Content.ReadAsStringAsync()
                     : json;
@@ -107,7 +97,6 @@ namespace comprehensure.DataBaseControl.Models
                 {
                     if (!doc2.RootElement.TryGetProperty("fields", out JsonElement fields2)) return;
 
-                    // ── Lock fields ───────────────────────────────────────
                     IsModule1Locked = ReadBool(fields2, "islockedmodule1", false);
                     IsModule2Locked = ReadBool(fields2, "islockedmodule2", true);
                     IsModule3Locked = ReadBool(fields2, "islockedmodule3", true);
@@ -118,7 +107,6 @@ namespace comprehensure.DataBaseControl.Models
                     IsModule8Locked = ReadBool(fields2, "islockedmodule8", true);
                 }
 
-                // ── Progress bars (use values already read in pass 1) ─────
                 for (int i = 1; i <= 8; i++)
                     SetProgress(i, prog[i]);
             }
@@ -128,11 +116,9 @@ namespace comprehensure.DataBaseControl.Models
             }
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────
 
         private void SetProgress(int moduleNumber, int rawValue)
         {
-            // calculatedprog max = 80 (story) + 10 questions × 2 = 100
             int clamped  = Math.Max(0, Math.Min(100, rawValue));
             double frac  = clamped / 100.0;
             string label = $"{clamped}%";
@@ -162,7 +148,6 @@ namespace comprehensure.DataBaseControl.Models
         {
             if (!fields.TryGetProperty(name, out JsonElement el)) return fallback;
 
-            // Firestore returns integers as strings in the REST API
             if (el.TryGetProperty("integerValue", out JsonElement iv))
             {
                 if (iv.ValueKind == JsonValueKind.String &&

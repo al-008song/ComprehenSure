@@ -10,7 +10,6 @@ namespace comprehensure.Models
 {
     public class QuizFunc
     {
-        // ── Firestore REST config ─────────────────────────────────────────
         private const string ProjectId  = "comprehensuredb-f9f7c";
         private const string Collection = "StoryPage";
         private static string BaseUrl =>
@@ -18,7 +17,6 @@ namespace comprehensure.Models
 
         private static readonly HttpClient _client = new HttpClient();
 
-        // storypageprogN  — written when the reader reaches the last story page (80%)
         private static readonly Dictionary<int, string> ProgressFields = new()
         {
             { 1, "storypageprog1" }, { 2, "storypageprog2" }, { 3, "storypageprog3" },
@@ -34,10 +32,6 @@ namespace comprehensure.Models
             { 7, "calculatedprog7" }, { 8, "calculatedprog8" },
         };
 
-        // ── Module lock variables ─────────────────────────────────────────
-        // false = unlocked, true = locked
-        // module 1 starts as false (unlocked), all others start as true (locked)
-        // These are ONLY written to Firestore if they don't already exist there
         private static bool islockedmodule1 = false;
         private static bool islockedmodule2 = true;
         private static bool islockedmodule3 = true;
@@ -58,10 +52,8 @@ namespace comprehensure.Models
             string uid = Preferences.Default.Get("SavedUserUid", "");
             if (string.IsNullOrWhiteSpace(uid)) return;
 
-            // Fetch fields that already exist in this user's document
             HashSet<string> existing = await GetExistingFieldNamesAsync(uid);
 
-            // Map each field name to its default value
             var defaults = new Dictionary<string, bool>
             {
                 { "islockedmodule1", islockedmodule1 },
@@ -81,14 +73,12 @@ namespace comprehensure.Models
 
             foreach (var kvp in defaults)
             {
-                // Skip if the field already exists in Firestore
                 if (existing.Contains(kvp.Key)) continue;
 
                 fieldsToWrite[kvp.Key] = new { booleanValue = kvp.Value };
                 fieldPaths.Add(kvp.Key);
             }
 
-            // Nothing new to write
             if (fieldsToWrite.Count <= 1)
             {
                 System.Diagnostics.Debug.WriteLine("[QuizFunc:InitializeLockFields] All lock fields already exist – skipping.");
@@ -102,7 +92,6 @@ namespace comprehensure.Models
         }
 
 
-        // ── Called when reader reaches the last story page ─────────────────
         /// <summary>Saves storypageprogN = 80 and UID to Firestore.</summary>
         public static async Task SaveProgressAsync(int storyNumber, int progress)
         {
@@ -152,13 +141,10 @@ namespace comprehensure.Models
 
             await PatchAsync(url, data, $"SaveQuizProgressAsync story {storyNumber} calc={calculatedProg}");
 
-            // ── Unlock next module if score is high enough ────────────────
-            // calculatedProg >= 88 means story (80) + at least 4/10 correct (8pts)
             if (calculatedProg >= 88 && storyNumber < 8)
                 await UnlockNextModuleAsync(uid, storyNumber + 1);
         }
 
-        // ── Unlocks a module by setting its lock field to false ────────────
         /// <summary>
         /// Sets islockedmodule{moduleNumber} = false in Firestore.
         /// Only called internally when the previous module's score qualifies.
@@ -186,7 +172,6 @@ namespace comprehensure.Models
             await PatchAsync(url, new { fields }, $"UnlockNextModule module{moduleNumber}");
         }
 
-        // ── Reads all calculatedprogN fields and saves their sum as totalprogress ──
         public static async Task SaveTotalProgressAsync()
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
@@ -242,7 +227,6 @@ namespace comprehensure.Models
             }
         }
 
-        // ── Internal helpers ───────────────────────────────────────────────
 
         private static async Task<HashSet<string>> GetExistingFieldNamesAsync(string uid)
         {

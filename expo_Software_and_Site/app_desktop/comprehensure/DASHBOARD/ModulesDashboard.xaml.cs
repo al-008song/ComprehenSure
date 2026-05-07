@@ -11,8 +11,6 @@ public partial class ModulesDashboard : ContentPage
         BindingContext = viewModel;
     }
 
-    // Reload lock state + progress every time the page appears
-    // (e.g. returning from a story/quiz will reflect updated data)
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -26,7 +24,6 @@ public partial class ModulesDashboard : ContentPage
         await Shell.Current.GoToAsync("///MainDashboard");
     }
 
-    // ─── Pointer / hover handlers (matches MainDashboard smooth animations) ──────
 
     private void OnPointerEntered(object sender, PointerEventArgs e)
     {

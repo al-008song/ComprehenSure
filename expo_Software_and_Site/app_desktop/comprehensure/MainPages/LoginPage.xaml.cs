@@ -2,7 +2,6 @@ namespace comprehensure
 {
     public partial class LoginPage : ContentPage
     {
-        // Tracks whether the password is currently visible
         private bool _isPasswordVisible = false;
 
         public LoginPage(DataBaseControl.Models.LoginViewModel viewModel)
@@ -33,10 +32,8 @@ namespace comprehensure
         {
             _isPasswordVisible = !_isPasswordVisible;
 
-            // Show or hide the password characters
             Password.IsPassword = !_isPasswordVisible;
 
-            // Swap icon: eye_open when visible, eye_closed when hidden
             LoginTogglePasswordButton.Source = _isPasswordVisible
                 ? "eye_open.png"
                 : "eye_closed.png";

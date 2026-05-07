@@ -7,7 +7,7 @@ namespace comprehensure
 {
     public partial class AppShell : Shell
     {
-        // The popup overlay — built once, reused every time
+    
         private Grid? _popupOverlay;
         private TaskCompletionSource<bool>? _popupTcs;
 
@@ -46,11 +46,11 @@ namespace comprehensure
             _popupOverlay = BuildPopupOverlay();
         }
 
-        // ── Log Out button clicked ────────────────────────────────────────────
+       
         private async void OnLogOutClicked(object sender, EventArgs e)
         {
             FlyoutIsPresented = false;
-            await Task.Delay(250); // wait for flyout to close
+            await Task.Delay(250); // wait for flyout to close it weird gliches occur when u remove this
 
             bool confirmed = await ShowLogoutPopup();
             if (confirmed)
@@ -60,13 +60,12 @@ namespace comprehensure
                 await GoToAsync("///MainPage");
             }
         }
-
-        // ── Show / hide popup ─────────────────────────────────────────────────
+      
         private Task<bool> ShowLogoutPopup()
         {
             _popupTcs = new TaskCompletionSource<bool>();
 
-            // Find the current ContentPage
+           
             ContentPage? page = GetCurrentPage();
             if (page == null)
             {
@@ -74,8 +73,7 @@ namespace comprehensure
                 return _popupTcs.Task;
             }
 
-            // Wrap the page content in a Grid if not already one,
-            // then inject the overlay — same pattern as StoryPage
+         
             Grid root;
             if (page.Content is Grid g)
             {
@@ -106,30 +104,31 @@ namespace comprehensure
             _popupTcs?.TrySetResult(result);
         }
 
-        // ── Popup button handlers ─────────────────────────────────────────────
+       
         private void OnLogoutConfirm(object sender, EventArgs e) => HidePopup(true);
         private void OnLogoutCancel(object sender, EventArgs e) => HidePopup(false);
 
-        // ── Find the visible ContentPage ──────────────────────────────────────
+      
         private static ContentPage? GetCurrentPage()
         {
-            // Check pushed navigation stack first
+          
             var stack = Shell.Current?.Navigation?.NavigationStack;
             if (stack != null)
                 for (int i = stack.Count - 1; i >= 0; i--)
                     if (stack[i] is ContentPage cp) return cp;
 
-            // Fall back to the current Shell tab content
+      
             if (Shell.Current?.CurrentPage is ContentPage sp)
                 return sp;
 
             return null;
         }
 
-        // ── Build the popup overlay once ──────────────────────────────────────
+      
         private Grid BuildPopupOverlay()
+        
         {
-            // ── Yes, log out button ──────────────────────────────────────────
+         
             var yesBtn = new Button
             {
                 Text = "Yes, log out",
@@ -152,7 +151,7 @@ namespace comprehensure
                 Content = yesBtn,
             };
 
-            // ── Cancel button ────────────────────────────────────────────────
+           
             var cancelBtn = new Button
             {
                 Text = "Cancel",
@@ -174,7 +173,7 @@ namespace comprehensure
                 Content = cancelBtn,
             };
 
-            // ── Top gradient accent band (matches StoryPage popup) ───────────
+         
             var gradientBand = new Border
             {
                 HeightRequest = 6,
@@ -191,7 +190,7 @@ namespace comprehensure
                 StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(36, 36, 0, 0) },
             };
 
-            // ── Icon chip ────────────────────────────────────────────────────
+      
             var iconChip = new Border
             {
                 BackgroundColor = Color.FromArgb("#D6EAFF"),
@@ -210,7 +209,7 @@ namespace comprehensure
                 },
             };
 
-            // ── Assemble card ────────────────────────────────────────────────
+       
             var card = new Border
             {
                 HorizontalOptions = LayoutOptions.Center,
@@ -259,7 +258,7 @@ namespace comprehensure
                 },
             };
 
-            // ── Full-screen dim overlay ──────────────────────────────────────
+        
             var overlay = new Grid
             {
                 BackgroundColor = Color.FromArgb("#60000000"),

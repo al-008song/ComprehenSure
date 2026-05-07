@@ -4,7 +4,7 @@ namespace comprehensure.DASHBOARD
 {
     public partial class AboutUs : ContentPage
     {
-        // ── Member data ──────────────────────────────────────────────────────
+     
         private record MemberInfo(string ImageSource, string Position, string Description);
 
         private static readonly Dictionary<string, MemberInfo> Members = new()
@@ -37,13 +37,12 @@ namespace comprehensure.DASHBOARD
                              "Megan assisted in conducting research and gathering data."),
         };
 
-        // ── Track which member's description is currently open ───────────────
+        
         private string? _openMember = null;
 
-        // ── Lookup: name → (description Border, description Label) ───────────
+       
         private Dictionary<string, (Border panel, Label label)> _descPanels = new();
 
-        // ── Constructor ──────────────────────────────────────────────────────
         public AboutUs()
         {
             InitializeComponent();
@@ -57,7 +56,6 @@ namespace comprehensure.DASHBOARD
                 IsEnabled = false
             });
 
-            // Build lookup table after InitializeComponent so x:Name fields are resolved
             _descPanels = new Dictionary<string, (Border, Label)>
             {
                 ["Fren"]   = (Desc_Fren,   DescLabel_Fren),
@@ -72,13 +70,12 @@ namespace comprehensure.DASHBOARD
             };
         }
 
-        // ── Navigation ───────────────────────────────────────────────────────
         private void BackButton_Clicked(object sender, EventArgs e)
         {
             Shell.Current.GoToAsync("MainDashboard");
         }
 
-        // ── Member tap handler ───────────────────────────────────────────────
+
         private async void OnMemberTapped(object sender, TappedEventArgs e)
         {
             if (e.Parameter is not string name) return;
@@ -87,7 +84,6 @@ namespace comprehensure.DASHBOARD
 
             var (panel, label) = ui;
 
-            // Tapping the same member again collapses their description
             if (_openMember == name && panel.IsVisible)
             {
                 await CollapsePanel(panel);
@@ -95,11 +91,9 @@ namespace comprehensure.DASHBOARD
                 return;
             }
 
-            // Close any previously open panel first
             if (_openMember != null && _descPanels.TryGetValue(_openMember, out var prev))
                 await CollapsePanel(prev.panel);
 
-            // Populate and expand the new panel
             label.Text = info.Description;
             panel.Opacity = 0;
             panel.TranslationY = -6;
@@ -113,7 +107,6 @@ namespace comprehensure.DASHBOARD
             _openMember = name;
         }
 
-        // ── Helper: animate-out and hide a panel ────────────────────────────
         private static async Task CollapsePanel(Border panel)
         {
             await Task.WhenAll(

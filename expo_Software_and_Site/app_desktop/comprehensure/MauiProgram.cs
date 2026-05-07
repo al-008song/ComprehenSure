@@ -52,7 +52,6 @@ namespace comprehensure
             builder.Services.AddTransient<ModulesDashboardViewModel>();
             builder.Services.AddTransient<ModulesDashboard>();
 
-            // ── ADDED: ChangePassword ────────────────────────────────────────
             builder.Services.AddTransient<ChangePasswordViewModel>();
             builder.Services.AddTransient<ChangePassword>();
 
@@ -68,7 +67,6 @@ namespace comprehensure
             builder.Services.AddTransient<StoryPage2ViewModel>();
             builder.Services.AddTransient<StoryPage4ViewModel>();
 
-            // ── ADDED: QuizPage ViewModels 1-8 ──────────────────────────
             builder.Services.AddTransient<QuizPage1ViewModel>(); // ADDED
             builder.Services.AddTransient<QuizPage2ViewModel>();
             builder.Services.AddTransient<QuizPage3ViewModel>();
@@ -78,7 +76,6 @@ namespace comprehensure
             builder.Services.AddTransient<QuizPage7ViewModel>();
             builder.Services.AddTransient<QuizPage8ViewModel>();
 
-            // ── ADDED: QuizPage Pages 1-8 ───────────────────────────────
             builder.Services.AddTransient<QuizPage1>(); // ADDED
             builder.Services.AddTransient<QuizPage2>();
             builder.Services.AddTransient<QuizPage3>(); // ADDED

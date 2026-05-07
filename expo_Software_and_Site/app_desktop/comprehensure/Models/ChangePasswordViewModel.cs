@@ -10,8 +10,7 @@ namespace comprehensure.DataBaseControl.Models
     {
         private readonly FirebaseAuthClient _authClient;
 
-        // ── Observable fields ─────────────────────────────────────────────────
-
+    
         [ObservableProperty]
         private string _currentPassword = string.Empty;
 
@@ -30,21 +29,18 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty]
         private bool _hasError = false;
 
-        // ── Constructor ───────────────────────────────────────────────────────
 
         public ChangePasswordViewModel(FirebaseAuthClient authClient)
         {
             _authClient = authClient;
         }
 
-        // ── Commands ──────────────────────────────────────────────────────────
 
         [RelayCommand]
         public async Task ChangePassword()
         {
             ClearError();
 
-            // ── Validation ────────────────────────────────────────────────────
             if (string.IsNullOrWhiteSpace(CurrentPassword) ||
                 string.IsNullOrWhiteSpace(NewPassword) ||
                 string.IsNullOrWhiteSpace(ConfirmPassword))
@@ -83,14 +79,12 @@ namespace comprehensure.DataBaseControl.Models
                     return;
                 }
 
-                // ── Re-authenticate then change password ──────────────────────
                 var userCredential = await _authClient.SignInWithEmailAndPasswordAsync(email, CurrentPassword);
 
                 await userCredential.User.ChangePasswordAsync(NewPassword);
 
                 await ToastShow("Password changed successfully!");
 
-                // Clear fields after success
                 CurrentPassword = string.Empty;
                 NewPassword = string.Empty;
                 ConfirmPassword = string.Empty;
@@ -131,7 +125,6 @@ namespace comprehensure.DataBaseControl.Models
             await Shell.Current.GoToAsync("..");
         }
 
-        // ── Helpers ───────────────────────────────────────────────────────────
 
         private void SetError(string message)
         {

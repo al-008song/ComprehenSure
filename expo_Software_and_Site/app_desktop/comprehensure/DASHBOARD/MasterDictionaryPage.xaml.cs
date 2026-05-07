@@ -18,7 +18,6 @@ public partial class MasterDictionaryPage : ContentPage
             IsVisible = false,
             IsEnabled = false
         });
-        // Easy tab is active by default — already set in XAML visibility
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
@@ -26,7 +25,6 @@ public partial class MasterDictionaryPage : ContentPage
         await Navigation.PopAsync();
     }
 
-    // ── Tab switching ─────────────────────────────────────────────────────
 
     private void OnEasyTabClicked(object sender, EventArgs e) => SwitchTab("Easy");
     private void OnAvgTabClicked(object sender, EventArgs e)  => SwitchTab("Average");
@@ -34,17 +32,14 @@ public partial class MasterDictionaryPage : ContentPage
 
     private void SwitchTab(string tab)
     {
-        // Show/hide panels
         EasyPanel.IsVisible = tab == "Easy";
         AvgPanel.IsVisible  = tab == "Average";
         IntPanel.IsVisible  = tab == "Intermediate";
 
-        // Reset all tab borders to inactive style
         SetTabInactive(EasyTabBorder, EasyTab);
         SetTabInactive(AvgTabBorder,  AvgTab);
         SetTabInactive(IntTabBorder,  IntTab);
 
-        // Highlight active tab
         switch (tab)
         {
             case "Easy":
@@ -76,7 +71,6 @@ public partial class MasterDictionaryPage : ContentPage
         btn.TextColor          = Color.FromArgb("#4A6A9A");
     }
 
-    // ── Text-to-speech ────────────────────────────────────────────────────
 
     private async void OnSpeakClicked(object sender, EventArgs e)
     {

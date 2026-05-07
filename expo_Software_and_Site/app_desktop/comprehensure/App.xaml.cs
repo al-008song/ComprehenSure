@@ -19,12 +19,10 @@ namespace comprehensure
         {
             var shell = new AppShell();
 
-            // Delay navigation until after the Shell window is fully rendered,
-            // so Shell.Current is non-null and GoToAsync won't silently fail.
+         
             shell.Loaded += async (s, e) =>
             {
-                // Brief pause so the initial ShellContent (Login) doesn't flash
-                await Task.Delay(150);
+                await Task.Delay(1500);
                 await NavigateToStartPageAsync();
             };
 
@@ -38,7 +36,7 @@ namespace comprehensure
             string savedUid = Preferences.Default.Get("SavedUserUid", "");
             string savedEmail = Preferences.Default.Get("SavedUserEmail", "");
 
-            // FIX: No UID = go to MainPage (landing/welcome screen), not Login directly
+           
             if (string.IsNullOrEmpty(savedUid))
             {
                 await Shell.Current.GoToAsync("///MainPage");
@@ -53,8 +51,7 @@ namespace comprehensure
                 await Shell.Current.GoToAsync($"///UsernameReq?email={Uri.EscapeDataString(savedEmail)}&uid={Uri.EscapeDataString(savedUid)}");
         }
 
-        // OnStart() removed — navigation is now driven by the shell.Loaded event
-        // above, which guarantees Shell.Current is ready before GoToAsync is called.
+      
 
         private async Task<bool> CheckHasUsername(string uid)
         {
