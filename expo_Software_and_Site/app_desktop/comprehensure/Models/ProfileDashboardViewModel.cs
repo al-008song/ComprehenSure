@@ -13,13 +13,13 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-    // ── Firestore ─────────────────────────────────────────────────
+    
     private readonly string _projectId = "comprehensuredb-f9f7c";
     private string BaseUrl =>
         $"https://firestore.googleapis.com/v1/projects/{_projectId}/databases/(default)/documents";
     private readonly HttpClient _client = new HttpClient();
 
-    // ── Profile ───────────────────────────────────────────────────
+  
 
     private string _usernameEdit = string.Empty;
     public string UsernameEdit
@@ -44,7 +44,6 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
         set { _isSaving = value; OnPropertyChanged(); }
     }
 
-    // ── Dark Mode ─────────────────────────────────────────────────
 
     private bool _isDarkModeEnabled;
     public bool IsDarkModeEnabled
