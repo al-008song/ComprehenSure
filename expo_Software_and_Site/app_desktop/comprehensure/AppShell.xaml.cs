@@ -57,7 +57,7 @@ namespace comprehensure
             {
                 Preferences.Default.Remove("SavedUserUid");
                 Preferences.Default.Remove("SavedUserEmail");
-                await GoToAsync("///Login");
+                await GoToAsync("///MainPage");
             }
         }
 

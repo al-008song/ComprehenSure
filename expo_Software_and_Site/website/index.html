@@ -263,53 +263,9 @@
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px;
     }
 
-    #how { background: var(--navy2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .how-wrap { max-width: 660px; margin: 0 auto; }
-    .steps { display:flex;flex-direction:column;gap:0;margin-top:48px; }
-    .step { display:grid;grid-template-columns:52px 1fr;gap:18px;padding-bottom:36px; }
-    .step:last-child{padding-bottom:0;}
-    .step-left{display:flex;flex-direction:column;align-items:center;}
-    .step-num{
-      width:42px;height:42px;border-radius:50%;
-      background:var(--blue);color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size:.95rem;flex-shrink:0;
-    }
-    .step-line{flex:1;width:2px;background:rgba(37,99,235,.2);margin-top:6px;}
-    .step:last-child .step-line{display:none;}
-    .step-body{padding-top:7px;}
-    .step-body h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
-    .step-body p{font-size:.88rem;color:var(--muted);}
 
-    #stats { background: var(--blue); }
-    .stats-row {
-      max-width:900px;margin:0 auto;
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:32px;text-align:center;
-    }
-    .stat-n { font-size:clamp(2rem,4vw,3.2rem);font-weight:800;color:#fff;letter-spacing:-.5px; }
-    .stat-l { color:rgba(255,255,255,.7);font-size:.88rem;margin-top:4px; }
 
-    #testimonials { background: var(--navy); }
-    .testi-grid {
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:16px;max-width:1060px;margin:46px auto 0;
-    }
-    .tcard {
-      background:var(--navy2);border:1px solid var(--border);
-      border-radius:var(--radius);padding:26px;
-    }
-    .tcard-stars{color:var(--yellow2);font-size:.85rem;margin-bottom:10px;}
-    .tcard-text{font-size:.88rem;color:var(--muted);line-height:1.65;}
-    .tcard-author{display:flex;align-items:center;gap:12px;margin-top:18px;}
-    .tcard-avatar{
-      width:36px;height:36px;border-radius:50%;
-      background:linear-gradient(135deg,var(--blue),var(--blue2));
-      display:flex;align-items:center;justify-content:center;
-      font-weight:700;font-size:.8rem;color:#fff;flex-shrink:0;
-    }
-    .tcard-name{font-weight:600;font-size:.88rem;color:var(--white);}
-    .tcard-role{font-size:.76rem;color:var(--muted2);}
+
 
     #download { background: var(--navy2); border-top: 1px solid var(--border); text-align: center; }
     .dl-box {
@@ -324,12 +280,11 @@
     .dl-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
     .dl-btn{
       display:flex;align-items:center;gap:8px;
-      background:rgba(255,255,255,.05);border:1px solid var(--border);
-      color:var(--white);padding:10px 18px;border-radius:9px;
-      font-weight:600;font-size:.84rem;cursor:pointer;
-      transition:background .2s,transform .15s;
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+      color:var(--muted2);padding:10px 18px;border-radius:9px;
+      font-weight:600;font-size:.84rem;cursor:not-allowed;
+      opacity:.5;pointer-events:none;
     }
-    .dl-btn:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
     .dl-btn-icon{font-size:1.15rem;}
     .dl-btn small{display:block;font-size:.66rem;font-weight:400;color:var(--muted2);}
 
@@ -378,7 +333,7 @@
   <span class="mobile-nav-close" onclick="closeMobileNav()">✕</span>
   <a href="#features" onclick="closeMobileNav()">Features</a>
   <a href="#showcase" onclick="closeMobileNav()">Screenshots</a>
-
+  <a href="#download" onclick="closeMobileNav()">Download</a>
 </div>
 
 <nav>
@@ -390,8 +345,9 @@
     <a href="#features">Features</a>
     <a href="#showcase">Screenshots</a>
   </div>
-  <div style="justify-self:end;">
-    <a class="nav-cta" onclick="return false;" style="cursor:pointer;">Download</a>
+  <a href="#download" class="nav-cta">Download</a>
+  <div class="hamburger" onclick="openMobileNav()">
+    <span></span><span></span><span></span>
   </div>
 </nav>
 
@@ -400,6 +356,7 @@
   <h1>ComprehenSure.<br/>Grow with <span class="hl">every page.</span></h1>
   <p>ComprehenSure is an interactive platform that enhances comprehension through structured modules, stories, and quizzes. The app features mini-games, an active progress bar to track growth, and vocabulary lists paired with a voice assistant for advanced pronunciation.</p>
   <div class="hero-btns">
+    <a href="#download" class="btn-blue">Get it Free →</a>
     <a href="#showcase" class="btn-outline">See Screenshots</a>
   </div>
 
@@ -475,6 +432,10 @@
       <span class="sec-tag">Screenshots</span>
       <h2 class="sec-title">Looks great on <span style="color:var(--yellow)">every screen</span></h2>
       <p class="sec-sub">A clean, focused interface whether you're studying on your laptop or reviewing flashcards on your phone.</p>
+      <div class="showcase-btns">
+        <a href="#download" class="btn-blue" style="font-size:.88rem;padding:11px 22px;">Download for Desktop</a>
+        <a href="#download" class="btn-outline" style="font-size:.88rem;padding:11px 22px;">Get Mobile App</a>
+      </div>
     </div>
     <div class="screens-col reveal">
       <div class="sc-frame">
@@ -512,6 +473,20 @@
 
 
 
+<section id="download">
+  <div class="dl-box reveal">
+    <div class="dl-logo">
+      <img src="appcs.png" alt="Comprehensure" onerror="this.parentElement.innerHTML='💡'"/>
+    </div>
+    <h2>Start for free today</h2>
+    <p>Available on Windows and Android. Your progress syncs across all your devices.</p>
+    <div class="dl-btns">
+      <div class="dl-btn"><span class="dl-btn-icon">🪟</span><div><small>Download for</small>Windows</div></div>
+      <div class="dl-btn"><span class="dl-btn-icon">🤖</span><div><small>Download for</small>Android</div></div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -526,6 +501,7 @@
       <ul>
         <li><a href="#features">Features</a></li>
         <li><a href="#showcase">Screenshots</a></li>
+        <li><a href="#download">Download</a></li>
         <li><a href="#">Changelog</a></li>
         <li><a href="#">Roadmap</a></li>
       </ul>
@@ -577,29 +553,7 @@
     });
   });
 
-  const statObs = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) { animateStats(); statObs.disconnect(); }
-  }, { threshold: 0.5 });
-  const statsEl = document.getElementById('stats');
-  if (statsEl) statObs.observe(statsEl);
 
-  function animateStats() {
-    document.querySelectorAll('.stat-n').forEach(el => {
-      const raw = el.textContent;
-      const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
-      const suffix = raw.replace(/[0-9.]/g, '');
-      let start = null;
-      const dur = 1400;
-      const tick = (ts) => {
-        if (!start) start = ts;
-        const p = Math.min((ts - start) / dur, 1);
-        const ev = 1 - Math.pow(1 - p, 3);
-        el.textContent = (num < 100 ? (ev * num).toFixed(num % 1 !== 0 ? 1 : 0) : Math.floor(ev * num).toLocaleString()) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-  }
 </script>
 </body>
 </html>

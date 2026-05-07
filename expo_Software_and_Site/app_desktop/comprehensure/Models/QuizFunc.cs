@@ -127,12 +127,7 @@ namespace comprehensure.Models
             await PatchAsync(url, data, $"SaveProgressAsync story {storyNumber}");
         }
 
-        // ── Called when the quiz finishes ──────────────────────────────────
-        /// <summary>
-        /// Saves calculatedprogN = storyProgress + (quizScore * 2) to Firestore.
-        /// storyProgress is always 80 when reached from a completed story.
-        /// If calculatedProg >= 88, also unlocks the next module (islockedmodule{N+1} = false).
-        /// </summary>
+       
         public static async Task SaveQuizProgressAsync(int storyNumber, int quizScore, int storyProgress = 80)
         {
             if (!CalculatedProgFields.TryGetValue(storyNumber, out string fieldName)) return;

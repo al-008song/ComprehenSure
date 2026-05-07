@@ -12,7 +12,6 @@ namespace comprehensure
         public App()
         {
             InitializeComponent();
-            // Removed: MainPage = new SplashScreenPage(); — conflicts with CreateWindow
             Connectivity.Current.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
@@ -34,12 +33,15 @@ namespace comprehensure
 
         private async Task NavigateToStartPageAsync()
         {
-            string savedUid   = Preferences.Default.Get("SavedUserUid",    "");
-            string savedEmail = Preferences.Default.Get("SavedUserEmail",   "");
+            await Task.Delay(2000);
 
+            string savedUid = Preferences.Default.Get("SavedUserUid", "");
+            string savedEmail = Preferences.Default.Get("SavedUserEmail", "");
+
+            // FIX: No UID = go to MainPage (landing/welcome screen), not Login directly
             if (string.IsNullOrEmpty(savedUid))
             {
-                await Shell.Current.GoToAsync("///Login");
+                await Shell.Current.GoToAsync("///MainPage");
                 return;
             }
 
