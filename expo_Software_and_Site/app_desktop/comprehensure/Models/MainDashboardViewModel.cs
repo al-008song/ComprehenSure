@@ -16,14 +16,12 @@ namespace comprehensure.DataBaseControl.Models
             $"https://firestore.googleapis.com/v1/projects/{projectId}/databases/(default)/documents";
         private readonly HttpClient client = new HttpClient();
 
-      
         private List<(string Name, int Score)> _cachedLeaderboard = new();
         private DateTime _leaderboardFetchedAt = DateTime.MinValue;
         private static readonly TimeSpan LeaderboardTtl = TimeSpan.FromMinutes(5);
 
-      
         private string _cachedUsername = null;
-        private int _cachedModuleFinished = -1; // -1 = not yet loaded
+        private double _cachedAccountComprehension = -1; // -1 = not yet loaded
 
         [ObservableProperty]
         private string firstPlayerName = "—";
@@ -55,8 +53,10 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty]
         private double _strokeOffset = 100;
 
+        // AccountComprehension replaces ModuleFinished as the progress source.
+        // Value comes from StoryPage/{uid}.AccountComprehension (written by QuizFunc).
         [ObservableProperty]
-        private int _moduleFinished;
+        private double _accountComprehension;
 
         [ObservableProperty]
         private string _displayPercentage = "0%";
@@ -65,21 +65,18 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty]
         private bool _isMinigameLocked = true;
 
-        // Notifies XAML Opacity binding whenever the lock state changes
         partial void OnIsMinigameLockedChanged(bool value)
         {
             OnPropertyChanged(nameof(MinigameOpacity));
-            OnPropertyChanged(nameof(IsMinigameUnlocked)); // add this line
+            OnPropertyChanged(nameof(IsMinigameUnlocked));
         }
 
         public double MinigameOpacity => _isMinigameLocked ? 0.45 : 1.0;
-        public bool IsMinigameUnlocked => !_isMinigameLocked;  // add this;
+        public bool IsMinigameUnlocked => !_isMinigameLocked;
+
         // ─────────────────────────────────────────────────────────────────────
 
-        private readonly int _moduleCount = 8;
-        private readonly int score_count_max = 80;
-
-       
+        private const double MaxComprehension = 100.0;
 
         [RelayCommand]
         public async Task modules()
@@ -105,7 +102,6 @@ namespace comprehensure.DataBaseControl.Models
             _ = CalculateProgress();
         }
 
-       
         private static int ReadFirestoreInt(JsonElement integerValueElement)
         {
             if (integerValueElement.ValueKind == JsonValueKind.String)
@@ -118,29 +114,43 @@ namespace comprehensure.DataBaseControl.Models
             return 0;
         }
 
+        private static double ReadFirestoreDouble(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Number)
+                return element.GetDouble();
+            if (
+                element.ValueKind == JsonValueKind.String
+                && double.TryParse(element.GetString(), out double parsed)
+            )
+                return parsed;
+            return 0;
+        }
 
         public async Task OnAppearing()
         {
             await Task.Delay(650);
 
-
             bool redirected = await RedirectIfNoUsername();
             if (redirected)
                 return;
 
-
             _ = QuizFunc.InitializeLockFieldsAsync();
 
+            // Recalculate and save totals first so AccountComprehension is fresh
+            await QuizFunc.SaveTotalProgressAsync();
 
             ApplyCachedProfile();
 
             await showloginwelcome(); // uses _cachedUsername — no read
 
+            // Load AccountComprehension from StoryPage after SaveTotalProgressAsync
+            // so we always display the latest computed value
+            await LoadAccountComprehensionFromDb();
+
             // Load minigame lock state from Firestore
             IsMinigameLocked = await checkforminigameunlock();
 
             await Task.Delay(1050);
-
 
             await scoreboard();
         }
@@ -149,28 +159,34 @@ namespace comprehensure.DataBaseControl.Models
         public async Task<bool> checkforminigameunlock()
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
-            if (string.IsNullOrWhiteSpace(uid)) return true; // fail-safe: locked
+            if (string.IsNullOrWhiteSpace(uid))
+                return true; // fail-safe: locked
 
             try
             {
                 string url = $"{BaseUrl}/StoryPage/{uid}";
                 var response = await client.GetAsync(url);
 
-                if (!response.IsSuccessStatusCode) return true;
+                if (!response.IsSuccessStatusCode)
+                    return true;
 
                 var json = await response.Content.ReadAsStringAsync();
                 var doc = JsonSerializer.Deserialize<JsonElement>(json);
 
-                if (doc.TryGetProperty("fields", out var fields) &&
-                    fields.TryGetProperty("isminigamelocked", out var field) &&
-                    field.TryGetProperty("booleanValue", out var boolVal))
+                if (
+                    doc.TryGetProperty("fields", out var fields)
+                    && fields.TryGetProperty("isminigamelocked", out var field)
+                    && field.TryGetProperty("booleanValue", out var boolVal)
+                )
                 {
                     return boolVal.GetBoolean();
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[checkforminigameunlock] Exception: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine(
+                    $"[checkforminigameunlock] Exception: {ex.Message}"
+                );
             }
 
             return true; // default locked on any error
@@ -180,7 +196,6 @@ namespace comprehensure.DataBaseControl.Models
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
             string email = Preferences.Default.Get("SavedUserEmail", "");
-
 
             if (string.IsNullOrEmpty(uid))
             {
@@ -217,6 +232,7 @@ namespace comprehensure.DataBaseControl.Models
                 if (fields.TryGetProperty("Username", out var usernameProp))
                 {
                     string username = usernameProp.GetProperty("stringValue").GetString();
+
                     if (string.IsNullOrWhiteSpace(username))
                     {
                         await Shell.Current.GoToAsync($"///UsernameReq?email={email}&uid={uid}");
@@ -225,15 +241,6 @@ namespace comprehensure.DataBaseControl.Models
 
                     // ── Populate profile cache from this single read ──────────
                     _cachedUsername = username;
-                }
-
-                // Cache ModuleFinished from the same read
-                if (
-                    fields.TryGetProperty("ModuleFinished", out var moduleProp)
-                    && moduleProp.TryGetProperty("integerValue", out var modVal)
-                )
-                {
-                    _cachedModuleFinished = ReadFirestoreInt(modVal);
                 }
 
                 return false;
@@ -254,9 +261,9 @@ namespace comprehensure.DataBaseControl.Models
             else
                 UsernameEdit = "User not found";
 
-            if (_cachedModuleFinished >= 0)
+            if (_cachedAccountComprehension >= 0)
             {
-                ModuleFinished = _cachedModuleFinished;
+                AccountComprehension = _cachedAccountComprehension;
                 _ = CalculateProgress();
             }
 
@@ -266,9 +273,7 @@ namespace comprehensure.DataBaseControl.Models
                 Preferences.Default.Set("CachedUsername", _cachedUsername);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // showloginwelcome  –  uses cached username, NO Firestore read
-        // ─────────────────────────────────────────────────────────────────────
+       
         public async Task showloginwelcome()
         {
             bool isFirst = Preferences.Default.Get("IsFirstLogin", false);
@@ -337,8 +342,14 @@ namespace comprehensure.DataBaseControl.Models
                     if (string.IsNullOrWhiteSpace(name))
                         continue;
 
+                    // Priority: AccountComprehension (double) → ScoreOfTotal → ModuleFinished
                     int score = 0;
                     if (
+                        fields.TryGetProperty("AccountComprehension", out var acProp)
+                        && acProp.TryGetProperty("doubleValue", out var acVal)
+                    )
+                        score = (int)Math.Round(ReadFirestoreDouble(acVal));
+                    else if (
                         fields.TryGetProperty("ScoreOfTotal", out var sotProp)
                         && sotProp.TryGetProperty("integerValue", out var sotVal)
                     )
@@ -376,72 +387,21 @@ namespace comprehensure.DataBaseControl.Models
             ThirdPlayerScore = top3.Count >= 3 ? $"{top3[2].Score} pts" : "0 pts";
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // Score commands  –  update local state instantly, write to Firestore,
-        //                    then update the in-memory leaderboard cache so the
-        //                    UI stays accurate WITHOUT an extra scoreboard read.
-        // ─────────────────────────────────────────────────────────────────────
+    
         [RelayCommand]
         private async Task AddValue()
         {
-            ModuleFinished++;
-            await modulescoredb();
+            AccountComprehension++;
+            await CalculateProgress();
+            UpdateLeaderboardCacheForCurrentUser((int)Math.Round(AccountComprehension));
         }
 
         [RelayCommand]
         private async Task SubtractValue()
         {
-            ModuleFinished--;
-            await modulescoredb();
-        }
-
-        public async Task modulescoredb()
-        {
-            string uid = Preferences.Default.Get("SavedUserUid", "");
-            if (string.IsNullOrEmpty(uid))
-                return;
-
-            valuecheck();
+            AccountComprehension--;
             await CalculateProgress();
-
-            // Update the leaderboard cache in memory so the UI reflects the
-            // new score without a Firestore read.
-            UpdateLeaderboardCacheForCurrentUser(ModuleFinished);
-
-            string url = $"{BaseUrl}/userdata/{uid}?updateMask.fieldPaths=ModuleFinished";
-            var data = new
-            {
-                fields = new { ModuleFinished = new { integerValue = ModuleFinished.ToString() } },
-            };
-
-            var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
-            var json = JsonSerializer.Serialize(data, options);
-
-            try
-            {
-                var response = await client.PatchAsync(
-                    url,
-                    new StringContent(json, System.Text.Encoding.UTF8, "application/json")
-                );
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    string error = await response.Content.ReadAsStringAsync();
-                    System.Diagnostics.Debug.WriteLine($"[modulescoredb] Save failed: {error}");
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine(
-                        $"[modulescoredb] Saved ModuleFinished = {ModuleFinished}"
-                    );
-                    // NOTE: scoreboard() is intentionally NOT called here.
-                    // The cache is already updated in-memory above.
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[modulescoredb] Exception: {ex.Message}");
-            }
+            UpdateLeaderboardCacheForCurrentUser((int)Math.Round(AccountComprehension));
         }
 
         /// <summary>
@@ -453,7 +413,6 @@ namespace comprehensure.DataBaseControl.Models
             if (_cachedLeaderboard == null || string.IsNullOrEmpty(_cachedUsername))
                 return;
 
-            // Replace or insert the current user's entry
             var updated = _cachedLeaderboard
                 .Where(e => e.Name != _cachedUsername)
                 .Append((_cachedUsername, newScore))
@@ -466,24 +425,22 @@ namespace comprehensure.DataBaseControl.Models
             ApplyLeaderboard(_cachedLeaderboard);
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // Helpers
-        // ─────────────────────────────────────────────────────────────────────
-        public int valuecheck()
+    
+        public double valuecheck()
         {
-            if (ModuleFinished < 0)
-                ModuleFinished = 0;
-            else if (ModuleFinished > _moduleCount)
-                ModuleFinished = 8;
-            return ModuleFinished;
+            if (AccountComprehension < 0)
+                AccountComprehension = 0;
+            else if (AccountComprehension > MaxComprehension)
+                AccountComprehension = MaxComprehension;
+            return AccountComprehension;
         }
 
         public async Task CalculateProgress()
         {
             valuecheck();
-            float resultModule = ((float)ModuleFinished / _moduleCount) * 100;
-            StrokeOffset = -ModuleFinished * 4.9;
-            DisplayPercentage = $"{resultModule}%";
+          
+            StrokeOffset = -AccountComprehension * 0.392;
+            DisplayPercentage = $"{(int)Math.Round(AccountComprehension)}%";
         }
 
         [RelayCommand]
@@ -492,17 +449,14 @@ namespace comprehensure.DataBaseControl.Models
             await Shell.Current.GoToAsync("///ProfileDashboard");
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // LoadModuleFinishedFromDb  –  kept for external callers but now also
-        // updates the profile cache so the data stays consistent.
-        // ─────────────────────────────────────────────────────────────────────
-        public async Task LoadModuleFinishedFromDb()
+       
+        public async Task LoadAccountComprehensionFromDb()
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
             if (string.IsNullOrEmpty(uid))
                 return;
 
-            string url = $"{BaseUrl}/userdata/{uid}";
+            string url = $"{BaseUrl}/StoryPage/{uid}";
             try
             {
                 var response = await client.GetAsync(url);
@@ -514,26 +468,25 @@ namespace comprehensure.DataBaseControl.Models
                 var fields = doc.RootElement.GetProperty("fields");
 
                 if (
-                    fields.TryGetProperty("ModuleFinished", out var moduleProp)
-                    && moduleProp.TryGetProperty("integerValue", out var modVal)
+                    fields.TryGetProperty("AccountComprehension", out var acProp)
+                    && acProp.TryGetProperty("doubleValue", out var acVal)
                 )
                 {
-                    int value = ReadFirestoreInt(modVal);
-                    ModuleFinished = value;
-                    _cachedModuleFinished = value;
+                    double value = ReadFirestoreDouble(acVal);
+                    AccountComprehension = value;
+                    _cachedAccountComprehension = value;
                     await CalculateProgress();
+                    System.Diagnostics.Debug.WriteLine(
+                        $"[LoadAccountComprehensionFromDb] AccountComprehension = {value}"
+                    );
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[LoadModuleFinished] {ex.Message}");
+                System.Diagnostics.Debug.WriteLine(
+                    $"[LoadAccountComprehensionFromDb] {ex.Message}"
+                );
             }
         }
-
-        // ─────────────────────────────────────────────────────────────────────
-        // AutoRefresh  –  REMOVED (was 2 Firestore reads every second).
-        // If periodic background refresh is needed in future, use a minimum
-        // interval of 5+ minutes and only refresh when the page is visible.
-        // ─────────────────────────────────────────────────────────────────────
     }
 }

@@ -186,6 +186,62 @@ namespace comprehensure.Models
             await PatchAsync(url, new { fields }, $"UnlockNextModule module{moduleNumber}");
         }
 
+        // ── Reads all calculatedprogN fields and saves their sum as totalprogress ──
+        public static async Task SaveTotalProgressAsync()
+        {
+            string uid = Preferences.Default.Get("SavedUserUid", "");
+            if (string.IsNullOrWhiteSpace(uid)) return;
+
+            try
+            {
+                var response = await _client.GetAsync($"{BaseUrl}/{Collection}/{uid}");
+                if (!response.IsSuccessStatusCode) return;
+
+                string json = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(json);
+
+                if (!doc.RootElement.TryGetProperty("fields", out JsonElement fields)) return;
+
+                int totalprogress = 0;
+                foreach (var kvp in CalculatedProgFields)
+                {
+                    if (fields.TryGetProperty(kvp.Value, out JsonElement field) &&
+                        field.TryGetProperty("integerValue", out JsonElement val))
+                    {
+                        if (val.ValueKind == JsonValueKind.String &&
+                            int.TryParse(val.GetString(), out int strParsed))
+                            totalprogress += strParsed;
+                        else if (val.ValueKind == JsonValueKind.Number)
+                            totalprogress += val.GetInt32();
+                    }
+                }
+
+                int moduleCount = CalculatedProgFields.Count; // 8
+                double AccountComprehension = moduleCount > 0 ? (double)totalprogress / moduleCount : 0;
+
+                string url = $"{BaseUrl}/{Collection}/{uid}" +
+                             $"?updateMask.fieldPaths=totalprogress" +
+                             $"&updateMask.fieldPaths=AccountComprehension" +
+                             $"&updateMask.fieldPaths=UID";
+
+                var data = new
+                {
+                    fields = new Dictionary<string, object>
+                    {
+                        { "totalprogress",        new { integerValue = totalprogress.ToString() } },
+                        { "AccountComprehension", new { doubleValue  = AccountComprehension } },
+                        { "UID",                  new { stringValue  = uid } }
+                    }
+                };
+
+                await PatchAsync(url, data, $"SaveTotalProgressAsync total={totalprogress} comprehension={AccountComprehension}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[QuizFunc:SaveTotalProgressAsync] Exception: {ex.Message}");
+            }
+        }
+
         // ── Internal helpers ───────────────────────────────────────────────
 
         private static async Task<HashSet<string>> GetExistingFieldNamesAsync(string uid)
