@@ -32,9 +32,9 @@
 
         <ScrollView>
             <Grid
-                Padding="36,28,36,48"
+                Padding="32,24,32,48"
                 ColumnSpacing="20"
-                RowSpacing="18">
+                RowSpacing="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -54,7 +54,8 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Padding="24,20"
+                    Padding="28,22"
+                    HeightRequest="190"
                     BackgroundColor="White"
                     Stroke="#CBDCEB"
                     StrokeThickness="1">
@@ -65,120 +66,131 @@
                         <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
                     </Border.Shadow>
 
-                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="20">
+                    <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="20" VerticalOptions="Fill">
 
-                        <!-- Profile section -->
-                        <HorizontalStackLayout
-                            Grid.Column="0"
-                            Spacing="14"
-                            VerticalOptions="Center">
-
-                            <!-- Avatar ring — pressable -->
-                            <Border
-                                BackgroundColor="#D6EAFF"
-                                HeightRequest="60"
-                                Stroke="#CBDCEB"
-                                StrokeThickness="2"
-                                WidthRequest="60"
->
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="30" />
-                                </Border.StrokeShape>
-                                <Border.Shadow>
-                                    <Shadow Brush="#0F2D4A" Offset="0,3" Radius="10" Opacity="0.08" />
-                                </Border.Shadow>
-                                <Border.GestureRecognizers>
-                                    <PointerGestureRecognizer
-                                        PointerEntered="OnPointerEntered"
-                                        PointerExited="OnPointerExited"
-                                        PointerPressed="OnPointerPressed"
-                                        PointerReleased="OnPointerReleased" />
-                                </Border.GestureRecognizers>
-                                <ImageButton
-                                    Aspect="AspectFill"
-                                    Command="{Binding ProfileDashboardCommand}"
-                                    Source="user.png" />
-                            </Border>
-
-                            <!-- Name + greeting -->
-                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                                <Label
-                                    CharacterSpacing="2.0"
-                                    FontAttributes="Bold"
-                                    FontSize="9"
-                                    Text="WELCOME BACK,"
-                                    TextColor="#6B8CAE" />
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="20"
-                                    Text="{Binding UsernameEdit}"
-                                    TextColor="#0F2D4A" />
-                            </VerticalStackLayout>
-
-                            <!-- Settings icon — pressable -->
-                            <Border
-                                BackgroundColor="Transparent"
-                                Stroke="Transparent"
-                                StrokeThickness="0"
-                                Margin="4,0,0,0"
->
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="16" />
-                                </Border.StrokeShape>
-                                <Border.GestureRecognizers>
-                                    <PointerGestureRecognizer
-                                        PointerEntered="OnPointerEntered"
-                                        PointerExited="OnPointerExited"
-                                        PointerPressed="OnPointerPressed"
-                                        PointerReleased="OnPointerReleased" />
-                                </Border.GestureRecognizers>
-                                <ImageButton
-                                    Command="{Binding ProfileDashboardCommand}"
-                                    HeightRequest="32"
-                                    Opacity="0.45"
-                                    Source="settings.png"
-                                    VerticalOptions="Center"
-                                    WidthRequest="32" />
-                            </Border>
-                        </HorizontalStackLayout>
-
-                        <!-- Centre title -->
+                        <!-- Left section: Dashboard title + greeting stacked -->
                         <VerticalStackLayout
-                            Grid.Column="1"
-                            HorizontalOptions="FillAndExpand"
-                            Spacing="2"
-                            VerticalOptions="Center">
+                            Grid.Column="0"
+                            Spacing="16"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Margin="0,0,0,0">
+
+                            <!-- Dashboard label — upper left, prominent -->
                             <Label
+                                CharacterSpacing="2.5"
                                 FontAttributes="Bold"
-                                FontSize="30"
-                                HorizontalOptions="Fill"
-                                HorizontalTextAlignment="Center"
-                                CharacterSpacing="1.5"
-                                Text="Dashboard"
+                                FontSize="22"
+                                Text="DASHBOARD"
                                 TextColor="#0F2D4A" />
-                            <Label
-                                FontAttributes="Italic"
-                                FontSize="13"
-                                HorizontalOptions="Fill"
-                                HorizontalTextAlignment="Center"
-                                Text="comprehensure"
-                                TextColor="#6B8CAE" />
+
+                            <!-- Welcome Back + username — large and prominent -->
+                            <HorizontalStackLayout Spacing="14" VerticalOptions="Center">
+
+                                <!-- Avatar ring — pressable -->
+                                <Border
+                                    BackgroundColor="#D6EAFF"
+                                    HeightRequest="64"
+                                    Stroke="#CBDCEB"
+                                    StrokeThickness="2"
+                                    WidthRequest="64">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="32" />
+                                    </Border.StrokeShape>
+                                    <Border.Shadow>
+                                        <Shadow Brush="#0F2D4A" Offset="0,3" Radius="10" Opacity="0.08" />
+                                    </Border.Shadow>
+                                    <Border.GestureRecognizers>
+                                        <PointerGestureRecognizer
+                                            PointerEntered="OnPointerEntered"
+                                            PointerExited="OnPointerExited"
+                                            PointerPressed="OnPointerPressed"
+                                            PointerReleased="OnPointerReleased" />
+                                    </Border.GestureRecognizers>
+                                    <ImageButton
+                                        Aspect="AspectFill"
+                                        Command="{Binding ProfileDashboardCommand}"
+                                        Source="user.png" />
+                                </Border>
+
+                                <!-- Name + greeting -->
+                                <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                    <Label
+                                        CharacterSpacing="2.2"
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="WELCOME BACK,"
+                                        TextColor="#0F2D4A" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="28"
+                                        Text="{Binding UsernameEdit}"
+                                        TextColor="#0F2D4A" />
+                                </VerticalStackLayout>
+
+                                <!-- Settings icon — pressable -->
+                                <Border
+                                    BackgroundColor="Transparent"
+                                    Stroke="Transparent"
+                                    StrokeThickness="0"
+                                    Margin="6,0,0,0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="16" />
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <PointerGestureRecognizer
+                                            PointerEntered="OnPointerEntered"
+                                            PointerExited="OnPointerExited"
+                                            PointerPressed="OnPointerPressed"
+                                            PointerReleased="OnPointerReleased" />
+                                    </Border.GestureRecognizers>
+                                    <ImageButton
+                                        Command="{Binding ProfileDashboardCommand}"
+                                        HeightRequest="32"
+                                        Opacity="0.45"
+                                        Source="settings.png"
+                                        VerticalOptions="Center"
+                                        WidthRequest="32" />
+                                </Border>
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
 
-                        <!-- Progress ring card — subtle hover -->
+                        <!-- Centre: app logo — explicitly sized and centered -->
                         <Border
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            BackgroundColor="#EEF4FB"
+                            Stroke="#CBDCEB"
+                            StrokeThickness="1.0"
+                            WidthRequest="140"
+                            HeightRequest="140">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="100" />
+                            </Border.StrokeShape>
+                            <Image
+                                Source="appcs.png"
+                                Aspect="Fill"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="140"
+                                HeightRequest="140"/>
+                        </Border>
+
+                        <!-- Progress ring card — subtle hover -->
+                        <Border 
                             Grid.Column="2"
-                            Padding="20,16"
+                            Padding="24,18"
                             BackgroundColor="White"
                             HorizontalOptions="End"
+                            VerticalOptions="Center"
                             Stroke="#CBDCEB"
                             StrokeThickness="1"
-                            VerticalOptions="Center"
->
+                            WidthRequest="150">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="22" />
                             </Border.StrokeShape>
-                            <Border.Shadow>
+                            <Border.Shadow> 
                                 <Shadow Brush="#0F2D4A" Offset="0,4" Radius="16" Opacity="0.07" />
                             </Border.Shadow>
                             <Border.GestureRecognizers>
@@ -190,9 +202,9 @@
                             </Border.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Grid
-                                    HeightRequest="120"
+                                    HeightRequest="100"
                                     HorizontalOptions="Center"
-                                    WidthRequest="120">
+                                    WidthRequest="100">
                                     <Ellipse
                                         Fill="Transparent"
                                         Stroke="#D6EAFF"
@@ -216,7 +228,7 @@
                                 <Label
                                     CharacterSpacing="1.8"
                                     FontAttributes="Bold"
-                                    FontSize="8"
+                                    FontSize="9"
                                     HorizontalOptions="Center"
                                     Text="OVERALL PROGRESS"
                                     TextColor="#6B8CAE" />
@@ -284,7 +296,7 @@
                             Command="{Binding modulesCommand}"
                             FontAttributes="Bold"
                             FontSize="26"
-                            HeightRequest="80"
+                            HeightRequest="90"
                             Text="📚  MODULES"
                             TextColor="White" />
                     </Grid>
@@ -317,8 +329,8 @@
                         CharacterSpacing="2.0"
                         Command="{Binding AboutUsCommand}"
                         FontAttributes="Bold"
-                        FontSize="25"
-                        HeightRequest="88"
+                        FontSize="26"
+                        HeightRequest="90"
                         Text="ABOUT US"
                         TextColor="White" />
                 </Border>
@@ -328,10 +340,9 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Margin="0,12,0,0"
+                    Margin="0,4,0,0"
                     Stroke="#1E3A6B"
-                    StrokeThickness="1.5"
->
+                    StrokeThickness="1.5">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                             <GradientStop Color="#0A0F1E" Offset="0"/>
@@ -409,7 +420,7 @@
                     Spacing="16">
 
                     <!-- Section heading -->
-                    <HorizontalStackLayout Margin="4,0" Spacing="10">
+                    <HorizontalStackLayout Margin="4,4,4,0" Spacing="10">
                         <BoxView
                             BackgroundColor="#0F2D4A"
                             CornerRadius="2"
@@ -419,7 +430,7 @@
                         <Label
                             CharacterSpacing="2.2"
                             FontAttributes="Bold"
-                            FontSize="12"
+                            FontSize="13"
                             Text="CHALLENGE ZONE"
                             TextColor="#0F2D4A"
                             VerticalOptions="Center" />
@@ -541,8 +552,7 @@
                             Stroke="#CBDCEB"
                             StrokeThickness="1"
                             IsEnabled="{Binding IsMinigameUnlocked}"
-                            Opacity="{Binding MinigameOpacity}"
->
+                            Opacity="{Binding MinigameOpacity}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="28" />
                             </Border.StrokeShape>
@@ -589,9 +599,7 @@
                                         BackgroundColor="#0F2D4A"
                                         Stroke="Transparent"
                                         StrokeThickness="0"
-                                        Margin="0,4,0,0"
-                                        IsEnabled="{Binding IsMinigameLocked, Converter={x:StaticResource InverseBoolConverter}}"
->
+                                        Margin="0,4,0,0">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="26" />
                                         </Border.StrokeShape>
@@ -624,7 +632,7 @@
 
                     <!-- Quote card -->
                     <Border
-                        Padding="28,22"
+                        Padding="28,20"
                         BackgroundColor="White"
                         Stroke="#CBDCEB"
                         StrokeThickness="1">
@@ -662,7 +670,7 @@
                 <Border
                     Grid.Row="3"
                     Grid.Column="2"
-                    Padding="24,24"
+                    Padding="24,28"
                     BackgroundColor="White"
                     Stroke="#CBDCEB"
                     StrokeThickness="1"
@@ -674,14 +682,14 @@
                         <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
                     </Border.Shadow>
 
-                    <VerticalStackLayout Spacing="16">
+                    <VerticalStackLayout Spacing="14">
 
                         <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
                             <Label FontSize="15" Text="🏆" VerticalOptions="Center" />
                             <Label
                                 CharacterSpacing="2.4"
                                 FontAttributes="Bold"
-                                FontSize="11"
+                                FontSize="12"
                                 Text="LEADERBOARD"
                                 TextColor="#0F2D4A"
                                 VerticalOptions="Center" />

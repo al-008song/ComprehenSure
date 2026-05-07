@@ -90,6 +90,12 @@ namespace comprehensure.DataBaseControl.Models
             await Shell.Current.GoToAsync(nameof(AboutUs));
         }
 
+        [RelayCommand]
+        public async Task NavigateToFourPics()
+        {
+            await Shell.Current.GoToAsync("///FourPicsOneTheme");
+        }
+
         public async Task Toastshow(string showtext)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();

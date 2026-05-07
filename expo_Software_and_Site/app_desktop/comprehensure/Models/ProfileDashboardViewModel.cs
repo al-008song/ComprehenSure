@@ -14,6 +14,12 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
+    // ── Callback wired by the View to show the success popup ──────
+    public Action<string>? OnSaveSuccess { get; set; }
+
+    // ── Callback wired by the View to show the no-change popup ───
+    public Action? OnNoChange { get; set; }
+
     private readonly string _projectId = "comprehensuredb-f9f7c";
     private string BaseUrl =>
         $"https://firestore.googleapis.com/v1/projects/{_projectId}/databases/(default)/documents";
@@ -158,7 +164,7 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
         string currentUsername = Preferences.Default.Get("CachedUsername", string.Empty);
         if (string.Equals(newUsername, currentUsername, StringComparison.OrdinalIgnoreCase))
         {
-            await Shell.Current.DisplayAlert("No Change", "That is already your current username.", "OK");
+            OnNoChange?.Invoke();
             return;
         }
 
@@ -206,7 +212,9 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
             UsernameEdit = newUsername;
 
             System.Diagnostics.Debug.WriteLine($"[SaveProfile] Username updated to '{newUsername}'");
-            await Shell.Current.DisplayAlert("Saved", "Your username has been updated successfully.", "OK");
+
+            // Fire the success popup in the View instead of a plain alert
+            OnSaveSuccess?.Invoke(newUsername);
         }
         catch (Exception ex)
         {

@@ -2,7 +2,7 @@
     x:Class="comprehensure.DASHBOARD.AboutUs"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="#D6EAFF"
+    BackgroundColor="#EEF4FB"
     Shell.NavBarIsVisible="False">
 
     <Grid>
@@ -11,18 +11,23 @@
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse
                 Fill="White"
-                WidthRequest="580" HeightRequest="440"
+                WidthRequest="620" HeightRequest="480"
                 HorizontalOptions="Start" VerticalOptions="Start"
-                Margin="-140,-110,0,0" Opacity="0.75" />
+                Margin="-160,-130,0,0" Opacity="0.65" />
+            <Ellipse
+                Fill="#C8E2FF"
+                WidthRequest="500" HeightRequest="420"
+                HorizontalOptions="End" VerticalOptions="End"
+                Margin="0,0,-130,-80" Opacity="0.45" />
             <Ellipse
                 Fill="#D6EAFF"
-                WidthRequest="460" HeightRequest="380"
-                HorizontalOptions="End" VerticalOptions="End"
-                Margin="0,0,-110,-60" Opacity="0.45" />
+                WidthRequest="260" HeightRequest="260"
+                HorizontalOptions="Center" VerticalOptions="Start"
+                Margin="0,60,0,0" Opacity="0.30" />
         </Grid>
 
         <ScrollView HorizontalScrollBarVisibility="Never">
-            <VerticalStackLayout Spacing="24" Padding="56,36,56,56"
+            <VerticalStackLayout Spacing="20" Padding="48,32,48,56"
                                  HorizontalOptions="Fill">
 
                 <!-- ══════════════════════════════════════ -->
@@ -32,13 +37,13 @@
 
                     <!-- Back button -->
                     <Border Grid.Column="0"
-                            BackgroundColor="White" Stroke="#AECDE8" StrokeThickness="1"
+                            BackgroundColor="White" Stroke="#BDD4E8" StrokeThickness="1"
                             VerticalOptions="Center">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="20" />
+                            <RoundRectangle CornerRadius="22" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.08" />
+                            <Shadow Brush="#0F2D4A" Offset="0,3" Radius="10" Opacity="0.07" />
                         </Border.Shadow>
                         <Button Text="← Back"
                                 Command="{Binding BackCommand}"
@@ -47,70 +52,75 @@
                                 BorderWidth="0"
                                 FontAttributes="Bold"
                                 FontSize="13"
-                                HeightRequest="44"
-                                Padding="20,0" />
+                                HeightRequest="42"
+                                Padding="18,0" />
                     </Border>
 
                     <!-- Page title -->
                     <Label Grid.Column="1"
                            Text="ALL ABOUT US"
-                           FontSize="38" FontAttributes="Bold"
-                           TextColor="#0F2D4A" CharacterSpacing="2.2"
+                           FontSize="32" FontAttributes="Bold"
+                           TextColor="#0B2540" CharacterSpacing="3.5"
                            HorizontalOptions="Fill"
                            HorizontalTextAlignment="Center"
                            VerticalOptions="Center" />
 
-       
                 </Grid>
 
                 <!-- ══════════════════════════════════════ -->
                 <!--  SECTION LABEL                        -->
                 <!-- ══════════════════════════════════════ -->
-                <Label Text="Our Team Pyramid"
-                       FontSize="13" FontAttributes="Bold"
-                       TextColor="#0F2D4A" CharacterSpacing="1.5"
-                       HorizontalOptions="Center"
-                       Opacity="0.70" />
+                <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <Label Text="OUR TEAM"
+                           FontSize="11" FontAttributes="Bold"
+                           TextColor="#5A7FA0" CharacterSpacing="3.0"
+                           HorizontalOptions="Center" />
+                    <!-- Accent underline -->
+                    <BoxView WidthRequest="36" HeightRequest="2"
+                             Color="#4A9EDB" CornerRadius="1"
+                             HorizontalOptions="Center" />
+                </VerticalStackLayout>
 
                 <!-- ══════════════════════════════════════ -->
                 <!--  PYRAMID CARD CONTAINER               -->
                 <!-- ══════════════════════════════════════ -->
                 <Border BackgroundColor="White"
-                        Stroke="#AECDE8" StrokeThickness="1.5"
-                        Padding="48,44"
+                        Stroke="#C4D8EC" StrokeThickness="1"
+                        Padding="40,40"
                         HorizontalOptions="Fill">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="36" />
+                        <RoundRectangle CornerRadius="32" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#0F2D4A" Offset="0,10" Radius="32" Opacity="0.10" />
+                        <Shadow Brush="#0B2540" Offset="0,8" Radius="36" Opacity="0.09" />
                     </Border.Shadow>
 
-                    <VerticalStackLayout Spacing="28" HorizontalOptions="Fill">
+                    <VerticalStackLayout Spacing="24" HorizontalOptions="Fill">
 
                         <!-- ─────────────────────────── -->
                         <!--  ROW 1 — Apex: Fren         -->
                         <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
-                            <Border BackgroundColor="#D6EAFF"
-                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                    HorizontalOptions="Fill" HeightRequest="230">
+                            <Border BackgroundColor="#D9EEFF"
+                                    Stroke="#A8C8E8" StrokeThickness="1.5"
+                                    HorizontalOptions="Fill" HeightRequest="220">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="20" />
                                 </Border.StrokeShape>
                                 <Border.Shadow>
-                                    <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.10" />
+                                    <Shadow Brush="#0B2540" Offset="0,5" Radius="18" Opacity="0.10" />
                                 </Border.Shadow>
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Fren" />
                                 </Border.GestureRecognizers>
-                                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                    <Border WidthRequest="120" HeightRequest="120"
+                                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                    <!-- Avatar with ring -->
+                                    <Border WidthRequest="110" HeightRequest="110"
                                             HorizontalOptions="Center"
-                                            Stroke="#AECDE8" StrokeThickness="1.5"
-                                            BackgroundColor="#D6EAFF">
+                                            Stroke="#7ABBE0" StrokeThickness="2.5"
+                                            BackgroundColor="#C0DCEF">
                                         <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="60" />
+                                            <RoundRectangle CornerRadius="55" />
                                         </Border.StrokeShape>
                                         <Image Source="member_fren.jpg"
                                                Aspect="AspectFill"
@@ -118,12 +128,15 @@
                                                VerticalOptions="Fill" />
                                     </Border>
                                     <Label Text="Mariano, Frenchelle A."
-                                           FontSize="20" FontAttributes="Bold"
-                                           TextColor="#0F2D4A"
-                                           HorizontalOptions="Center" />
+                                           FontSize="16" FontAttributes="Bold"
+                                           TextColor="#0B2540"
+                                           HorizontalOptions="Center"
+                                           HorizontalTextAlignment="Center" />
                                     <Label Text="Leader"
-                                           FontSize="20"
-                                           TextColor="#4A7FA8"
+                                           FontSize="12"
+                                           TextColor="#5A7FA0"
+                                           FontAttributes="Bold"
+                                           CharacterSpacing="1.2"
                                            HorizontalOptions="Center"
                                            HorizontalTextAlignment="Center" />
                                 </VerticalStackLayout>
@@ -132,51 +145,54 @@
                             <!-- Inline description — Fren -->
                             <Border x:Name="Desc_Fren"
                                     IsVisible="False"
-                                    BackgroundColor="#EEF5FF"
-                                    Stroke="#AECDE8" StrokeThickness="1"
+                                    BackgroundColor="#EAF4FF"
+                                    Stroke="#A8C8E8" StrokeThickness="1"
                                     Padding="18,14"
-                                    Margin="0,6,0,0"
+                                    Margin="0,8,0,0"
                                     HorizontalOptions="Fill">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="14" />
                                 </Border.StrokeShape>
                                 <Label x:Name="DescLabel_Fren"
-                                       FontSize="15" TextColor="#4A6580"
+                                       FontSize="14" TextColor="#4A6C8A"
                                        LineBreakMode="WordWrap"
                                        HorizontalOptions="Fill" />
                             </Border>
                         </VerticalStackLayout>
 
                         <!-- Connector line row 1→2 -->
-                        <BoxView HeightRequest="1" BackgroundColor="#AECDE8" Margin="40,0" />
+                        <Grid HorizontalOptions="Fill" HeightRequest="12" Margin="60,0">
+                            <BoxView HeightRequest="1" BackgroundColor="#C4D8EC"
+                                     VerticalOptions="Center" />
+                        </Grid>
 
                         <!-- ─────────────────────────── -->
                         <!--  ROW 2 — Franz and Abbey    -->
                         <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
-                            <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="20" HorizontalOptions="Fill">
+                            <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="16" HorizontalOptions="Fill">
 
                                 <!-- Franz -->
                                 <VerticalStackLayout Grid.Column="0" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1.5"
-                                            HorizontalOptions="Fill" HeightRequest="230">
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1.5"
+                                            HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="20" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.09" />
+                                            <Shadow Brush="#0B2540" Offset="0,5" Radius="16" Opacity="0.08" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Franz" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="120" HeightRequest="120"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="100" HeightRequest="100"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="60" />
+                                                    <RoundRectangle CornerRadius="50" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_franz.jpg"
                                                        Aspect="AspectFill"
@@ -184,12 +200,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Pardilla, Franz Louie D"
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="14" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Backend and Database Developer"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -197,45 +216,45 @@
                                     <!-- Inline description — Franz -->
                                     <Border x:Name="Desc_Franz"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
-                                            Padding="18,14"
-                                            Margin="0,6,0,0"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
+                                            Padding="16,12"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="14" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Franz"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="14" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
                                 </VerticalStackLayout>
 
                                 <!-- Spacer / central gap -->
-                                <BoxView Grid.Column="1" WidthRequest="40" Color="Transparent" />
+                                <BoxView Grid.Column="1" WidthRequest="32" Color="Transparent" />
 
                                 <!-- Abbey -->
                                 <VerticalStackLayout Grid.Column="2" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1.5"
-                                            HorizontalOptions="Fill" HeightRequest="230">
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1.5"
+                                            HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="20" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.09" />
+                                            <Shadow Brush="#0B2540" Offset="0,5" Radius="16" Opacity="0.08" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Abbey" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="120" HeightRequest="120"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="100" HeightRequest="100"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="60" />
+                                                    <RoundRectangle CornerRadius="50" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_abbey.jpg"
                                                        Aspect="AspectFill"
@@ -243,12 +262,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Abata, Abbey Anmae A."
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="14" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="UI/UX Designer"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -256,16 +278,16 @@
                                     <!-- Inline description — Abbey -->
                                     <Border x:Name="Desc_Abbey"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
-                                            Padding="18,14"
-                                            Margin="0,6,0,0"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
+                                            Padding="16,12"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="14" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Abbey"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="14" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
@@ -275,48 +297,54 @@
                         </VerticalStackLayout>
 
                         <!-- Connector line row 2→3 -->
-                        <BoxView HeightRequest="1" BackgroundColor="#AECDE8" Margin="20,0" />
+                        <Grid HorizontalOptions="Fill" HeightRequest="12" Margin="40,0">
+                            <BoxView HeightRequest="1" BackgroundColor="#C4D8EC"
+                                     VerticalOptions="Center" />
+                        </Grid>
 
                         <!-- ─────────────────────────── -->
                         <!--  ROW 3 — Japlyn, York, Abram -->
                         <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
-                            <Grid ColumnDefinitions="*, *, *" ColumnSpacing="16" HorizontalOptions="Fill">
+                            <Grid ColumnDefinitions="*, *, *" ColumnSpacing="14" HorizontalOptions="Fill">
 
                                 <!-- Japlyn -->
                                 <VerticalStackLayout Grid.Column="0" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="18" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.07" />
+                                            <Shadow Brush="#0B2540" Offset="0,4" Radius="14" Opacity="0.07" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Japlyn" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="110" HeightRequest="110"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="90" HeightRequest="90"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="55" />
+                                                    <RoundRectangle CornerRadius="45" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_japlyn.jpg"
                                                        Aspect="AspectFill"
                                                        HorizontalOptions="Fill"
                                                        VerticalOptions="Fill" />
                                             </Border>
-                                            <Label Text="Gutierrez,Japlyn N."
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                            <Label Text="Gutierrez, Japlyn N."
+                                                   FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Content Developer"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -324,16 +352,16 @@
                                     <!-- Inline description — Japlyn -->
                                     <Border x:Name="Desc_Japlyn"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             Padding="14,12"
-                                            Margin="0,6,0,0"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Japlyn"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="13" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
@@ -341,25 +369,25 @@
 
                                 <!-- York -->
                                 <VerticalStackLayout Grid.Column="1" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="18" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.07" />
+                                            <Shadow Brush="#0B2540" Offset="0,4" Radius="14" Opacity="0.07" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="York" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="110" HeightRequest="110"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="90" HeightRequest="90"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="55" />
+                                                    <RoundRectangle CornerRadius="45" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_york.jpg"
                                                        Aspect="AspectFill"
@@ -367,12 +395,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Tan, York Stephen M."
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Content Developer"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -380,16 +411,16 @@
                                     <!-- Inline description — York -->
                                     <Border x:Name="Desc_York"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             Padding="14,12"
-                                            Margin="0,6,0,0"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_York"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="13" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
@@ -397,25 +428,25 @@
 
                                 <!-- Abram -->
                                 <VerticalStackLayout Grid.Column="2" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="18" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.07" />
+                                            <Shadow Brush="#0B2540" Offset="0,4" Radius="14" Opacity="0.07" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Abram" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="110" HeightRequest="110"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="90" HeightRequest="90"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="55" />
+                                                    <RoundRectangle CornerRadius="45" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_abram.jpg"
                                                        Aspect="AspectFill"
@@ -423,12 +454,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Mendoza, Abram M."
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Content Developer"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -436,16 +470,16 @@
                                     <!-- Inline description — Abram -->
                                     <Border x:Name="Desc_Abram"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             Padding="14,12"
-                                            Margin="0,6,0,0"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Abram"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="13" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
@@ -455,35 +489,38 @@
                         </VerticalStackLayout>
 
                         <!-- Connector line row 3→4 -->
-                        <BoxView HeightRequest="1" BackgroundColor="#AECDE8" Margin="0,0" />
+                        <Grid HorizontalOptions="Fill" HeightRequest="12" Margin="20,0">
+                            <BoxView HeightRequest="1" BackgroundColor="#C4D8EC"
+                                     VerticalOptions="Center" />
+                        </Grid>
 
                         <!-- ─────────────────────────── -->
                         <!--  ROW 4 — Charly, Daniel, Megan -->
                         <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
-                            <Grid ColumnDefinitions="*, *, *" ColumnSpacing="16" HorizontalOptions="Fill">
+                            <Grid ColumnDefinitions="*, *, *" ColumnSpacing="14" HorizontalOptions="Fill">
 
                                 <!-- Charly -->
                                 <VerticalStackLayout Grid.Column="0" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="18" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.06" />
+                                            <Shadow Brush="#0B2540" Offset="0,4" Radius="14" Opacity="0.06" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Charly" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="110" HeightRequest="110"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="90" HeightRequest="90"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="55" />
+                                                    <RoundRectangle CornerRadius="45" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_charly.jpg"
                                                        Aspect="AspectFill"
@@ -491,12 +528,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Pamplona, Charly Vincent L."
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Researcher"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -504,16 +544,16 @@
                                     <!-- Inline description — Charly -->
                                     <Border x:Name="Desc_Charly"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             Padding="14,12"
-                                            Margin="0,6,0,0"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Charly"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="13" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
@@ -521,25 +561,25 @@
 
                                 <!-- Daniel -->
                                 <VerticalStackLayout Grid.Column="1" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="18" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.06" />
+                                            <Shadow Brush="#0B2540" Offset="0,4" Radius="14" Opacity="0.06" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Daniel" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="110" HeightRequest="110"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="90" HeightRequest="90"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="55" />
+                                                    <RoundRectangle CornerRadius="45" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_daniel.jpg"
                                                        Aspect="AspectFill"
@@ -547,12 +587,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Domingo, Daniel V."
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Researcher"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -560,16 +603,16 @@
                                     <!-- Inline description — Daniel -->
                                     <Border x:Name="Desc_Daniel"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             Padding="14,12"
-                                            Margin="0,6,0,0"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Daniel"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="13" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
@@ -577,25 +620,25 @@
 
                                 <!-- Megan -->
                                 <VerticalStackLayout Grid.Column="2" Spacing="0">
-                                    <Border BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                    <Border BackgroundColor="#D9EEFF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             HorizontalOptions="Fill" HeightRequest="220">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="18" />
                                         </Border.StrokeShape>
                                         <Border.Shadow>
-                                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.06" />
+                                            <Shadow Brush="#0B2540" Offset="0,4" Radius="14" Opacity="0.06" />
                                         </Border.Shadow>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Megan" />
                                         </Border.GestureRecognizers>
-                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="6">
-                                            <Border WidthRequest="110" HeightRequest="110"
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8">
+                                            <Border WidthRequest="90" HeightRequest="90"
                                                     HorizontalOptions="Center"
-                                                    Stroke="#AECDE8" StrokeThickness="1.5"
-                                                    BackgroundColor="#EEF5FF">
+                                                    Stroke="#7ABBE0" StrokeThickness="2"
+                                                    BackgroundColor="#C0DCEF">
                                                 <Border.StrokeShape>
-                                                    <RoundRectangle CornerRadius="55" />
+                                                    <RoundRectangle CornerRadius="45" />
                                                 </Border.StrokeShape>
                                                 <Image Source="member_megan.jpg"
                                                        Aspect="AspectFill"
@@ -603,12 +646,15 @@
                                                        VerticalOptions="Fill" />
                                             </Border>
                                             <Label Text="Candatu, Megan Jessie"
-                                                   FontSize="20" FontAttributes="Bold"
-                                                   TextColor="#0F2D4A"
-                                                   HorizontalOptions="Center" />
+                                                   FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#0B2540"
+                                                   HorizontalOptions="Center"
+                                                   HorizontalTextAlignment="Center" />
                                             <Label Text="Researcher"
-                                                   FontSize="20"
-                                                   TextColor="#4A7FA8"
+                                                   FontSize="11"
+                                                   TextColor="#5A7FA0"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="0.5"
                                                    HorizontalOptions="Center"
                                                    HorizontalTextAlignment="Center" />
                                         </VerticalStackLayout>
@@ -616,16 +662,16 @@
                                     <!-- Inline description — Megan -->
                                     <Border x:Name="Desc_Megan"
                                             IsVisible="False"
-                                            BackgroundColor="#EEF5FF"
-                                            Stroke="#AECDE8" StrokeThickness="1"
+                                            BackgroundColor="#EAF4FF"
+                                            Stroke="#A8C8E8" StrokeThickness="1"
                                             Padding="14,12"
-                                            Margin="0,6,0,0"
+                                            Margin="0,8,0,0"
                                             HorizontalOptions="Fill">
                                         <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="12"   />
+                                            <RoundRectangle CornerRadius="12" />
                                         </Border.StrokeShape>
                                         <Label x:Name="DescLabel_Megan"
-                                               FontSize="15" TextColor="#4A6580"
+                                               FontSize="13" TextColor="#4A6C8A"
                                                LineBreakMode="WordWrap"
                                                HorizontalOptions="Fill" />
                                     </Border>
