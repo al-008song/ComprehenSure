@@ -2,7 +2,6 @@ namespace comprehensure.DASHBOARD;
 
 public partial class HelpPage : ContentPage
 {
-    // Tracks which FAQ is currently open (null = all closed)
     private int? _openFaq = null;
 
     public HelpPage()
@@ -15,7 +14,6 @@ public partial class HelpPage : ContentPage
         Navigation.PopAsync();
     }
 
-    // ── Generic toggle helper ────────────────────────────────────────────────
 
     private void ToggleFaq(
         int faqNumber,
@@ -25,7 +23,6 @@ public partial class HelpPage : ContentPage
     {
         bool isOpening = _openFaq != faqNumber;
 
-        // Close whatever is currently open first
         if (_openFaq != null)
             CollapseAll();
 
@@ -51,7 +48,6 @@ public partial class HelpPage : ContentPage
         FAQ5Answer.IsVisible  = false;  FAQ5Divider.IsVisible  = false;  FAQ5Chevron.Rotation = 90;
     }
 
-    // ── Per-question handlers ────────────────────────────────────────────────
 
     private void FAQ1_Tapped(object sender, TappedEventArgs e) =>
         ToggleFaq(1, FAQ1Answer, FAQ1Divider, FAQ1Chevron);

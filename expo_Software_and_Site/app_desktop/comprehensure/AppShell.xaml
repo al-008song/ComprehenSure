@@ -10,9 +10,7 @@
     Shell.FlyoutBehavior="Flyout"
     FlyoutBackgroundColor="#F2F6FB">
 
-    <!-- ══════════════════════════════════════════════════ -->
-    <!--  FLYOUT HEADER                                     -->
-    <!-- ══════════════════════════════════════════════════ -->
+
     <Shell.FlyoutHeader>
         <Grid>
             <Grid.Background>

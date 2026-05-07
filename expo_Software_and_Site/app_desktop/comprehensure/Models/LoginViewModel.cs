@@ -86,7 +86,6 @@ namespace comprehensure.DataBaseControl.Models
                 if (fields.TryGetProperty("ScoreOfTotal", out var scoreProp))
                     int.TryParse(scoreProp.GetProperty("integerValue").GetString(), out score);
 
-                // ✅ Cache everything we fetched so future logins skip this read
                 if (hasUsername && !string.IsNullOrEmpty(username))
                     UserCache.SaveUser(uid, _Email?.Trim() ?? string.Empty, username, modules, score);
 
@@ -185,7 +184,7 @@ namespace comprehensure.DataBaseControl.Models
 
                 string uid = result.User.Uid;
 
-                // ✅ Cache hit — skip Firestore read entirely
+           
                 if (UserCache.IsCached(uid))
                 {
                     await Shell.Current.DisplayAlert("Login Complete", "Welcome back, " + UserCache.Username, "OK");
@@ -194,7 +193,6 @@ namespace comprehensure.DataBaseControl.Models
                     return;
                 }
 
-                // ❌ Not cached — read from Firestore only on first login
                 bool hasUsername = await HasUsername(uid);
 
                 if (hasUsername)

@@ -2,7 +2,6 @@ namespace comprehensure;
 
 public partial class SignUpPage : ContentPage
 {
-    // Tracks whether the password is currently visible
     private bool _isPasswordVisible = false;
 
     public SignUpPage(DataBaseControl.Models.SignUpViewModel viewModel)
@@ -22,10 +21,8 @@ public partial class SignUpPage : ContentPage
     {
         _isPasswordVisible = !_isPasswordVisible;
 
-        // Show or hide the password characters
         PasswordNonConf.IsPassword = !_isPasswordVisible;
 
-        // Swap icon: eye_open when visible, eye_closed when hidden
         SignUpTogglePasswordButton.Source = _isPasswordVisible
             ? "eye_open.png"
             : "eye_closed.png";
@@ -33,7 +30,6 @@ public partial class SignUpPage : ContentPage
 
     private async void SignUpButton_Clicked(object sender, EventArgs e)
     {
-        // await DisplayAlert("Sign Up", "Sign up button clicked!", "OK");
     }
 
     private async void OnLoginNavigationClicked(object sender, EventArgs e)

@@ -53,15 +53,12 @@ namespace comprehensure.DataBaseControl.Models
         [ObservableProperty]
         private double _strokeOffset = 100;
 
-        // AccountComprehension replaces ModuleFinished as the progress source.
-        // Value comes from StoryPage/{uid}.AccountComprehension (written by QuizFunc).
         [ObservableProperty]
         private double _accountComprehension;
 
         [ObservableProperty]
         private string _displayPercentage = "0%";
 
-        // ── Minigame lock ─────────────────────────────────────────────────────
         [ObservableProperty]
         private bool _isMinigameLocked = true;
 
@@ -74,7 +71,6 @@ namespace comprehensure.DataBaseControl.Models
         public double MinigameOpacity => _isMinigameLocked ? 0.45 : 1.0;
         public bool IsMinigameUnlocked => !_isMinigameLocked;
 
-        // ─────────────────────────────────────────────────────────────────────
 
         private const double MaxComprehension = 100.0;
 
@@ -142,18 +138,14 @@ namespace comprehensure.DataBaseControl.Models
 
             _ = QuizFunc.InitializeLockFieldsAsync();
 
-            // Recalculate and save totals first so AccountComprehension is fresh
             await QuizFunc.SaveTotalProgressAsync();
 
             ApplyCachedProfile();
 
             await showloginwelcome(); // uses _cachedUsername — no read
 
-            // Load AccountComprehension from StoryPage after SaveTotalProgressAsync
-            // so we always display the latest computed value
             await LoadAccountComprehensionFromDb();
 
-            // Load minigame lock state from Firestore
             IsMinigameLocked = await checkforminigameunlock();
 
             await Task.Delay(1050);
@@ -161,7 +153,6 @@ namespace comprehensure.DataBaseControl.Models
             await scoreboard();
         }
 
-        // ── Reads isminigamelocked from Firestore for the current user ────────
         public async Task<bool> checkforminigameunlock()
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
@@ -224,7 +215,6 @@ namespace comprehensure.DataBaseControl.Models
                 using var doc = JsonDocument.Parse(json);
                 var fields = doc.RootElement.GetProperty("fields");
 
-                // ── Redirect checks ──────────────────────────────────────────
                 if (fields.TryGetProperty("UserHasUserName", out var hasUserNameProp))
                     if (
                         hasUserNameProp.TryGetProperty("booleanValue", out var boolVal)
@@ -245,7 +235,6 @@ namespace comprehensure.DataBaseControl.Models
                         return true;
                     }
 
-                    // ── Populate profile cache from this single read ──────────
                     _cachedUsername = username;
                 }
 
@@ -257,9 +246,6 @@ namespace comprehensure.DataBaseControl.Models
             }
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // Apply cached profile to observable properties — zero Firestore reads
-        // ─────────────────────────────────────────────────────────────────────
         private void ApplyCachedProfile()
         {
             if (!string.IsNullOrEmpty(_cachedUsername))
@@ -273,8 +259,7 @@ namespace comprehensure.DataBaseControl.Models
                 _ = CalculateProgress();
             }
 
-            // Persist username to Preferences so other pages can read it
-            // without a Firestore call
+       
             if (!string.IsNullOrEmpty(_cachedUsername))
                 Preferences.Default.Set("CachedUsername", _cachedUsername);
         }
@@ -291,9 +276,6 @@ namespace comprehensure.DataBaseControl.Models
             }
         }
 
-        // ─────────────────────────────────────────────────────────────────────
-        // scoreboard  –  cached; only re-fetches after LeaderboardTtl expires
-        // ─────────────────────────────────────────────────────────────────────
         public async Task scoreboard(bool forceRefresh = false)
         {
             bool cacheValid =
@@ -348,7 +330,6 @@ namespace comprehensure.DataBaseControl.Models
                     if (string.IsNullOrWhiteSpace(name))
                         continue;
 
-                    // Priority: AccountComprehension (double) → ScoreOfTotal → ModuleFinished
                     int score = 0;
                     if (
                         fields.TryGetProperty("AccountComprehension", out var acProp)

@@ -4,9 +4,6 @@ namespace comprehensure.DASHBOARD.MiniGames;
 
 public partial class SynonymHuntPage : ContentPage
 {
-    // ─────────────────────────────────────────────
-    //  Data model
-    // ─────────────────────────────────────────────
     private record Question(string Story, string QuestionText, string Answer, string[] Choices);
 
     private record Module(int Id, string Name, string Difficulty, Question[] Questions);
@@ -135,9 +132,6 @@ public partial class SynonymHuntPage : ContentPage
         })
     ];
 
-    // ─────────────────────────────────────────────
-    //  State
-    // ─────────────────────────────────────────────
     private int _currentModuleIndex = 0;
     private int _currentQuestionIndex = 0;
     private bool _answered = false;
@@ -145,28 +139,21 @@ public partial class SynonymHuntPage : ContentPage
     private int _totalAnswered = 0;
     private int _totalCorrect = 0;
 
-    // Shuffled choice indices per module per question
     private readonly int[][][] _shuffled;
 
-    // References to choice borders/labels for easy manipulation
     private Border[] _choiceBorders = null!;
     private Border[] _choiceBadges  = null!;
     private Label[]  _choiceLabels  = null!;
 
-    // ─────────────────────────────────────────────
-    //  Custom popup state
-    // ─────────────────────────────────────────────
     private TaskCompletionSource<bool>? _modulePopupTcs;
 
     public SynonymHuntPage()
     {
         InitializeComponent();
 
-        // Randomize module order each time the page is opened
         var rng0 = new Random();
         rng0.Shuffle(_modules);
 
-        // Pre-shuffle all answer orderings
         _shuffled = new int[_modules.Length][][];
         var rng = new Random();
         for (int m = 0; m < _modules.Length; m++)
@@ -180,7 +167,6 @@ public partial class SynonymHuntPage : ContentPage
             }
         }
 
-        // Cache UI element arrays after InitializeComponent
         _choiceBorders = [ChoiceABorder, ChoiceBBorder, ChoiceCBorder, ChoiceDBorder];
         _choiceBadges  = [ChoiceABadge,  ChoiceBBadge,  ChoiceCBadge,  ChoiceDBadge];
         _choiceLabels  = [ChoiceALabel,  ChoiceBLabel,  ChoiceCLabel,  ChoiceDLabel];
@@ -197,9 +183,6 @@ public partial class SynonymHuntPage : ContentPage
         });
     }
 
-    // ─────────────────────────────────────────────
-    //  Custom popup helpers  (StoryPage style)
-    // ─────────────────────────────────────────────
 
     /// <summary>
     /// Shows the custom module popup and returns true if the user
@@ -230,9 +213,6 @@ public partial class SynonymHuntPage : ContentPage
         _modulePopupTcs?.TrySetResult(false);
     }
 
-    // ─────────────────────────────────────────────
-    //  Load current question into UI
-    // ─────────────────────────────────────────────
     private void LoadQuestion()
     {
         ResultsPanel.IsVisible = false;
@@ -244,19 +224,15 @@ public partial class SynonymHuntPage : ContentPage
 
         _answered = false;
 
-        // Module label in top bar
         ModuleLabel.Text = $"Module {_currentModuleIndex + 1} · {mod.Name}";
 
-        // Header counts
         QuestionNumberLabel.Text  = (_currentQuestionIndex + 1).ToString();
         QuestionCounterLabel.Text = $"{_currentQuestionIndex + 1} / {mod.Questions.Length}";
         QuestionLabel.Text        = q.QuestionText;
         StoryLabel.Text           = q.Story;
 
-        // Difficulty badge colour
         SetDifficultyBadge(mod.Difficulty);
 
-        // Choices — apply shuffled order so words are always visible
         for (int i = 0; i < 4; i++)
         {
             string choiceText = q.Choices[order[i]];
@@ -264,22 +240,16 @@ public partial class SynonymHuntPage : ContentPage
             ResetChoiceStyle(i);
         }
 
-        // Feedback hidden
         FeedbackBorder.IsVisible = false;
 
-        // Next button disabled until answered
         NextButton.IsEnabled = false;
         NextButton.Text = _currentQuestionIndex < mod.Questions.Length - 1
             ? "Next →"
             : "Finish Module";
 
-        // Progress bar
         UpdateProgressBar();
     }
 
-    // ─────────────────────────────────────────────
-    //  Difficulty badge colours
-    // ─────────────────────────────────────────────
     private void SetDifficultyBadge(string difficulty)
     {
         switch (difficulty)
@@ -305,9 +275,6 @@ public partial class SynonymHuntPage : ContentPage
         }
     }
 
-    // ─────────────────────────────────────────────
-    //  Choice tapped
-    // ─────────────────────────────────────────────
     private void OnChoiceTapped(object sender, TappedEventArgs e)
     {
         if (_answered) return;
@@ -330,7 +297,6 @@ public partial class SynonymHuntPage : ContentPage
         }
         _totalAnswered++;
 
-        // Highlight choices
         for (int i = 0; i < 4; i++)
         {
             string word = q.Choices[order[i]];
@@ -340,16 +306,11 @@ public partial class SynonymHuntPage : ContentPage
                 SetChoiceWrong(i);
         }
 
-        // Feedback banner
         ShowFeedback(isCorrect, q.Answer, q.QuestionText);
 
-        // Enable next button
         NextButton.IsEnabled = true;
     }
 
-    // ─────────────────────────────────────────────
-    //  Next / Finish button
-    // ─────────────────────────────────────────────
     private async void OnNextClicked(object sender, EventArgs e)
     {
         var mod = _modules[_currentModuleIndex];
@@ -361,7 +322,6 @@ public partial class SynonymHuntPage : ContentPage
         }
         else
         {
-            // Module complete — show custom StoryPage-style popup
             bool moreModules = _currentModuleIndex < _modules.Length - 1;
 
             string icon    = moreModules ? "🎉" : "🏆";
@@ -389,9 +349,6 @@ public partial class SynonymHuntPage : ContentPage
         }
     }
 
-    // ─────────────────────────────────────────────
-    //  Results screen
-    // ─────────────────────────────────────────────
     private void ShowResults()
     {
         GamePanel.IsVisible    = false;
@@ -423,9 +380,6 @@ public partial class SynonymHuntPage : ContentPage
         }
     }
 
-    // ─────────────────────────────────────────────
-    //  Restart
-    // ─────────────────────────────────────────────
     private void OnRestartClicked(object sender, EventArgs e)
     {
         _currentModuleIndex   = 0;
@@ -436,7 +390,6 @@ public partial class SynonymHuntPage : ContentPage
         _totalCorrect         = 0;
         ScoreLabel.Text       = "0";
 
-        // Re-shuffle modules and choices
         var rng0 = new Random();
         rng0.Shuffle(_modules);
 
@@ -448,17 +401,11 @@ public partial class SynonymHuntPage : ContentPage
         LoadQuestion();
     }
 
-    // ─────────────────────────────────────────────
-    //  Back to dashboard
-    // ─────────────────────────────────────────────
     private async void OnBackClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
 
-    // ─────────────────────────────────────────────
-    //  Visual helpers
-    // ─────────────────────────────────────────────
     private void ResetChoiceStyle(int i)
     {
         _choiceBorders[i].BackgroundColor = Color.FromArgb("#F2F6FB");

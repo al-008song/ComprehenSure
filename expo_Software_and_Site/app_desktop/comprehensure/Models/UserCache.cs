@@ -1,7 +1,5 @@
 namespace comprehensure.DataBaseControl
 {
-    // for the other dev do NOt remove any varble here this part is responsible for cachecing changes in the app to prevent the same issue
-    // as before that we got 50K requests like they say rules are written in blood and this one is the same
     public static class UserCache
     {
         

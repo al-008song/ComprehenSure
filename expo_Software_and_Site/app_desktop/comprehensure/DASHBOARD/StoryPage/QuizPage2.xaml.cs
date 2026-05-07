@@ -5,7 +5,6 @@ public partial class QuizPage2 : ContentPage
     private readonly QuizPage2ViewModel _viewModel;
     private string _selectedAnswer = "";
 
-    // Tracks the fill width for the progress bar
     private double _trackWidth = 0;
 
     public QuizPage2(QuizPage2ViewModel viewModel)
@@ -14,7 +13,6 @@ public partial class QuizPage2 : ContentPage
         _viewModel = viewModel;
         BindingContext = viewModel;
 
-        // Set nav bar here — before the page ever appears
         Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
         Shell.SetNavBarIsVisible(this, false);
         Shell.SetNavBarHasShadow(this, false);
@@ -35,12 +33,10 @@ public partial class QuizPage2 : ContentPage
     }
 
 
-    //  Called once the track Border has been measured 
     protected override void OnSizeAllocated(double width, double height)
     {
         base.OnSizeAllocated(width, height);
 
-        // Content padding is 40+40=80; MaxWidth=720 — derive usable track width
         double contentWidth = Math.Min(width, 720) - 80;
         if (contentWidth > 0 && Math.Abs(contentWidth - _trackWidth) > 1)
         {
@@ -49,13 +45,11 @@ public partial class QuizPage2 : ContentPage
         }
     }
 
-    //  Option tapped 
     private void OnOptionClicked(object sender, TappedEventArgs e)
     {
         _selectedAnswer = e.Parameter?.ToString().ToUpper() ?? "";
         ResetOptionStyles();
 
-        // Highlight the selected option row and its circle
         switch (_selectedAnswer)
         {
             case "A":
@@ -82,7 +76,6 @@ public partial class QuizPage2 : ContentPage
         circle.BackgroundColor = Color.FromArgb("#2E6BA8");
         circle.Stroke = Color.FromArgb("#2E6BA8");
 
-        // Turn the letter label white for contrast
         if (circle.Content is Label lbl)
             lbl.TextColor = Colors.White;
     }
@@ -107,7 +100,6 @@ public partial class QuizPage2 : ContentPage
         }
     }
 
-    //  Next clicked 
     private async void OnNextClicked(object sender, EventArgs e)
     {
         _viewModel.CheckAnswer(_selectedAnswer);
@@ -129,13 +121,11 @@ public partial class QuizPage2 : ContentPage
         }
     }
 
-    //  Finish button on the complete banner 
     private async void OnFinishClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
 
-    //  Back button 
     private void OnBackClicked(object sender, EventArgs e)
     {
         PopupOverlay.IsVisible = true;
@@ -152,12 +142,10 @@ public partial class QuizPage2 : ContentPage
         PopupOverlay.IsVisible = false;
     }
 
-    //  Helpers 
     private void UpdateProgress()
     {
         if (_viewModel == null || _viewModel.TotalQuestions == 0) return;
 
-        // QuestionNumber is 1-based (e.g. "Question 1 of 5")
         int current = _viewModel.CurrentQuestionIndex + 1; // expose this in VM, see note below
         int total = _viewModel.TotalQuestions;
 
@@ -172,12 +160,10 @@ public partial class QuizPage2 : ContentPage
     {
         FinalScoreLabel.Text = $"You scored {_viewModel.Score} out of {_viewModel.TotalQuestions}";
 
-        // Hide the options and next button area, show the banner
         OptionsContainer.IsVisible = false;
         CompleteBanner.IsVisible = true;
         NextButton.IsEnabled = false;
 
-        // Fill progress to 100%
         ProgressPercent.Text = "100%";
         ProgressFill.WidthRequest = _trackWidth;
     }

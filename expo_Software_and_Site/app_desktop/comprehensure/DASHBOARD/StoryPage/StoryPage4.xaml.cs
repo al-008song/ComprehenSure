@@ -11,35 +11,24 @@ namespace comprehensure.DASHBOARD.StoryPage
 
         private readonly string[] _storyPages = new string[]
         {
-           //THE GARDEN OF HIDDEN PATTERNS
-           // Page 1
            "Mara had always been drawn to patterns. As a child, she noticed the repeating shapes in tiles, the rhythm in music, and the order in the way leaves grew along a stem. While others admired beauty without question, she often wondered why things were arranged the way they were. To her, patterns were not just decorations. They were clues.\r\nOne summer, while exploring the quieter edge of town, she heard about a private garden hidden behind tall stone walls. The garden belonged to Mr. Calder, a retired mathematician known for his quiet lifestyle and unusual ideas. Some people described him as eccentric, while others simply said he saw the world differently. The garden, according to rumor, was not designed for appearance alone. It was built on rules.\r\n",
 
-           // Page 2
            "Curiosity led Mara to the iron gate one warm afternoon. The gate was slightly open, as if inviting someone observant enough to enter. When she stepped inside, she immediately sensed that this was no ordinary place. The garden did not follow the common design of neat rows and random clusters of flowers. Instead, everything seemed deliberate.\r\nBright red flowers curved in spirals that widened as they stretched outward. Yellow blossoms appeared at exact intervals, each placed at a measured distance from the next. The hedges formed smooth arcs that seemed to echo one another, growing larger yet keeping the same shape. Even the stepping stones beneath her feet were arranged in a sequence, each stone slightly farther apart than the last.\r\n",
 
-           // Page 3
            "\"You're studying the spacing,\" a voice said calmly.\r\nMara turned to see a tall man with gray hair and thoughtful eyes standing near a line of lavender plants. His expression was not surprised, but approving.\r\n\"I was trying to understand it,\" Mara admitted. \"It doesn't look random.\"\r\n\"It isn't,\" Mr. Calder replied. \"This garden follows algorithms. Every plant grows according to a rule. Every path reflects a formula.\"\r\n",
 
-           // Page 4
            "Mara had heard the word before. An algorithm was a set of instructions, a sequence that guided actions step by step. She looked again at the spiral of flowers and wondered what invisible instructions had shaped them.\r\nMr. Calder did not explain everything at once. Instead, he asked her questions. How many petals did she count before the pattern repeated? How many steps did it take before the curve of the path mirrored itself? Where would the next row of flowers appear if the sequence continued?\r\n",
 
-           // Page 5
            "At first, Mara guessed incorrectly. Some patterns were simple, repeating every three or five spaces. Others followed more complex growth, expanding outward while doubling in number. The spirals reminded her of natural forms she had seen in seashells and sunflowers, though she could not yet explain why.\r\nShe returned to the garden often. Each visit became an exercise in careful observation. She carried a small notebook, sketching the layout of flower beds and marking distances between stones. She compared one section to another, looking for similarities hidden beneath differences. Gradually, she began to see connections that were not obvious at first glance.\r\n",
 
-           // Page 6
            "One afternoon, Mr. Calder pointed to a patch of soil where no flowers had yet bloomed. \"If the sequence continues,\" he said, \"where will the next cluster grow?\"\r\nMara studied the previous rows. She noticed that each new cluster added two more flowers than the one before and shifted slightly toward the east. After several minutes of quiet calculation, she pointed to a spot near the edge of the bed and predicted the number of blooms.\r\nDays later, the flowers appeared exactly where she had expected.\r\nThe success did not feel like luck. It felt like understanding.\r\n",
 
-           // Page 7
            "As summer continued, Mara's way of seeing began to change. She noticed patterns beyond the garden walls. The arrangement of bricks in old buildings followed repeated structures. The timing of traffic lights formed cycles. Even conversations between people had patterns—questions followed by responses, pauses followed by reactions.\r\nMusic, too, carried sequences. A melody often returned to its starting note after a series of changes. In nature, branches divided in predictable ways, and waves reached the shore in steady rhythms. The world was full of structure, even when it appeared chaotic.\r\n",
 
-           // Page 8
            "One evening, while walking through the garden at sunset, Mara realized that the paths were not only mathematical but balanced. For every expanding curve, there was a matching form elsewhere. The design held symmetry without being rigid. It allowed growth while maintaining order.\r\nMr. Calder eventually gave her a more difficult challenge. He asked her to design a new section of the garden that would blend with the existing structure. She was not to copy what was already there, but to continue its logic.\r\nMara walked through every path again, tracing spirals with her eyes and counting intervals between plants. She thought about how the patterns grew and how they maintained harmony. After careful planning, she sketched a design that extended one of the garden's sequences while introducing a subtle variation.\r\n",
 
-           // Page 9
            "When Mr. Calder reviewed her design, he nodded slowly. \"You've learned to see the rule beneath the surface,\" he said.\r\nMara understood then that the garden was never just about mathematics. It was about perception. It was about recognizing that order and beauty often work together. Logic did not remove wonder; it deepened it.\r\nBy the end of the summer, the garden no longer seemed mysterious. It felt like a conversation written in shapes and numbers. Mara had learned to read it. More importantly, she had learned to look at the world with sharper awareness. Patterns were not confined to equations or carefully planted flowers. They existed in movement, growth, and even human behavior.\r\n",
 
-           // Page 10
            "As she stepped out of the garden one final evening, the spirals of flowers glowing in the fading light, she understood something lasting. The world is filled with hidden structures waiting to be noticed. Once you learn how to search for them, ordinary places begin to reveal extraordinary design.\r\nAnd from that day forward, Mara carried with her not only knowledge of patterns, but a deeper appreciation for the quiet logic that shapes the world.\r\n"
         };
 
@@ -74,7 +63,6 @@ namespace comprehensure.DASHBOARD.StoryPage
             StoryLabel.Text = _storyPages[current];
 
             PageIndicator.Text = $"Page {current + 1} of {total}";
-            // Reading all pages contributes up to 80%; the remaining 20% comes from completing the quiz
             double readingProgress = (current + 1) / (double)total * 80.0;
             int pct = (int)readingProgress;
             ProgressPercent.Text = $"{pct}%";
@@ -100,7 +88,6 @@ namespace comprehensure.DASHBOARD.StoryPage
 
             QuizBanner.IsVisible = (current == total - 1);
 
-            // ── Save 80 % progress to Firestore once when the last page is reached ──
             if (current == total - 1 && !_progressSaved)
             {
                 _progressSaved = true;

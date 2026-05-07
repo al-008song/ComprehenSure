@@ -11,29 +11,20 @@ namespace comprehensure.DASHBOARD.StoryPage
 
         private readonly string[] _storyPages = new string[]
         {
-            //THE WEIGHT OF PAPER WINGS
-            // Page 1
             "When the paper wings were first revealed to the public, they were met with disbelief rather than admiration. They appeared too delicate to hold a person's weight—thin, almost translucent layers arranged with careful precision. Yet the engineers insisted that the material itself was not the true breakthrough. The wings did not rely on engines or fuel. Instead, they responded to the mental and emotional state of the person wearing them. This idea unsettled many people. Flight had always depended on mechanical force, something measurable and predictable. Now it depended on emotional steadiness, something far less certain. If a flyer lost focus or allowed fear to take control, the wings would react immediately.",
 
-            // Page 2
             "The first public demonstration transformed doubt into fascination. A volunteer climbed a high platform overlooking a crowded square. The silence was heavy as he stepped forward and jumped. For a brief second, he fell like anyone else would. Then the wings unfolded and caught the air. Slowly, almost cautiously, he began to rise above the city. The crowd erupted in applause as he floated higher, suspended between earth and sky. Within months, launch towers appeared across major cities. Training centers promised to teach discipline and mental focus. For many, the wings symbolized freedom—an escape from traffic, from physical limits, and perhaps from ordinary life itself.",
 
-            // Page 3
             "However, the excitement did not last untouched. The first widely broadcast fall shifted public opinion. An experienced flyer, steady and confident during previous flights, suddenly began to waver midair. Witnesses described a visible hesitation in her movements, as if doubt had interrupted her concentration. Within seconds, the wings failed to sustain her. Investigations found no mechanical damage. The conclusion was unsettling: the failure had come from within. More incidents followed, and a pattern became clear. It was not fear alone that caused descent. It was the loss of emotional balance—the moment when fear overwhelmed control—that made the wings unstable.",
 
-            // Page 4
             "Dr. Anya Serrano, one of the lead engineers behind the invention, watched the public response change from admiration to caution. She had believed the wings would demonstrate human potential. Instead, they revealed human vulnerability. Governments began requiring psychological screenings before granting flight permits. Critics argued that no technology should depend so heavily on something as unpredictable as emotion. Anya, however, was not convinced that fear was the true problem. She began quietly interviewing those who maintained long, stable flights. She expected to find people who were unusually confident or naturally fearless. Instead, she found individuals who admitted they were afraid each time they stepped off a platform. \"I never stop feeling fear,\" one flyer told her. \"I just don't let it control me.\" Another explained that pretending to be fearless only made the wings unstable, while acknowledging fear helped restore balance.",
 
-            // Page 5
             "Despite her role in creating the wings, Anya had never flown herself. She told others that her work required observation, but privately she knew the reason was simpler. She was afraid of failing publicly. One evening, long after the training center had closed, she climbed the launch tower alone. The city lights stretched beneath her, steady and distant. She fastened the wings carefully to her shoulders and stepped toward the edge. Doubt surfaced immediately—memories of failed prototypes, harsh media criticism, and the weight of responsibility she carried for every accident. Her breathing quickened, and she felt the wings tremble slightly in response.",
 
-            // Page 6
             "For a moment, she nearly stepped back. Instead, she moved forward and jumped. The drop was sudden and disorienting. Wind rushed past her, and panic rose sharply in her chest. The wings shuddered as her fear intensified. She felt gravity pulling her downward and understood how easily she could lose control. Then she stopped trying to eliminate the fear. Instead of denying it, she acknowledged it. \"I am afraid,\" she said quietly. The admission did not remove the fear, but it steadied her. Her breathing slowed. The wings adjusted. Gradually, the descent softened, and she began to rise.",
 
-            // Page 7
             "From above the skyline, the city seemed smaller and less overwhelming. The buildings below appeared structured and solid, yet fragile from that height. In that moment, Anya realized that the wings were not designed to reward simple bravery. They responded to balance—the ability to hold fear and determination at the same time without allowing either to dominate. After that night, she revised the training programs. Instructors began teaching emotional awareness instead of forced confidence. Flyers were encouraged to recognize doubt rather than suppress it. Stability, they learned, came from understanding their internal reactions, not from pretending they did not exist.",
 
-            // Page 8
             "Over time, accidents became less frequent. Flying gradually lost its dramatic appeal and became more personal. Many chose to rise at sunrise or dusk, when the sky was quiet and there was no audience. The wings did not remove the invisible weight people carried within themselves. They revealed it. Those who learned to rise were not those who felt no fear, but those who understood its presence and remained steady despite it."
         };
 
@@ -68,7 +59,6 @@ namespace comprehensure.DASHBOARD.StoryPage
             StoryLabel.Text = _storyPages[current];
 
             PageIndicator.Text = $"Page {current + 1} of {total}";
-            // Reading all pages contributes up to 80%; the remaining 20% comes from completing the quiz
             double readingProgress = (current + 1) / (double)total * 80.0;
             int pct = (int)readingProgress;
             ProgressPercent.Text = $"{pct}%";
@@ -94,7 +84,6 @@ namespace comprehensure.DASHBOARD.StoryPage
 
             QuizBanner.IsVisible = (current == total - 1);
 
-            // ── Save 80 % progress to Firestore once when the last page is reached ──
             if (current == total - 1 && !_progressSaved)
             {
                 _progressSaved = true;

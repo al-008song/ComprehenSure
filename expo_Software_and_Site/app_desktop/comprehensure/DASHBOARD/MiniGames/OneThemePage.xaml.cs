@@ -2,9 +2,6 @@ namespace comprehensure.DASHBOARD.MiniGames;
 
 public partial class OneThemePage : ContentPage
 {
-    // ═══════════════════════════════════════════════════════════════
-    //  DATA — all themes from Modules 1–8
-    // ═══════════════════════════════════════════════════════════════
 
     private class ThemeQuestion
     {
@@ -20,7 +17,6 @@ public partial class OneThemePage : ContentPage
 
     private readonly List<ThemeQuestion> _allQuestions = new()
     {
-        // ── MODULE 1 · THE FORGOTTEN LIBRARY ──────────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 1 · The Forgotten Library",
@@ -49,7 +45,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m1_history_3.jpg", Img4 = "m1_history_4.jpg",
         },
 
-        // ── MODULE 2 · THE CLOCKMAKER'S SECRET ────────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 2 · The Clockmaker's Secret",
@@ -78,7 +73,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m2_wisdom_3.jpg", Img4 = "m2_wisdom_4.jpg",
         },
 
-        // ── MODULE 3 · THE OBSERVATORY ON THE HILL ────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 3 · The Observatory on the Hill",
@@ -107,7 +101,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m3_hidden_3.jpg", Img4 = "m3_hidden_4.jpg",
         },
 
-        // ── MODULE 4 · THE GARDEN OF HIDDEN PATTERNS ──────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 4 · The Garden of Hidden Patterns",
@@ -136,7 +129,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m4_harmony_3.jpg", Img4 = "m4_harmony_4.jpg",
         },
 
-        // ── MODULE 5 · THE MAP OF QUIET DECISIONS ─────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 5 · The Map of Quiet Decisions",
@@ -165,7 +157,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m5_continuity_3.jpg", Img4 = "m5_continuity_4.jpg",
         },
 
-        // ── MODULE 6 · THE WEIGHT OF PAPER WINGS ──────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 6 · The Weight of Paper Wings",
@@ -194,7 +185,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m6_awareness_3.jpg", Img4 = "m6_awareness_4.jpg",
         },
 
-        // ── MODULE 7 · THE CITY OF SILENT BARGAINS ────────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 7 · The City of Silent Bargains",
@@ -223,7 +213,6 @@ public partial class OneThemePage : ContentPage
             Img3 = "m7_reciprocation_3.jpg", Img4 = "m7_reciprocation_4.jpg",
         },
 
-        // ── MODULE 8 · THE WHISPERS OF THE IRON FOREST ────────────
         new ThemeQuestion
         {
             ModuleName   = "Module 8 · The Whispers of the Iron Forest",
@@ -253,9 +242,6 @@ public partial class OneThemePage : ContentPage
         },
     };
 
-    // ═══════════════════════════════════════════════════════════════
-    //  STATE
-    // ═══════════════════════════════════════════════════════════════
 
     private List<ThemeQuestion> _questions     = new();
     private int  _currentIndex  = 0;
@@ -265,7 +251,6 @@ public partial class OneThemePage : ContentPage
     private int  _skippedCount  = 0;
     private bool _roundFinished = false;
 
-    // Cached green styling so OnNextClicked can restore it
     private static readonly SolidColorBrush GreenStroke = new(Color.FromArgb("#B8E6D4"));
     private static readonly LinearGradientBrush GreenBackground = new()
     {
@@ -281,9 +266,6 @@ public partial class OneThemePage : ContentPage
     private static readonly SolidColorBrush RedStroke = new(Color.FromArgb("#FCA5A5"));
     private static readonly SolidColorBrush RedBackground = new(Color.FromArgb("#FEF2F2"));
 
-    // ═══════════════════════════════════════════════════════════════
-    //  INIT
-    // ═══════════════════════════════════════════════════════════════
 
     public OneThemePage()
     {
@@ -315,9 +297,6 @@ public partial class OneThemePage : ContentPage
         LoadQuestion();
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  LOAD QUESTION
-    // ═══════════════════════════════════════════════════════════════
 
     private void LoadQuestion()
     {
@@ -340,21 +319,17 @@ public partial class OneThemePage : ContentPage
         SetImage(Img3, ImgLabel3, q.Img3);
         SetImage(Img4, ImgLabel4, q.Img4);
 
-        // Reset hearts
         Heart1.Text = "❤️";
         Heart2.Text = "❤️";
         Heart3.Text = "❤️";
 
-        // Reset hint panel
         HintBorder.IsVisible  = false;
         HintContentLabel.Text = "";
         HintDescLabel.Text    = "";
 
-        // Reset input
         AnswerEntry.Text      = "";
         AnswerEntry.IsEnabled = true;
 
-        // Hide feedback card; restore green style for next correct answer
         FeedbackBorder.IsVisible   = false;
         FeedbackBorder.Stroke      = GreenStroke;
         FeedbackBorder.Background  = GreenBackground;
@@ -362,7 +337,6 @@ public partial class OneThemePage : ContentPage
         FeedbackLabel.Text         = "Correct!";
         PointsLabel.Text           = "+ 5 points";
 
-        // Show submit & skip
         SubmitButton.IsVisible     = true;
         SkipButtonBorder.IsVisible = true;
     }
@@ -394,9 +368,6 @@ public partial class OneThemePage : ContentPage
         });
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  SUBMIT
-    // ═══════════════════════════════════════════════════════════════
 
     private void OnSubmitClicked(object sender, EventArgs e)
     {
@@ -413,7 +384,6 @@ public partial class OneThemePage : ContentPage
             _roundFinished = true;
             UpdateScoreLabel();
 
-            // Show green correct feedback card — Next button lives inside it
             FeedbackBorder.Stroke      = GreenStroke;
             FeedbackBorder.Background  = GreenBackground;
             FeedbackIcon.Text          = "✓";
@@ -421,7 +391,6 @@ public partial class OneThemePage : ContentPage
             PointsLabel.Text           = "+ 5 points";
             FeedbackBorder.IsVisible   = true;
 
-            // Hide submit & skip
             SubmitButton.IsVisible     = false;
             SkipButtonBorder.IsVisible = false;
             AnswerEntry.IsEnabled      = false;
@@ -442,7 +411,6 @@ public partial class OneThemePage : ContentPage
             }
             else
             {
-                // Out of tries — reveal answer, show red feedback card with Next
                 _roundFinished = true;
                 ShowAnswer(q);
 
@@ -460,7 +428,6 @@ public partial class OneThemePage : ContentPage
         }
     }
 
-    // ─── Hint helpers ─────────────────────────────────────────────
 
     private void ShowBlankHint(ThemeQuestion q)
     {
@@ -486,7 +453,6 @@ public partial class OneThemePage : ContentPage
         HintDescLabel.Text    = q.Hint;
     }
 
-    // ─── Heart tracker ────────────────────────────────────────────
 
     private void LoseHeart()
     {
@@ -496,7 +462,6 @@ public partial class OneThemePage : ContentPage
         if (lost >= 3) Heart3.Text = "🖤";
     }
 
-    // ─── Round pills ──────────────────────────────────────────────
 
     private void UpdateRoundPills()
     {
@@ -526,9 +491,6 @@ public partial class OneThemePage : ContentPage
         ScoreLabel.Text = $"{_score}";
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  NAVIGATION
-    // ═══════════════════════════════════════════════════════════════
 
     private void OnNextClicked(object sender, EventArgs e)
     {
@@ -543,9 +505,6 @@ public partial class OneThemePage : ContentPage
         LoadQuestion();
     }
 
-    // ═══════════════════════════════════════════════════════════════
-    //  RESULTS PANEL
-    // ═══════════════════════════════════════════════════════════════
 
     private void ShowResults()
     {

@@ -37,13 +37,11 @@ public partial class ProfileDashboard : ContentPage
         SaveSuccessPopupOverlay.IsVisible = false;
     }
 
-    // ── Logout button — show popup ────────────────────────────────
     private void OnLogoutClicked(object sender, EventArgs e)
     {
         LogoutPopupOverlay.IsVisible = true;
     }
 
-    // ── Popup: confirmed ──────────────────────────────────────────
     private async void OnLogoutConfirm(object sender, EventArgs e)
     {
         LogoutPopupOverlay.IsVisible = false;
@@ -52,7 +50,6 @@ public partial class ProfileDashboard : ContentPage
             await vm.ExecuteLogout();
     }
 
-    // ── Popup: cancelled ─────────────────────────────────────────
     private void OnLogoutCancel(object sender, EventArgs e)
     {
         LogoutPopupOverlay.IsVisible = false;

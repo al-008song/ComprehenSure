@@ -35,7 +35,6 @@ public partial class DictionaryPage1 : ContentPage
         var word = btn.CommandParameter?.ToString();
         if (string.IsNullOrEmpty(word)) return;
 
-        // If the same button is tapped while speaking, cancel
         if (_activeButton == btn)
         {
             _cts?.Cancel();
@@ -44,12 +43,10 @@ public partial class DictionaryPage1 : ContentPage
             return;
         }
 
-        // Cancel any currently playing word
         _cts?.Cancel();
         if (_activeButton is not null)
             _activeButton.Text = "🔊";
 
-        // Set up new cancellation token and active button
         _cts = new CancellationTokenSource();
         _activeButton = btn;
         btn.Text = "🔉";
@@ -66,7 +63,6 @@ public partial class DictionaryPage1 : ContentPage
         }
         catch (OperationCanceledException)
         {
-            // User cancelled — no action needed
         }
         catch (Exception ex)
         {

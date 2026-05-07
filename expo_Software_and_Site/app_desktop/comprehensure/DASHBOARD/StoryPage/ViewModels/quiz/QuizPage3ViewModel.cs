@@ -125,7 +125,6 @@ namespace comprehensure.DASHBOARD.StoryPage
                 System.Diagnostics.Debug.WriteLine($"[SaveQuizResults] Exception: {ex.Message}");
             }
 
-            // ── Save calculatedprog3 to StoryPage collection ──────────────
             await QuizFunc.SaveQuizProgressAsync(storyNumber: 3, quizScore: Score);
         }
     }
