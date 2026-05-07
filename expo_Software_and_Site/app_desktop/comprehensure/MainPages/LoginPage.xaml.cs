@@ -2,6 +2,9 @@ namespace comprehensure
 {
     public partial class LoginPage : ContentPage
     {
+        // Tracks whether the password is currently visible
+        private bool _isPasswordVisible = false;
+
         public LoginPage(DataBaseControl.Models.LoginViewModel viewModel)
         {
             InitializeComponent();
@@ -22,63 +25,28 @@ namespace comprehensure
             public string Password { get; set; }
         }
 
-        /* public async Task<List<UserAccount>> GetAccountsAsync()
-         {
-             try
-             {
-                 var stream = await FileSystem.OpenAppPackageFileAsync(
-                     "LocalDB/ACCOUNTS/Accounts.json"
-                 );
-                 var reader = new StreamReader(stream);
-                 var contents = await reader.ReadToEndAsync();
+        /// <summary>
+        /// Toggles the password field between masked and plain-text,
+        /// and swaps the eye icon to match the current state.
+        /// </summary>
+        private void OnLoginTogglePasswordClicked(object sender, EventArgs e)
+        {
+            _isPasswordVisible = !_isPasswordVisible;
 
-                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                 return JsonSerializer.Deserialize<List<UserAccount>>(contents, options)
-                     ?? new List<UserAccount>();
-             }
-             catch (Exception e)
-             {
-                 await DisplayAlert(
-                     "no DB",
-                     "dora the explorer why cant i find the db????????????",
-                     "why cant it find the db? "
-                 ); // why tf //update why still not seeing db// update: works now
+            // Show or hide the password characters
+            Password.IsPassword = !_isPasswordVisible;
 
-                 return new List<UserAccount>();
-             }
-             // for the devs in simple termmms just return the value of email and password
-             // note for future me:  DO NOT DO THIS THIS YOU CAN EXPLOIT THIS BY reading memory or sum OR JUST READING THE ACCOUNTS.JSON
-         }
-
-         private async void Login_Button_Clicked(object sender, EventArgs e)
-         {
-             var accounts = await GetAccountsAsync();
-
-             //String ConvEmail = Email.Replace(" ", String.Empty);
-
-             string cleanEmail = Email.Text.Trim();
-
-             var user = accounts.FirstOrDefault(a =>
-                 a.Email == cleanEmail && a.Password == Password.Text
-             );
-
-             if (user != null)
-             {
-                 await DisplayAlert("Success", "Welcome back!", "OK");
-                 await Navigation.PushAsync(new DASHBOARD.MainDashboard());
-             }
-             else
-             {
-                 await DisplayAlert("Error", "Invalid wrong something!", "OK");
-             }
-         }
-        */
-
+            // Swap icon: eye_open when visible, eye_closed when hidden
+            LoginTogglePasswordButton.Source = _isPasswordVisible
+                ? "eye_open.png"
+                : "eye_closed.png";
+        }
 
         public async void BackButtonEvent(Object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("..");
         }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();

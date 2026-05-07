@@ -135,34 +135,7 @@
                                     BackgroundColor="Transparent" />
                             </Border>
                         </VerticalStackLayout>
-
-                        <!-- Email field -->
-                        <VerticalStackLayout Spacing="6">
-                            <Label
-                                CharacterSpacing="1.5"
-                                FontAttributes="Bold"
-                                FontSize="10"
-                                Text="EMAIL"
-                                TextColor="#6B8CAE" />
-                            <Border
-                                BackgroundColor="#F2F6FB"
-                                Stroke="#CBDCEB"
-                                StrokeThickness="1"
-                                Padding="14,0">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="16" />
-                                </Border.StrokeShape>
-                                <Entry
-                                    HeightRequest="48"
-                                    Keyboard="Email"
-                                    Placeholder="Enter email"
-                                    PlaceholderColor="#CBDCEB"
-                                    Text="{Binding UserEmail}"
-                                    TextColor="#0F2D4A"
-                                    BackgroundColor="Transparent" />
-                            </Border>
-                        </VerticalStackLayout>
-
+                        
                         <!-- Save Changes button -->
                         <Border
                             BackgroundColor="#0F2D4A"
@@ -222,31 +195,6 @@
                         <Shadow Brush="#0F2D4A" Offset="0,4" Radius="16" Opacity="0.06" />
                     </Border.Shadow>
                     <VerticalStackLayout Spacing="0">
-
-                        <!-- Change Password -->
-                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16" Padding="0,14">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
-                            </Grid.GestureRecognizers>
-                            <Border
-                                Grid.Column="0"
-                                BackgroundColor="#D6EAFF"
-                                HeightRequest="44" WidthRequest="44"
-                                Stroke="Transparent" StrokeThickness="0">
-                                <Border.StrokeShape><RoundRectangle CornerRadius="22" /></Border.StrokeShape>
-                                <Label Text="🔒" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Grid.Column="1" FontAttributes="Bold" FontSize="15"
-                                Text="Change Password"
-                                TextColor="#0F2D4A"
-                                VerticalOptions="Center" />
-                            <Label Grid.Column="2" FontSize="18"
-                                Text="›"
-                                TextColor="#CBDCEB"
-                                VerticalOptions="Center" />
-                        </Grid>
-
-                        <BoxView BackgroundColor="#F2F6FB" HeightRequest="1" />
 
                         <!-- Help & Support -->
                         <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16" Padding="0,14">

@@ -17,8 +17,9 @@
                      Margin="0,0,-110,-60" Opacity="0.45" />
         </Grid>
 
-        <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
-            <VerticalStackLayout Spacing="32" WidthRequest="440" Padding="20">
+        <ScrollView HorizontalOptions="Fill" VerticalOptions="Center">
+            <VerticalStackLayout Spacing="32" HorizontalOptions="Fill"
+                                 Padding="24,20">
 
                 <Label Text="ComprehenSure"
                            FontSize="13" FontAttributes="Bold"
@@ -40,6 +41,8 @@
                 <!-- ── Form card ── -->
                 <Border BackgroundColor="White"
                         Padding="36,32"
+                        HorizontalOptions="Center"
+                        WidthRequest="340"
                         Stroke="#CBDCEB" StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="36" />
@@ -84,15 +87,31 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="20" />
                                 </Border.StrokeShape>
-                                <Entry x:Name="Password"
-                                       Placeholder="••••••••"
-                                       PlaceholderColor="#A8C4D8"
-                                       IsPassword="True"
-                                       TextColor="#0F2D4A"
-                                       BackgroundColor="Transparent"
-                                       Text="{Binding Password}"
-                                       FontSize="15"
-                                       VerticalOptions="Center" />
+                                <!-- Grid lets the eye button float over the right edge of the Entry -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="40" />
+                                    </Grid.ColumnDefinitions>
+                                    <Entry x:Name="Password"
+                                           Grid.Column="0"
+                                           Placeholder="••••••••"
+                                           PlaceholderColor="#A8C4D8"
+                                           IsPassword="True"
+                                           TextColor="#0F2D4A"
+                                           BackgroundColor="Transparent"
+                                           Text="{Binding Password}"
+                                           FontSize="15"
+                                           VerticalOptions="Center" />
+                                    <ImageButton x:Name="LoginTogglePasswordButton"
+                                                 Grid.Column="1"
+                                                 Source="eye_closed.png"
+                                                 BackgroundColor="Transparent"
+                                                 WidthRequest="22" HeightRequest="22"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 Clicked="OnLoginTogglePasswordClicked" />
+                                </Grid>
                             </Border>
                         </VerticalStackLayout>
 
