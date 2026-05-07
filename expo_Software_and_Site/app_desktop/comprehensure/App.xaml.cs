@@ -17,10 +17,21 @@ namespace comprehensure
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var shell = new AppShell();
+
+            // Delay navigation until after the Shell window is fully rendered,
+            // so Shell.Current is non-null and GoToAsync won't silently fail.
+            shell.Loaded += async (s, e) =>
+            {
+                // Brief pause so the initial ShellContent (Login) doesn't flash
+                await Task.Delay(150);
+                await NavigateToStartPageAsync();
+            };
+
+            return new Window(shell);
         }
 
-        protected override async void OnStart()
+        private async Task NavigateToStartPageAsync()
         {
             await Task.Delay(2000);
 
@@ -39,8 +50,11 @@ namespace comprehensure
             if (hasUsername)
                 await Shell.Current.GoToAsync("///MainDashboard");
             else
-                await Shell.Current.GoToAsync($"///UsernameReq?email={savedEmail}&uid={savedUid}");
+                await Shell.Current.GoToAsync($"///UsernameReq?email={Uri.EscapeDataString(savedEmail)}&uid={Uri.EscapeDataString(savedUid)}");
         }
+
+        // OnStart() removed — navigation is now driven by the shell.Loaded event
+        // above, which guarantees Shell.Current is ready before GoToAsync is called.
 
         private async Task<bool> CheckHasUsername(string uid)
         {
