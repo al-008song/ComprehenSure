@@ -132,7 +132,7 @@
     <!-- ══════════════════════════════════════════════════ -->
     <ShellContent Shell.FlyoutItemIsVisible="False" Title="SignUp"   ContentTemplate="{DataTemplate local:SignUpPage}"      Route="SignUpPage" />
     <ShellContent Shell.FlyoutItemIsVisible="False" Title="Username" ContentTemplate="{DataTemplate dashboard:UsernameReq}" Route="UsernameReq" />
-    <ShellContent Shell.FlyoutItemIsVisible="False" Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}"        Route="AppMainPage" />
+    <ShellContent Shell.FlyoutItemIsVisible="False" Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}"        Route="MainPage" />
 
     <!-- ══════════════════════════════════════════════════ -->
     <!--  FLYOUT FOOTER — Log Out                          -->
