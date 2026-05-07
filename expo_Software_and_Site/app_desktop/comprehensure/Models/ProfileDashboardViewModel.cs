@@ -2,6 +2,7 @@ namespace comprehensure.DataBaseControl.Models;
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
@@ -13,13 +14,10 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-    
     private readonly string _projectId = "comprehensuredb-f9f7c";
     private string BaseUrl =>
         $"https://firestore.googleapis.com/v1/projects/{_projectId}/databases/(default)/documents";
     private readonly HttpClient _client = new HttpClient();
-
-  
 
     private string _usernameEdit = string.Empty;
     public string UsernameEdit
@@ -35,15 +33,12 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
         set { _userEmail = value; OnPropertyChanged(); }
     }
 
-    // ── Save state ────────────────────────────────────────────────
-
     private bool _isSaving;
     public bool IsSaving
     {
         get => _isSaving;
         set { _isSaving = value; OnPropertyChanged(); }
     }
-
 
     private bool _isDarkModeEnabled;
     public bool IsDarkModeEnabled
@@ -64,8 +59,6 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
             Application.Current.UserAppTheme = isDark ? AppTheme.Dark : AppTheme.Light;
     }
 
-    // ── Commands ──────────────────────────────────────────────────
-
     public ICommand logoutCommand { get; }
     public ICommand BackCommand { get; }
     public ICommand EditProfileCommand { get; }
@@ -75,29 +68,76 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
 
     public ProfileDashboardViewModel()
     {
-        // ── Load profile from Preferences (written by MainDashboard) ──────────
-        // MainDashboard.ApplyCachedProfile() sets "CachedUsername"
-        // MainDashboard.RedirectIfNoUsername() reads/stores "SavedUserEmail"
-        // Using the same keys means zero extra Firestore reads on this page.
         _usernameEdit = Preferences.Default.Get("CachedUsername", "Username");
         _userEmail    = Preferences.Default.Get("SavedUserEmail",  "user@email.com");
 
-        // Sync dark-mode toggle with current app theme
         _isDarkModeEnabled = Application.Current?.RequestedTheme == AppTheme.Dark;
 
-        logoutCommand       = new Command(async () => await ExecuteLogout());
-        BackCommand         = new Command(async () => await Shell.Current.GoToAsync(".."));
-        EditProfileCommand  = new Command(() => { /* open edit mode if needed */ });
-        SaveProfileCommand  = new Command(async () => await ExecuteSaveProfile());
+        logoutCommand         = new Command(async () => await ExecuteLogout());
+        BackCommand           = new Command(async () => await Shell.Current.GoToAsync(".."));
+        EditProfileCommand    = new Command(() => { });
+        SaveProfileCommand    = new Command(async () => await ExecuteSaveProfile());
         ChangePasswordCommand = new Command(async () => await Shell.Current.GoToAsync("/ChangePassword"));
-        HelpCommand         = new Command(async () => await Shell.Current.GoToAsync("/HelpPage"));
+        HelpCommand           = new Command(async () => await Shell.Current.GoToAsync("/HelpPage"));
     }
 
-    // ── Save: mirrors MainDashboard.modulescoredb() pattern ───────────────────
-    //  1. Validate input
-    //  2. PATCH only the Username field in Firestore  userdata/{uid}
-    //  3. Update "CachedUsername" in Preferences so MainDashboard's next call
-    //     to ApplyCachedProfile() picks up the new value without an extra read
+    private async Task<bool> UsernameExists(string username)
+    {
+        string url  = $"{BaseUrl}:runQuery";
+        string json = JsonSerializer.Serialize(new
+        {
+            structuredQuery = new
+            {
+                from  = new[] { new { collectionId = "userdata" } },
+                where = new
+                {
+                    fieldFilter = new
+                    {
+                        field = new { fieldPath = "Username" },
+                        op    = "EQUAL",
+                        value = new { stringValue = username },
+                    },
+                },
+                limit = 1,
+            },
+        });
+
+        HttpResponseMessage response = await _client.PostAsync(
+            url,
+            new StringContent(json, Encoding.UTF8, "application/json")
+        );
+
+        if (!response.IsSuccessStatusCode)
+        {
+            string error = await response.Content.ReadAsStringAsync();
+            System.Diagnostics.Debug.WriteLine($"[UsernameExists] Firestore error: {error}");
+            await Shell.Current.DisplayAlert($"Error {(int)response.StatusCode}", "Could not verify username availability. Please try again.", "OK");
+            return true;
+        }
+
+        string result = await response.Content.ReadAsStringAsync();
+
+        if (string.IsNullOrEmpty(result))
+            return false;
+
+        using var doc = JsonDocument.Parse(result);
+        var root      = doc.RootElement;
+
+        if (root.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var element in root.EnumerateArray())
+            {
+                if (element.TryGetProperty("document", out var documentProp) &&
+                    documentProp.TryGetProperty("fields", out _))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     private async Task ExecuteSaveProfile()
     {
         string newUsername = UsernameEdit?.Trim() ?? string.Empty;
@@ -115,10 +155,27 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
             return;
         }
 
+        string currentUsername = Preferences.Default.Get("CachedUsername", string.Empty);
+        if (string.Equals(newUsername, currentUsername, StringComparison.OrdinalIgnoreCase))
+        {
+            await Shell.Current.DisplayAlert("No Change", "That is already your current username.", "OK");
+            return;
+        }
+
         IsSaving = true;
         try
         {
-            // PATCH only the Username field — same approach as modulescoredb()
+            bool taken = await UsernameExists(newUsername.ToLower());
+            if (taken)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Username Taken",
+                    $"\"{newUsername}\" is already in use. Please choose a different username.",
+                    "OK"
+                );
+                return;
+            }
+
             string url = $"{BaseUrl}/userdata/{uid}?updateMask.fieldPaths=Username";
 
             var payload = new
@@ -129,12 +186,12 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
                 }
             };
 
-            var options = new JsonSerializerOptions { PropertyNamingPolicy = null };
-            var json    = JsonSerializer.Serialize(payload, options);
+            var options  = new JsonSerializerOptions { PropertyNamingPolicy = null };
+            var json     = JsonSerializer.Serialize(payload, options);
 
             var response = await _client.PatchAsync(
                 url,
-                new StringContent(json, System.Text.Encoding.UTF8, "application/json")
+                new StringContent(json, Encoding.UTF8, "application/json")
             );
 
             if (!response.IsSuccessStatusCode)
@@ -145,11 +202,7 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
                 return;
             }
 
-            // Keep Preferences in sync so MainDashboard.ApplyCachedProfile()
-            // reads the updated name the next time it runs — no Firestore read needed.
             Preferences.Default.Set("CachedUsername", newUsername);
-
-            // Trim whitespace back into the binding
             UsernameEdit = newUsername;
 
             System.Diagnostics.Debug.WriteLine($"[SaveProfile] Username updated to '{newUsername}'");
@@ -166,7 +219,6 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
         }
     }
 
-    // ── Called by code-behind after popup confirms ────────────────
     public async Task ExecuteLogout()
     {
         await Shell.Current.GoToAsync("///Login");
