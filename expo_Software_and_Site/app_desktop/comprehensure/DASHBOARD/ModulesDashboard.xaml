@@ -54,9 +54,11 @@
                                          Spacing="2">
                         <Label Text="MODULES"
                                TextColor="#0F2D4A"
-                               FontSize="30" FontAttributes="Bold"
+                               FontSize="18" FontAttributes="Bold"
                                HorizontalOptions="Center"
-                               CharacterSpacing="1.5" />
+                               HorizontalTextAlignment="Center"
+                               CharacterSpacing="1.0"
+                               LineBreakMode="WordWrap" />
                         <Label Text="Read each story carefully!"
                                TextColor="#6B8CAE" FontSize="13"
                                HorizontalOptions="Center" />
