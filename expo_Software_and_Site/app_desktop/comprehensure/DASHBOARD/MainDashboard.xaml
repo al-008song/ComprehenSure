@@ -503,6 +503,7 @@
                                         Stroke="Transparent"
                                         StrokeThickness="0"
                                         Margin="0,4,0,0"
+                                        IsEnabled="{Binding IsMinigameUnlocked}"
 >
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="26" />
@@ -539,7 +540,7 @@
                             BackgroundColor="White"
                             Stroke="#CBDCEB"
                             StrokeThickness="1"
-                            IsEnabled="{Binding IsMinigameLocked, Converter={x:StaticResource InverseBoolConverter}}"
+                            IsEnabled="{Binding IsMinigameUnlocked}"
                             Opacity="{Binding MinigameOpacity}"
 >
                             <Border.StrokeShape>
@@ -589,6 +590,7 @@
                                         Stroke="Transparent"
                                         StrokeThickness="0"
                                         Margin="0,4,0,0"
+                                        IsEnabled="{Binding IsMinigameLocked, Converter={x:StaticResource InverseBoolConverter}}"
 >
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="26" />
