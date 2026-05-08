@@ -30,9 +30,6 @@
         <ScrollView>
             <VerticalStackLayout Padding="18,20,18,40" Spacing="16">
 
-                <!--  ══════════════════════════════════════════  -->
-                <!--  HEADER CARD  -->
-                <!--  ══════════════════════════════════════════  -->
                 <Border
                     Padding="20,18"
                     BackgroundColor="White"
@@ -85,13 +82,11 @@
                             </Border>
                         </Grid>
 
-                        <!--  Bottom row: Avatar + Name + Progress ring  -->
                         <Grid
                             ColumnDefinitions="Auto, *, Auto"
                             ColumnSpacing="14"
                             VerticalOptions="Center">
 
-                            <!--  Avatar  -->
                             <Border
                                 Grid.Column="0"
                                 BackgroundColor="#D6EAFF"
@@ -137,7 +132,6 @@
                                     TextColor="#0F2D4A" />
                             </VerticalStackLayout>
 
-                            <!--  Progress ring + score  -->
                             <Grid
                                 Grid.Column="2"
                                 ColumnDefinitions="Auto, Auto"
@@ -200,9 +194,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!--  ══════════════════════════════════════════  -->
-                <!--  MODULES BUTTON  -->
-                <!--  ══════════════════════════════════════════  -->
                 <Border
                     BackgroundColor="#0F2D4A"
                     Stroke="Transparent"
@@ -226,7 +217,6 @@
                     </Border.GestureRecognizers>
 
                     <Grid RowDefinitions="Auto,Auto" RowSpacing="0">
-                        <!--  "START LEARNING" pill badge  -->
                         <Border
                             Grid.Row="0"
                             Margin="0,10,0,0"
@@ -262,9 +252,6 @@
                     </Grid>
                 </Border>
 
-                <!--  ══════════════════════════════════════════  -->
-                <!--  ABOUT US BUTTON  -->
-                <!--  ══════════════════════════════════════════  -->
                 <Border
                     BackgroundColor="#0F2D4A"
                     Stroke="Transparent"
@@ -298,9 +285,6 @@
                         TextColor="White" />
                 </Border>
 
-                <!--  ══════════════════════════════════════════  -->
-                <!--  MASTER DICTIONARY BUTTON  -->
-                <!--  ══════════════════════════════════════════  -->
                 <Border
                     Margin="0,4,0,0"
                     Stroke="#1E3A6B"
@@ -335,7 +319,6 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnMasterDictionaryClicked" />
                         </Grid.GestureRecognizers>
-                        <!--  Book icon chip  -->
                         <Border
                             Grid.Column="0"
                             BackgroundColor="#0F1A30"
