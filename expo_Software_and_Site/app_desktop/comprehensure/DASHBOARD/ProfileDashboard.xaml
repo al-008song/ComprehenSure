@@ -24,21 +24,50 @@
         <ScrollView>
             <VerticalStackLayout Padding="36,28,36,48" Spacing="18">
 
-                <HorizontalStackLayout Margin="4,0" Spacing="10">
-                    <BoxView
-                        BackgroundColor="#0F2D4A"
-                        CornerRadius="2"
-                        HeightRequest="20"
-                        VerticalOptions="Center"
-                        WidthRequest="4" />
-                    <Label
-                        CharacterSpacing="2.2"
-                        FontAttributes="Bold"
-                        FontSize="12"
-                        Text="PROFILE"
-                        TextColor="#0F2D4A"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14">
+
+                    <Border Grid.Column="0"
+                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20" />
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.08" />
+                        </Border.Shadow>
+                        <Button Text="← Back"
+                                Clicked="OnBackClicked"
+                                BackgroundColor="Transparent"
+                                TextColor="#0F2D4A"
+                                BorderWidth="0"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                HeightRequest="44"
+                                Padding="20,0" />
+                    </Border>
+
+                    <HorizontalStackLayout Grid.Column="1"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Center"
+                                          Spacing="10">
+                        <BoxView
+                            BackgroundColor="#0F2D4A"
+                            CornerRadius="2"
+                            HeightRequest="20"
+                            VerticalOptions="Center"
+                            WidthRequest="4" />
+                        <Label
+                            CharacterSpacing="2.2"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Text="PROFILE"
+                            TextColor="#0F2D4A"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <BoxView Grid.Column="2" WidthRequest="80" Color="Transparent" />
+
+                </Grid>
 
                 <Border
                     Padding="24,20"

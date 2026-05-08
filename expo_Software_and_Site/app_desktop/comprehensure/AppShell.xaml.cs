@@ -30,6 +30,7 @@ namespace comprehensure
             Routing.RegisterRoute(nameof(StoryPage8), typeof(StoryPage8));
             Routing.RegisterRoute("SynonymGamePage", typeof(SynonymHuntPage));
             Routing.RegisterRoute("OneThemeGamePage", typeof(OneThemePage));
+            Routing.RegisterRoute("ProfileDashboard", typeof(ProfileDashboard));
             Routing.RegisterRoute(nameof(QuizPage1), typeof(QuizPage1));
             Routing.RegisterRoute(nameof(QuizPage2), typeof(QuizPage2));
             Routing.RegisterRoute(nameof(QuizPage3), typeof(QuizPage3));

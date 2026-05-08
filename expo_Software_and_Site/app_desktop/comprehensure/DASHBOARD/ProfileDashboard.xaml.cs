@@ -37,6 +37,11 @@ public partial class ProfileDashboard : ContentPage
         SaveSuccessPopupOverlay.IsVisible = false;
     }
 
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//MainDashboard");
+    }
+
     private void OnLogoutClicked(object sender, EventArgs e)
     {
         LogoutPopupOverlay.IsVisible = true;
