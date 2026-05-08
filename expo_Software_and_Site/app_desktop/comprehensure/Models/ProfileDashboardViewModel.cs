@@ -229,6 +229,7 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
 
     public async Task ExecuteLogout()
     {
-        await Shell.Current.GoToAsync("///Login");
+        await Shell.Current.GoToAsync("///MainPage");
+            Preferences.Default.Clear();
     }
 }

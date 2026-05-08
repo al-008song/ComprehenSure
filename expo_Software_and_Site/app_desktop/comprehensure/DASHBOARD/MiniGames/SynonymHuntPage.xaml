@@ -8,7 +8,7 @@
 
     <Grid>
 
-        <!-- ░░ BACKGROUND BLOBS ░░ -->
+ 
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse Fill="White"
                      WidthRequest="580" HeightRequest="440"
@@ -23,9 +23,7 @@
         <ScrollView>
             <VerticalStackLayout Padding="20,20,20,30" Spacing="24">
 
-                <!-- ══════════════════════════════════════ -->
-                <!-- TOP BAR                                -->
-                <!-- ══════════════════════════════════════ -->
+             
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                     <Border Grid.Column="0" BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1" VerticalOptions="Center">
                         <Border.StrokeShape>

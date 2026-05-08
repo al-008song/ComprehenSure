@@ -1,8 +1,16 @@
+using System.Text.Json;
+
 namespace comprehensure.DASHBOARD.MiniGames;
 
 public partial class OneThemePage : ContentPage
 {
 
+    private readonly string _projectId = "comprehensuredb-f9f7c";
+    private string BaseUrl =>
+        $"https://firestore.googleapis.com/v1/projects/{_projectId}/databases/(default)/documents";
+    private readonly HttpClient _http = new HttpClient();
+
+    
     private class ThemeQuestion
     {
         public string ModuleName   { get; set; } = "";
@@ -250,6 +258,7 @@ public partial class OneThemePage : ContentPage
     private int  _correctCount  = 0;
     private int  _skippedCount  = 0;
     private bool _roundFinished = false;
+    private bool _scoreSaved    = false;
 
     private static readonly SolidColorBrush GreenStroke = new(Color.FromArgb("#B8E6D4"));
     private static readonly LinearGradientBrush GreenBackground = new()
@@ -291,6 +300,7 @@ public partial class OneThemePage : ContentPage
         _correctCount  = 0;
         _skippedCount  = 0;
         _roundFinished = false;
+        _scoreSaved    = false;
 
         ResultsPanel.IsVisible = false;
         UpdateScoreLabel();
@@ -333,6 +343,7 @@ public partial class OneThemePage : ContentPage
         FeedbackBorder.IsVisible   = false;
         FeedbackBorder.Stroke      = GreenStroke;
         FeedbackBorder.Background  = GreenBackground;
+
         FeedbackIcon.Text          = "✓";
         FeedbackLabel.Text         = "Correct!";
         PointsLabel.Text           = "+ 5 points";
@@ -506,6 +517,71 @@ public partial class OneThemePage : ContentPage
     }
 
 
+   
+    private async Task SaveScoreToDbAsync(int sessionScore)
+    {
+        string uid = Preferences.Default.Get("SavedUserUid", "");
+        if (string.IsNullOrWhiteSpace(uid))
+        {
+            System.Diagnostics.Debug.WriteLine("[OneTheme] No UID — score not saved.");
+            return;
+        }
+
+        string url = $"{BaseUrl}/userdata/{uid}";
+
+        try
+        {
+            // 1. Read existing document
+            var getResponse = await _http.GetAsync(url);
+            int existingScore = 0;
+
+            if (getResponse.IsSuccessStatusCode)
+            {
+                var getJson = await getResponse.Content.ReadAsStringAsync();
+                using var getDoc = JsonDocument.Parse(getJson);
+
+                if (getDoc.RootElement.TryGetProperty("fields", out var fields) &&
+                    fields.TryGetProperty("ScoreOfTotal", out var scoreProp))
+                {
+                    if (scoreProp.TryGetProperty("integerValue", out var intVal))
+                        int.TryParse(intVal.GetString(), out existingScore);
+                    else if (scoreProp.TryGetProperty("doubleValue", out var dblVal))
+                        existingScore = (int)dblVal.GetDouble();
+                }
+            }
+
+            // 2. Accumulate and PATCH
+            int newTotal = existingScore + sessionScore;
+
+            var body = new
+            {
+                fields = new
+                {
+                    ScoreOfTotal = new { integerValue = newTotal.ToString() }
+                }
+            };
+
+            var patchUrl     = $"{url}?updateMask.fieldPaths=ScoreOfTotal";
+            var content      = new StringContent(
+                JsonSerializer.Serialize(body),
+                System.Text.Encoding.UTF8,
+                "application/json");
+
+            var patchResponse = await _http.PatchAsync(patchUrl, content);
+
+            if (patchResponse.IsSuccessStatusCode)
+                System.Diagnostics.Debug.WriteLine(
+                    $"[OneTheme] Score saved — session: {sessionScore}, total: {newTotal}");
+            else
+                System.Diagnostics.Debug.WriteLine(
+                    $"[OneTheme] PATCH failed: {(int)patchResponse.StatusCode}");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[OneTheme] SaveScoreToDbAsync error: {ex.Message}");
+        }
+    }
+
     private void ShowResults()
     {
         ResultsPanel.IsVisible = true;
@@ -522,6 +598,20 @@ public partial class OneThemePage : ContentPage
         StatCorrectLabel.Text  = $"{_correctCount}";
         StatSkippedLabel.Text  = $"{_skippedCount}";
         StatAccuracyLabel.Text = $"{accuracy}%";
+
+     
+        _ = SaveScoreToDbAsync(_score);
+        _scoreSaved = true;
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        if (!_scoreSaved && _score > 0)
+        {
+            _scoreSaved = true;
+            _ = SaveScoreToDbAsync(_score);
+        }
     }
 
     private void OnPlayAgainClicked(object sender, EventArgs e)

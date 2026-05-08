@@ -1,9 +1,17 @@
+using System.Text.Json;
 using Microsoft.Maui.Controls;
 
 namespace comprehensure.DASHBOARD.MiniGames;
 
 public partial class SynonymHuntPage : ContentPage
 {
+    //Firestore link
+    private readonly string _projectId = "comprehensuredb-f9f7c";
+    private string BaseUrl =>
+        $"https://firestore.googleapis.com/v1/projects/{_projectId}/databases/(default)/documents";
+    private readonly HttpClient _http = new HttpClient();
+
+ 
     private record Question(string Story, string QuestionText, string Answer, string[] Choices);
 
     private record Module(int Id, string Name, string Difficulty, Question[] Questions);
@@ -138,6 +146,7 @@ public partial class SynonymHuntPage : ContentPage
     private int _score = 0;
     private int _totalAnswered = 0;
     private int _totalCorrect = 0;
+    private bool _scoreSaved = false;
 
     private readonly int[][][] _shuffled;
 
@@ -183,11 +192,7 @@ public partial class SynonymHuntPage : ContentPage
         });
     }
 
-
-    /// <summary>
-    /// Shows the custom module popup and returns true if the user
-    /// tapped the confirm button, false if they tapped "Stay Here".
-    /// </summary>
+   
     private Task<bool> ShowModulePopupAsync(
         string icon, string title, string message, string confirmText)
     {
@@ -349,6 +354,73 @@ public partial class SynonymHuntPage : ContentPage
         }
     }
 
+   
+    private async Task SaveScoreToDbAsync(int sessionScore)
+    {
+        string uid = Preferences.Default.Get("SavedUserUid", "");
+        if (string.IsNullOrWhiteSpace(uid))
+        {
+            System.Diagnostics.Debug.WriteLine("[SynonymHunt] No UID — score not saved.");
+            return;
+        }
+
+        string url = $"{BaseUrl}/userdata/{uid}";
+
+        try
+        {
+            
+            var getResponse = await _http.GetAsync(url);
+            int existingScore = 0;
+
+            if (getResponse.IsSuccessStatusCode)
+            {
+                var getJson = await getResponse.Content.ReadAsStringAsync();
+                using var getDoc = JsonDocument.Parse(getJson);
+
+                if (getDoc.RootElement.TryGetProperty("fields", out var fields) &&
+                    fields.TryGetProperty("ScoreOfTotal", out var scoreProp))
+                {
+                    if (scoreProp.TryGetProperty("integerValue", out var intVal))
+                        int.TryParse(intVal.GetString(), out existingScore);
+                    else if (scoreProp.TryGetProperty("doubleValue", out var dblVal))
+                        existingScore = (int)dblVal.GetDouble();
+                }
+            }
+
+    
+            int newTotal = existingScore + sessionScore;
+
+            var body = new
+            {
+                fields = new
+                {
+                    ScoreOfTotal = new { integerValue = newTotal.ToString() }
+                }
+            };
+
+            var patchUrl = $"{url}?updateMask.fieldPaths=ScoreOfTotal";
+            var content  = new StringContent(
+                JsonSerializer.Serialize(body),
+                System.Text.Encoding.UTF8,
+                "application/json");
+
+            var patchResponse = await _http.PatchAsync(patchUrl, content);
+
+            if (patchResponse.IsSuccessStatusCode)
+                System.Diagnostics.Debug.WriteLine(
+                    $"[SynonymHunt] Score saved — session: {sessionScore}, total: {newTotal}");
+            else
+                System.Diagnostics.Debug.WriteLine(
+                    $"[SynonymHunt] PATCH failed: {(int)patchResponse.StatusCode}");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SynonymHunt] SaveScoreToDbAsync error: {ex.Message}");
+        }
+    }
+
+ 
+
     private void ShowResults()
     {
         GamePanel.IsVisible    = false;
@@ -378,6 +450,20 @@ public partial class SynonymHuntPage : ContentPage
             ResultsTrophyLabel.Text = "📚";
             ResultsTitleLabel.Text  = "Keep Practicing!";
         }
+
+        // Save score to Firestore when the game ends
+        _ = SaveScoreToDbAsync(_score);
+        _scoreSaved = true;
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        if (!_scoreSaved && _score > 0)
+        {
+            _scoreSaved = true;
+            _ = SaveScoreToDbAsync(_score);
+        }
     }
 
     private void OnRestartClicked(object sender, EventArgs e)
@@ -388,6 +474,7 @@ public partial class SynonymHuntPage : ContentPage
         _score                = 0;
         _totalAnswered        = 0;
         _totalCorrect         = 0;
+        _scoreSaved           = false;
         ScoreLabel.Text       = "0";
 
         var rng0 = new Random();
@@ -482,6 +569,6 @@ public partial class SynonymHuntPage : ContentPage
 
         ProgressFill.AnchorX      = 0;
         ProgressFill.ScaleX       = ratio;
-        ProgressFill.WidthRequest = 1000; // oversized; clipped by parent
+        ProgressFill.WidthRequest = 1000; 
     }
 }

@@ -111,7 +111,8 @@ namespace comprehensure.DataBaseControl.Models
             if (raw.Contains("invalid_password") ||
                 raw.Contains("wrong_password") ||
                 raw.Contains("invalid credential") ||
-                raw.Contains("invalid login credentials"))
+                raw.Contains("invalid login credentials") ||
+                raw.Contains("invalid_login_credentials"))
                 return ("Incorrect Password",
                         "The password you entered is wrong.\nPlease try again.");
 
@@ -184,7 +185,6 @@ namespace comprehensure.DataBaseControl.Models
 
                 string uid = result.User.Uid;
 
-           
                 if (UserCache.IsCached(uid))
                 {
                     await Shell.Current.DisplayAlert("Login Complete", "Welcome back, " + UserCache.Username, "OK");
@@ -208,12 +208,13 @@ namespace comprehensure.DataBaseControl.Models
             }
             catch (Firebase.Auth.FirebaseAuthHttpException ex)
             {
-                await Shell.Current.DisplayAlert("Sign-In Failed", ex.Message, "OK");
+                var (title, message) = ParseFirebaseError(ex);
+                await Shell.Current.DisplayAlert(title, message, "OK");
             }
             catch (Exception ex)
             {
-               
-                await Shell.Current.DisplayAlert("fail!", ex.Message, "OK");
+                var (title, message) = ParseFirebaseError(ex);
+                await Shell.Current.DisplayAlert(title, message, "OK");
             }
             finally
             {
