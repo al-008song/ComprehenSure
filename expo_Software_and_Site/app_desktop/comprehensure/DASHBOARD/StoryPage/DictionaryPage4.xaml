@@ -7,7 +7,6 @@
 
     <Grid>
 
-        <!-- Background texture blobs -->
         <Grid InputTransparent="True" HorizontalOptions="Fill" VerticalOptions="Fill">
             <Ellipse Fill="#1A2744" WidthRequest="500" HeightRequest="500"
                      HorizontalOptions="Start" VerticalOptions="Start"
@@ -25,9 +24,7 @@
                                  HorizontalOptions="Center"
                                  MaximumWidthRequest="760">
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  HERO HEADER                        -->
-                <!-- ═══════════════════════════════════ -->
+ 
                 <Grid Padding="32,52,32,32">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -35,7 +32,6 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Back button -->
                     <Border Grid.Row="0"
                             BackgroundColor="#0F1A30" Stroke="#1E3A6B" StrokeThickness="1"
                             HorizontalOptions="Start" Margin="0,0,0,28">
@@ -54,11 +50,11 @@
                                 Padding="20,0"/>
                     </Border>
 
-                    <!-- Book icon row -->
+
                     <HorizontalStackLayout Grid.Row="1" Spacing="14"
                                            HorizontalOptions="Center"
                                            Margin="0,0,0,16">
-                        <!-- Decorative lines -->
+
                         <BoxView BackgroundColor="#1E3A6B" HeightRequest="1" WidthRequest="60"
                                  VerticalOptions="Center"/>
                         <Label Text="📖" FontSize="36" VerticalOptions="Center"/>
@@ -66,7 +62,7 @@
                                  VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                    <!-- Title block -->
+
                     <VerticalStackLayout Grid.Row="2" Spacing="6" HorizontalOptions="Center">
                         <Label Text="VOCABULARY"
                                FontSize="11" FontAttributes="Bold"
@@ -82,7 +78,7 @@
                     </VerticalStackLayout>
                 </Grid>
 
-                <!-- Divider -->
+
                 <Border HeightRequest="1" Stroke="Transparent" Margin="32,0,32,32">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -93,12 +89,11 @@
                     </Border.Background>
                 </Border>
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  WORD CARDS                         -->
-                <!-- ═══════════════════════════════════ -->
+ 
+                
                 <VerticalStackLayout Spacing="16" Padding="24,0">
 
-                    <!-- Patterns -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -107,7 +102,7 @@
                             <Shadow Brush="#000000" Offset="0,8" Radius="24" Opacity="0.4"/>
                         </Border.Shadow>
                         <Grid ColumnDefinitions="8,*" ColumnSpacing="0">
-                            <!-- Left accent strip -->
+
                             <Border Grid.Column="0" Stroke="Transparent" StrokeThickness="0">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -119,7 +114,7 @@
                                     <RoundRectangle CornerRadius="20,0,0,20"/>
                                 </Border.StrokeShape>
                             </Border>
-                            <!-- Content -->
+
                             <VerticalStackLayout Grid.Column="1" Spacing="6" Padding="20,18,20,18">
                                 <Grid ColumnDefinitions="*,Auto,Auto">
                                     <Label Grid.Column="0" Text="Patterns" FontSize="20" FontAttributes="Bold" TextColor="#E8F0FF"/>
@@ -146,7 +141,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Rhythm -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -192,7 +187,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Eccentric -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -238,7 +233,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Deliberate -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -284,7 +279,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Intervals -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -330,7 +325,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Sequence -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -376,8 +371,8 @@
                         </Grid>
                     </Border>
 
-                    <!-- Algorithms -->
-                    <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
+
+                   <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -422,7 +417,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Formula -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -468,7 +463,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Observation -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -514,7 +509,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Complex -->
+                 
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -560,7 +555,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Gradually -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -606,7 +601,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Calculation -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -652,7 +647,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Symmetry -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -698,7 +693,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Structure -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -744,7 +739,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Perception -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -790,7 +785,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Confined -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -836,7 +831,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- Extraordinary -->
+
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
@@ -882,7 +877,6 @@
                         </Grid>
                     </Border>
 
-                    <!-- Bottom quote -->
                     <Border BackgroundColor="#0D1528" Stroke="#8B6914" StrokeThickness="1" Padding="28,22" Margin="0,8,0,0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>

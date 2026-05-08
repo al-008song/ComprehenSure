@@ -8,7 +8,6 @@
 
     <Grid>
 
-        <!-- Background decorative blobs — matches MainDashboard exactly -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse
                 Fill="White"
@@ -29,9 +28,6 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- ══════════════════════════════════════════ -->
-                <!-- ROW 0 — HEADER CARD                        -->
-                <!-- ══════════════════════════════════════════ -->
                 <Border
                     Grid.Row="0"
                     Padding="24,20"
@@ -47,7 +43,6 @@
 
                     <Grid ColumnDefinitions="Auto, *" ColumnSpacing="20">
 
-                        <!-- Profile section -->
                         <HorizontalStackLayout
                             Grid.Column="0"
                             Spacing="14"
@@ -81,7 +76,6 @@
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
 
-                        <!-- Centre title -->
                         <VerticalStackLayout
                             Grid.Column="1"
                             HorizontalOptions="FillAndExpand"
@@ -107,9 +101,7 @@
                     </Grid>
                 </Border>
 
-                <!-- ══════════════════════════════════════════ -->
-                <!-- ROW 1 — LOCKED MESSAGE CARD               -->
-                <!-- ══════════════════════════════════════════ -->
+           
                 <Border
                     Grid.Row="1"
                     Padding="40,52"
@@ -125,7 +117,6 @@
 
                     <VerticalStackLayout Spacing="28" HorizontalOptions="Center">
 
-                        <!-- Lock icon -->
                         <Border
                             BackgroundColor="#D6EAFF"
                             HeightRequest="110"
@@ -146,7 +137,6 @@
                                 VerticalOptions="Center" />
                         </Border>
 
-                        <!-- Main locked message -->
                         <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                             <Label
                                 FontAttributes="Bold"
@@ -162,10 +152,8 @@
                                 TextColor="#6B8CAE" />
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView BackgroundColor="#CBDCEB" HeightRequest="1" HorizontalOptions="Fill" />
 
-                        <!-- Module 3 hint -->
                         <Border
                             Padding="22,16"
                             BackgroundColor="#F2F6FB"
@@ -193,7 +181,6 @@
                             </HorizontalStackLayout>
                         </Border>
 
-                        <!-- Quote card -->
                         <Border
                             Padding="28,22"
                             BackgroundColor="White"

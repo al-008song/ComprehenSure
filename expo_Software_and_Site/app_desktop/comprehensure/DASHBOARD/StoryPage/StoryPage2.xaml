@@ -7,7 +7,6 @@
 
     <Grid>
 
-        <!-- Blurred thumbnail background -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Image Source="t2.png"
                    Aspect="AspectFill"
@@ -23,10 +22,8 @@
                                  HorizontalOptions="Center"
                                  MaximumWidthRequest="720">
 
-                <!-- TOP BAR -->
                 <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14">
 
-                    <!-- Back button -->
                     <Border Grid.Column="0"
                             BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
                             VerticalOptions="Center">
@@ -47,7 +44,6 @@
                                 Padding="20,0" />
                     </Border>
 
-                    <!-- Module label -->
                     <VerticalStackLayout Grid.Column="1"
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"
@@ -62,7 +58,6 @@
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
 
-                    <!-- Difficulty badge -->
                     <Border Grid.Column="2"
                             Padding="14,8" BackgroundColor="#E8F5E9"
                             Stroke="#A5D6A7" StrokeThickness="1"
@@ -75,7 +70,6 @@
                     </Border>
                 </Grid>
 
-                <!-- PROGRESS BAR -->
                 <VerticalStackLayout Spacing="6">
                     <Grid ColumnDefinitions="*, Auto">
                         <Label Grid.Column="0"
@@ -109,7 +103,6 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- STORY CARD -->
                 <Border BackgroundColor="White"
                         Stroke="#CBDCEB" StrokeThickness="1"
                         Padding="44,40">
@@ -140,10 +133,8 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- NAVIGATION BAR -->
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
 
-                    <!-- Previous -->
                     <Border x:Name="PrevBtnBorder"
                             Grid.Column="0"
                             BackgroundColor="#0F2D4A" Stroke="Transparent" StrokeThickness="0">
@@ -163,7 +154,6 @@
                                 HeightRequest="52" Padding="22,0" />
                     </Border>
 
-                    <!-- Page dots -->
                     <HorizontalStackLayout Grid.Column="1"
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center"
@@ -182,7 +172,6 @@
                                  CornerRadius="4" BackgroundColor="#CBDCEB" Opacity="0.5" />
                     </HorizontalStackLayout>
 
-                    <!-- Next -->
                     <Border Grid.Column="2"
                             BackgroundColor="#0F2D4A" Stroke="Transparent" StrokeThickness="0">
                         <Border.StrokeShape>
@@ -202,7 +191,6 @@
                     </Border>
                 </Grid>
 
-                <!-- DICTIONARY BUTTON -->
                 <Border BackgroundColor="#D6EAFF"
                         Stroke="#CBDCEB" StrokeThickness="1" Padding="0">
                     <Border.StrokeShape>
@@ -249,7 +237,6 @@
                     </Grid>
                 </Border>
 
-                <!-- GO TO QUIZ -->
                 <Border x:Name="QuizBanner"
                         IsVisible="False"
                         Stroke="#CBDCEB" StrokeThickness="1.5">
@@ -295,7 +282,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- CUSTOM BACK CONFIRMATION POPUP -->
         <Grid x:Name="PopupOverlay"
               IsVisible="False"
               BackgroundColor="#60000000"
@@ -386,6 +372,7 @@
                                         FontAttributes="Bold" FontSize="14"
                                         HeightRequest="52" />
                             </Border>
+                            
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
