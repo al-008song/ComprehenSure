@@ -51,6 +51,8 @@ namespace comprehensure.DataBaseControl.Models
         {
             // FIX:thank god may documentation
             // instead of silently killing navigation and kicking back to MainPage.
+            _ = UsernameExists(_username);
+
             try
             {
                 if (string.IsNullOrWhiteSpace(_username))
