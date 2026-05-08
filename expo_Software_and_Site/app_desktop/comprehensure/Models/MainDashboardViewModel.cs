@@ -21,7 +21,7 @@ namespace comprehensure.DataBaseControl.Models
         private static readonly TimeSpan LeaderboardTtl = TimeSpan.FromMinutes(5);
 
         private string _cachedUsername = null;
-        private double _cachedAccountComprehension = -1; // -1 = not yet loaded
+        private double _cachedAccountComprehension = -1; // -1 = not yet loaded aka it be empty fr it shows up like this -
 
         [ObservableProperty]
         private string firstPlayerName = "—";
@@ -145,7 +145,7 @@ namespace comprehensure.DataBaseControl.Models
 
             ApplyCachedProfile();
 
-            await showloginwelcome(); // uses _cachedUsername — no read
+            await showloginwelcome(); // uses _cachedUsername it will not read anything (do not bother)
 
             await LoadAccountComprehensionFromDb();
             await LoadScoreOfTotalFromDb();
@@ -161,7 +161,7 @@ namespace comprehensure.DataBaseControl.Models
         {
             string uid = Preferences.Default.Get("SavedUserUid", "");
             if (string.IsNullOrWhiteSpace(uid))
-                return true; // fail-safe: locked
+                return true; 
 
             try
             {
@@ -190,7 +190,7 @@ namespace comprehensure.DataBaseControl.Models
                 );
             }
 
-            return true; // default locked on any error
+            return true; 
         }
 
         private async Task<bool> RedirectIfNoUsername()
@@ -395,10 +395,7 @@ namespace comprehensure.DataBaseControl.Models
             UpdateLeaderboardCacheForCurrentUser((int)Math.Round(AccountComprehension));
         }
 
-        /// <summary>
-        /// After a local score change, update the in-memory leaderboard cache
-        /// for the current user so the UI stays correct without a Firestore read.
-        /// </summary>
+       
         private void UpdateLeaderboardCacheForCurrentUser(int newScore)
         {
             if (_cachedLeaderboard == null || string.IsNullOrEmpty(_cachedUsername))
