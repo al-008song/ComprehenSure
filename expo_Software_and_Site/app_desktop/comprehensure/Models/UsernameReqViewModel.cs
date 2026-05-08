@@ -49,7 +49,120 @@ namespace comprehensure.DataBaseControl.Models
         [RelayCommand]
         public async Task UsernameCheck()
         {
-            _ = UsernameExists(_username);
+            // FIX:thank god may documentation
+            // instead of silently killing navigation and kicking back to MainPage.
+            try
+            {
+                if (string.IsNullOrWhiteSpace(_username))
+                {
+                    await Shell.Current.DisplayAlert("Missing Username", "Please enter a username.", "OK");
+                    return;
+                }
+
+                bool emailAlreadyExists = await EmailExists(UserEmail);
+                if (emailAlreadyExists)
+                    return;
+
+            
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
+        }
+
+    
+        private async Task<bool> EmailExists(string email)
+        {
+            string url  = $"{BaseUrl}:runQuery";
+            string json = JsonSerializer.Serialize(new
+            {
+                structuredQuery = new
+                {
+                    from  = new[] { new { collectionId = "userdata" } },
+                    where = new
+                    {
+                        fieldFilter = new
+                        {
+                            field = new { fieldPath = "Email" },
+                            op    = "EQUAL",
+                            value = new { stringValue = email },
+                        },
+                    },
+                    limit = 1,
+                },
+            });
+
+            HttpResponseMessage response = await client.PostAsync(
+                url,
+                new StringContent(json, Encoding.UTF8, "application/json")
+            );
+
+            string result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(result))
+                return false;
+
+            using var doc  = JsonDocument.Parse(result);
+            var root       = doc.RootElement;
+
+            if (root.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var element in root.EnumerateArray())
+                {
+                    if (element.TryGetProperty("document", out var documentProp))
+                    {
+                        if (documentProp.TryGetProperty("fields", out var fields))
+                        {
+                            // Pull the stored username so we can cache it.
+                            string existingUsername = fields
+                                .TryGetProperty("Username", out var uProp)
+                                    ? uProp.GetProperty("stringValue").GetString() ?? string.Empty
+                                    : string.Empty;
+
+                            string existingUid = fields
+                                .TryGetProperty("Uid", out var uidProp)
+                                    ? uidProp.GetProperty("stringValue").GetString() ?? UserUid
+                                    : UserUid;
+
+                            int moduleFinished = 0;
+                            int scoreOfTotal   = 0;
+
+                            if (fields.TryGetProperty("ModuleFinished", out var mfProp) &&
+                                mfProp.TryGetProperty("integerValue", out var mfVal))
+                                int.TryParse(mfVal.GetString(), out moduleFinished);
+
+                            if (fields.TryGetProperty("ScoreOfTotal", out var stProp) &&
+                                stProp.TryGetProperty("integerValue", out var stVal))
+                                int.TryParse(stVal.GetString(), out scoreOfTotal);
+
+                            await Shell.Current.DisplayAlert(
+                                "Account Found",
+                                $"An account with this email already exists (username: \"{existingUsername}\"). Logging you in.",
+                                "OK"
+                            );
+
+                            Preferences.Default.Set("SavedUserUid",   existingUid);
+                            Preferences.Default.Set("SavedUserEmail", email);
+
+                            UserCache.SaveUser(existingUid, email, existingUsername,
+                                               moduleFinished, scoreOfTotal);
+
+                            await Shell.Current.GoToAsync(
+                                $"MainDashboard?uid={existingUid}&baseUrl={BaseUrl}");
+
+                            return true; 
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         private async Task<bool> UsernameExists(string username)
@@ -85,8 +198,8 @@ namespace comprehensure.DataBaseControl.Models
 
             if (!response.IsSuccessStatusCode)
             {
+                
                 await Shell.Current.DisplayAlert($"Error {(int)response.StatusCode}", result, "OK");
-                _ = UserCreation();
                 return false;
             }
 
@@ -118,7 +231,8 @@ namespace comprehensure.DataBaseControl.Models
                 }
             }
 
-            _ = UserCreation();
+          
+            await UserCreation();
             return false;
         }
 
