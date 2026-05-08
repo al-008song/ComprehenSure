@@ -8,7 +8,6 @@
 
     <Grid>
 
-        <!-- Background decorative blobs -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse Fill="White"    WidthRequest="580" HeightRequest="440"
                      HorizontalOptions="Start" VerticalOptions="Start"
@@ -21,12 +20,8 @@
         <ScrollView VerticalOptions="FillAndExpand">
             <VerticalStackLayout Padding="40,36,40,56" Spacing="28">
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  HEADER BAR                           -->
-                <!-- ══════════════════════════════════════ -->
                 <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16">
 
-                    <!-- Back button -->
                     <Border Grid.Column="0"
                             BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
                             VerticalOptions="Center">
@@ -47,7 +42,6 @@
                                 Padding="20,0" />
                     </Border>
 
-                    <!-- Title + subtitle -->
                     <VerticalStackLayout Grid.Column="1"
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"
@@ -64,13 +58,9 @@
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
 
-                    <!-- Spacer to balance back button -->
                     <BoxView Grid.Column="2" WidthRequest="90" BackgroundColor="Transparent" />
                 </Grid>
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  FAQ SECTION LABEL                    -->
-                <!-- ══════════════════════════════════════ -->
                 <Border Padding="16,10"
                         BackgroundColor="White"
                         Stroke="#CBDCEB" StrokeThickness="1"
@@ -86,11 +76,7 @@
                            TextColor="#6B8CAE" />
                 </Border>
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  FAQ CARDS                            -->
-                <!-- ══════════════════════════════════════ -->
 
-                <!-- ── FAQ 1 ── -->
                 <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="24"/>
@@ -100,7 +86,6 @@
                     </Border.Shadow>
                     <VerticalStackLayout Spacing="0">
 
-                        <!-- Question row (tappable) -->
                         <Grid ColumnDefinitions="*, Auto" Padding="24,20">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="FAQ1_Tapped" />
@@ -122,14 +107,12 @@
                                    Rotation="90" />
                         </Grid>
 
-                        <!-- Divider (only visible when expanded) -->
                         <BoxView x:Name="FAQ1Divider"
                                  HeightRequest="1"
                                  BackgroundColor="#EAF1F8"
                                  IsVisible="False"
                                  Margin="24,0" />
 
-                        <!-- Answer -->
                         <Label x:Name="FAQ1Answer"
                                Text="ComprehenSure provides reading passages followed by comprehension quiz. Users complete the tasks and review their results to monitor their understanding and progress."
                                FontSize="14"
@@ -141,7 +124,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- ── FAQ 2 ── -->
                 <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="24"/>
@@ -189,7 +171,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- ── FAQ 3 ── -->
                 <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="24"/>
@@ -237,7 +218,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- ── FAQ 4 ── -->
                 <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="24"/>
@@ -285,7 +265,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- ── FAQ 5 ── -->
                 <Border BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="24"/>

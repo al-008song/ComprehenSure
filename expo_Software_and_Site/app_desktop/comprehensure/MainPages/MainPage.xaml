@@ -7,7 +7,6 @@
 
     <Grid>
 
-        <!-- Background decorative blobs -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse Fill="White"   WidthRequest="580" HeightRequest="440"
                      HorizontalOptions="Start" VerticalOptions="Start"
@@ -20,15 +19,12 @@
         <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
             <VerticalStackLayout Spacing="32" WidthRequest="400" Padding="20">
 
-                <!-- ── Logo ── -->
-                <!-- Key fix: BackgroundColor="Transparent" + no Frame border -->
                 <Image Source="appcs.png"
                        Aspect="AspectFit"
                        HeightRequest="180"
                        WidthRequest="180"
                        HorizontalOptions="Center" />
 
-                <!-- ── App name + tagline ── -->
                 <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
                     <Label Text="ComprehenSure"
                            FontSize="34" FontAttributes="Bold"
@@ -40,10 +36,8 @@
                            HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
 
-                <!-- ── CTA buttons ── -->
                 <VerticalStackLayout Spacing="14" HorizontalOptions="Fill">
 
-                    <!-- Login — primary -->
                     <Border BackgroundColor="#0F2D4A"
                             Stroke="Transparent" StrokeThickness="0">
                         <Border.StrokeShape>
@@ -62,7 +56,6 @@
                                 CharacterSpacing="2.0" />
                     </Border>
 
-                    <!-- Sign Up — outlined -->
                     <Border BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1.5">
                         <Border.StrokeShape>
@@ -82,7 +75,6 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- ── Quote banner ── -->
                 <Border Padding="24,18"
                         Stroke="#E8C547" StrokeThickness="1">
                     <Border.Background>

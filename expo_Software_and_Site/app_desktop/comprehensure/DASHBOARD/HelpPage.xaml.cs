@@ -7,6 +7,14 @@ public partial class HelpPage : ContentPage
     public HelpPage()
     {
         InitializeComponent();
+        Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
+        Shell.SetNavBarIsVisible(this, false);
+        Shell.SetNavBarHasShadow(this, false);
+        Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+        {
+            IsVisible = false,
+            IsEnabled = false
+        });
     }
 
     private void BackButton_Clicked(object sender, EventArgs e)

@@ -7,7 +7,6 @@
 
     <Grid>
 
-        <!-- Background blobs -->
         <Grid InputTransparent="True" HorizontalOptions="Fill" VerticalOptions="Fill">
             <Ellipse Fill="#1A2744" WidthRequest="500" HeightRequest="500"
                      HorizontalOptions="Start" VerticalOptions="Start"
@@ -25,9 +24,6 @@
                                  HorizontalOptions="Center"
                                  MaximumWidthRequest="760">
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  HERO HEADER                        -->
-                <!-- ═══════════════════════════════════ -->
                 <Grid Padding="32,52,32,32">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -35,7 +31,6 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Back button -->
                     <Border Grid.Row="0"
                             BackgroundColor="#0F1A30" Stroke="#1E3A6B" StrokeThickness="1"
                             HorizontalOptions="Start" Margin="0,0,0,28">
@@ -53,7 +48,6 @@
                                 Padding="20,0"/>
                     </Border>
 
-                    <!-- Book icon row -->
                     <HorizontalStackLayout Grid.Row="1" Spacing="14"
                                            HorizontalOptions="Center"
                                            Margin="0,0,0,16">
@@ -64,7 +58,6 @@
                                  VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                    <!-- Title block -->
                     <VerticalStackLayout Grid.Row="2" Spacing="6" HorizontalOptions="Center">
                         <Label Text="MASTER VOCABULARY"
                                FontSize="11" FontAttributes="Bold"
@@ -80,7 +73,6 @@
                     </VerticalStackLayout>
                 </Grid>
 
-                <!-- Divider -->
                 <Border HeightRequest="1" Stroke="Transparent" Margin="32,0,32,28">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -91,12 +83,8 @@
                     </Border.Background>
                 </Border>
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  DIFFICULTY FILTER TABS             -->
-                <!-- ═══════════════════════════════════ -->
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12" Padding="24,0,24,24">
 
-                    <!-- EASY tab -->
                     <Border x:Name="EasyTabBorder"
                             Grid.Column="0"
                             BackgroundColor="#1B4A1B"
@@ -118,7 +106,6 @@
                                 HeightRequest="60"/>
                     </Border>
 
-                    <!-- AVERAGE tab -->
                     <Border x:Name="AvgTabBorder"
                             Grid.Column="1"
                             BackgroundColor="#0F1A30"
@@ -137,7 +124,6 @@
                                 HeightRequest="60"/>
                     </Border>
 
-                    <!-- INTERMEDIATE tab -->
                     <Border x:Name="IntTabBorder"
                             Grid.Column="2"
                             BackgroundColor="#0F1A30"
@@ -158,9 +144,6 @@
 
                 </Grid>
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  EASY WORDS PANEL                   -->
-                <!-- ═══════════════════════════════════ -->
                 <VerticalStackLayout x:Name="EasyPanel" Spacing="16" Padding="24,0">
 
                     <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
@@ -1396,9 +1379,6 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  AVERAGE WORDS PANEL                -->
-                <!-- ═══════════════════════════════════ -->
                 <VerticalStackLayout x:Name="AvgPanel" IsVisible="False" Spacing="16" Padding="24,0">
 
                     <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
@@ -2678,9 +2658,6 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- ═══════════════════════════════════ -->
-                <!--  INTERMEDIATE WORDS PANEL           -->
-                <!-- ═══════════════════════════════════ -->
                 <VerticalStackLayout x:Name="IntPanel" IsVisible="False" Spacing="16" Padding="24,0">
 
                     <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
@@ -3649,10 +3626,9 @@
                                 <Label Text="This means held back or kept secret." FontSize="14" TextColor="#7EB8F7" LineHeight="1.5"/>
                             </VerticalStackLayout>
                         </Grid>
-                    </Border>
+                    </Border> 
                 </VerticalStackLayout>
 
-                <!-- Bottom tip -->
                 <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1"
                         Padding="28,22" Margin="24,24,24,0">
                     <Border.StrokeShape>
