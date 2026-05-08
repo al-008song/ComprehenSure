@@ -60,6 +60,9 @@ namespace comprehensure.DataBaseControl.Models
         private string _displayPercentage = "0%";
 
         [ObservableProperty]
+        private string _scoreDisplay = "—";
+
+        [ObservableProperty]
         private bool _isMinigameLocked = true;
 
         partial void OnIsMinigameLockedChanged(bool value)
@@ -145,6 +148,7 @@ namespace comprehensure.DataBaseControl.Models
             await showloginwelcome(); // uses _cachedUsername — no read
 
             await LoadAccountComprehensionFromDb();
+            await LoadScoreOfTotalFromDb();
 
             IsMinigameLocked = await checkforminigameunlock();
 
@@ -473,6 +477,37 @@ namespace comprehensure.DataBaseControl.Models
                 System.Diagnostics.Debug.WriteLine(
                     $"[LoadAccountComprehensionFromDb] {ex.Message}"
                 );
+            }
+        }
+        public async Task LoadScoreOfTotalFromDb()
+        {
+            string uid = Preferences.Default.Get("SavedUserUid", "");
+            if (string.IsNullOrEmpty(uid))
+                return;
+
+            string url = $"{BaseUrl}/userdata/{uid}";
+            try
+            {
+                var response = await client.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                    return;
+
+                var json = await response.Content.ReadAsStringAsync();
+                using var doc = JsonDocument.Parse(json);
+                var fields = doc.RootElement.GetProperty("fields");
+
+                if (
+                    fields.TryGetProperty("ScoreOfTotal", out var sotProp)
+                    && sotProp.TryGetProperty("integerValue", out var sotVal)
+                )
+                {
+                    int score = ReadFirestoreInt(sotVal);
+                    ScoreDisplay = $"{score} pts";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[LoadScoreOfTotalFromDb] {ex.Message}");
             }
         }
     }

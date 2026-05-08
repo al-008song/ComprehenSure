@@ -125,34 +125,54 @@
                                     LineBreakMode="TailTruncation" />
                             </VerticalStackLayout>
 
-                            <!-- Progress ring -->
-                            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="4">
-                                <Grid HeightRequest="72" WidthRequest="72" HorizontalOptions="Center">
-                                    <Ellipse Fill="Transparent" Stroke="#D6EAFF" StrokeThickness="10" />
-                                    <Ellipse
-                                        x:Name="DashboardProgressCircle"
-                                        Fill="Transparent"
-                                        Rotation="-90"
-                                        Stroke="#0F2D4A"
-                                        StrokeDashArray="100,100"
-                                        StrokeDashOffset="{Binding StrokeOffset}"
-                                        StrokeThickness="10" />
+                            <!-- Progress ring + score -->
+                            <Grid
+                                Grid.Column="2"
+                                ColumnDefinitions="Auto, Auto"
+                                ColumnSpacing="12"
+                                VerticalOptions="Center">
+                                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="2">
                                     <Label
+                                        CharacterSpacing="1.2"
                                         FontAttributes="Bold"
-                                        FontSize="16"
+                                        FontSize="14"
+                                        Text="{Binding ScoreDisplay}"
+                                        TextColor="#0F2D4A" />
+                                    <Label
+                                        CharacterSpacing="1.4"
+                                        FontAttributes="Bold"
+                                        FontSize="8"
+                                        Text="SCORE"
+                                        TextColor="#6B8CAE" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="4">
+                                    <Grid HeightRequest="90" WidthRequest="90">
+                                        <Ellipse Fill="Transparent" Stroke="#D6EAFF" StrokeThickness="10" />
+                                        <Ellipse
+                                            x:Name="DashboardProgressCircle"
+                                            Fill="Transparent"
+                                            Rotation="-90"
+                                            Stroke="#0F2D4A"
+                                            StrokeDashArray="100,100"
+                                            StrokeDashOffset="{Binding StrokeOffset}"
+                                            StrokeThickness="10" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="19"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding DisplayPercentage}"
+                                            TextColor="#0F2D4A"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                    <Label
+                                        CharacterSpacing="1.4"
+                                        FontAttributes="Bold"
+                                        FontSize="8"
                                         HorizontalOptions="Center"
-                                        Text="{Binding DisplayPercentage}"
-                                        TextColor="#0F2D4A"
-                                        VerticalOptions="Center" />
-                                </Grid>
-                                <Label
-                                    CharacterSpacing="1.4"
-                                    FontAttributes="Bold"
-                                    FontSize="8"
-                                    HorizontalOptions="Center"
-                                    Text="PROGRESS"
-                                    TextColor="#6B8CAE" />
-                            </VerticalStackLayout>
+                                        Text="PROGRESS"
+                                        TextColor="#6B8CAE" />
+                                </VerticalStackLayout>
+                            </Grid>
 
                         </Grid>
 
