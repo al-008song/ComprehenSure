@@ -108,7 +108,7 @@
                             <Shadow Brush="#2E7D32" Offset="0,4" Radius="12" Opacity="0.25"/>
                         </Border.Shadow>
                         <Button x:Name="EasyTab"
-                                Text="🟢  EASY&#10;28 words"
+                                Text="🟢  &#10;28 words"
                                 Clicked="OnEasyTabClicked"
                                 BackgroundColor="Transparent"
                                 TextColor="#A5D6A7"
@@ -127,7 +127,7 @@
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
                         <Button x:Name="AvgTab"
-                                Text="🟡  AVERAGE&#10;29 words"
+                                Text="🟡 &#10;29 words"
                                 Clicked="OnAvgTabClicked"
                                 BackgroundColor="Transparent"
                                 TextColor="#4A6A9A"
@@ -146,7 +146,7 @@
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
                         <Button x:Name="IntTab"
-                                Text="🔴  INTERMEDIATE&#10;22 words"
+                                Text="🔴  &#10;22 words"
                                 Clicked="OnIntTabClicked"
                                 BackgroundColor="Transparent"
                                 TextColor="#4A6A9A"
