@@ -3626,7 +3626,7 @@
                                 <Label Text="This means held back or kept secret." FontSize="14" TextColor="#7EB8F7" LineHeight="1.5"/>
                             </VerticalStackLayout>
                         </Grid>
-                    </Border>
+                    </Border> 
                 </VerticalStackLayout>
 
                 <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1"

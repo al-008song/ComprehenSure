@@ -2,15 +2,13 @@ using comprehensure.DASHBOARD;
 using comprehensure.DASHBOARD.MiniGames;
 using comprehensure.DASHBOARD.StoryPage;
 using comprehensure.Models;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace comprehensure
 {
     public partial class AppShell : Shell
     {
-    
-        private Grid? _popupOverlay;
-        private TaskCompletionSource<bool>? _popupTcs;
-
+        private Grid? _logoutOverlay;
 
         public AppShell()
         {
@@ -43,37 +41,23 @@ namespace comprehensure
             Routing.RegisterRoute("HelpPage", typeof(HelpPage));
             Routing.RegisterRoute("ChangePassword", typeof(ChangePassword));
 
-            _popupOverlay = BuildPopupOverlay();
+            _logoutOverlay = BuildLogoutOverlay();
         }
 
-       
         private async void OnLogOutClicked(object sender, EventArgs e)
         {
             FlyoutIsPresented = false;
-            await Task.Delay(250); // wait for flyout to close it weird gliches occur when u remove this
+            await Task.Delay(300);
 
-            bool confirmed = await ShowLogoutPopup();
-            if (confirmed)
-            {
-                Preferences.Default.Remove("SavedUserUid");
-                Preferences.Default.Remove("SavedUserEmail");
-                await GoToAsync("///MainPage");
-            }
-        }
-      
-        private Task<bool> ShowLogoutPopup()
-        {
-            _popupTcs = new TaskCompletionSource<bool>();
+            ContentPage? page = null;
+            var stack = Shell.Current?.Navigation?.NavigationStack;
+            if (stack != null)
+                for (int i = stack.Count - 1; i >= 0; i--)
+                    if (stack[i] is ContentPage cp) { page = cp; break; }
+            page ??= Shell.Current?.CurrentPage as ContentPage;
 
-           
-            ContentPage? page = GetCurrentPage();
-            if (page == null)
-            {
-                _popupTcs.SetResult(false);
-                return _popupTcs.Task;
-            }
+            if (page == null || _logoutOverlay == null) return;
 
-         
             Grid root;
             if (page.Content is Grid g)
             {
@@ -87,49 +71,36 @@ namespace comprehensure
                 page.Content = root;
             }
 
-            if (_popupOverlay!.Parent != null)
-                root.Children.Remove(_popupOverlay);
+            if (_logoutOverlay.Parent is Grid oldParent)
+                oldParent.Children.Remove(_logoutOverlay);
 
-            root.Children.Add(_popupOverlay);
-            _popupOverlay.IsVisible = true;
-
-            return _popupTcs.Task;
+            root.Children.Add(_logoutOverlay);
+            _logoutOverlay.IsVisible = true;
         }
 
-        private void HidePopup(bool result)
+        private void HideOverlay()
         {
-            if (_popupOverlay != null)
-                _popupOverlay.IsVisible = false;
-
-            _popupTcs?.TrySetResult(result);
+            if (_logoutOverlay == null) return;
+            _logoutOverlay.IsVisible = false;
+            if (_logoutOverlay.Parent is Grid parent)
+                parent.Children.Remove(_logoutOverlay);
         }
 
-       
-        private void OnLogoutConfirm(object sender, EventArgs e) => HidePopup(true);
-        private void OnLogoutCancel(object sender, EventArgs e) => HidePopup(false);
-
-      
-        private static ContentPage? GetCurrentPage()
+        private async void OnLogoutConfirm(object sender, EventArgs e)
         {
-          
-            var stack = Shell.Current?.Navigation?.NavigationStack;
-            if (stack != null)
-                for (int i = stack.Count - 1; i >= 0; i--)
-                    if (stack[i] is ContentPage cp) return cp;
-
-      
-            if (Shell.Current?.CurrentPage is ContentPage sp)
-                return sp;
-
-            return null;
+            HideOverlay();
+            Preferences.Default.Clear();
+            await GoToAsync("///MainPage");
         }
 
-      
-        private Grid BuildPopupOverlay()
-        
+        private void OnLogoutCancel(object sender, EventArgs e)
         {
-         
-            var yesBtn = new Button
+            HideOverlay();
+        }
+
+        private Grid BuildLogoutOverlay()
+        {
+            var confirmBtn = new Button
             {
                 Text = "Yes, log out",
                 BackgroundColor = Colors.Transparent,
@@ -139,19 +110,18 @@ namespace comprehensure
                 FontSize = 14,
                 HeightRequest = 52,
             };
-            yesBtn.Clicked += OnLogoutConfirm;
+            confirmBtn.Clicked += OnLogoutConfirm;
 
-            var yesBorder = new Border
+            var confirmBorder = new Border
             {
                 BackgroundColor = Color.FromArgb("#0F2D4A"),
                 Stroke = Colors.Transparent,
                 StrokeThickness = 0,
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(26) },
+                StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(26) },
                 Shadow = new Shadow { Brush = new SolidColorBrush(Color.FromArgb("#0F2D4A")), Offset = new Point(0, 6), Radius = 16, Opacity = 0.22f },
-                Content = yesBtn,
+                Content = confirmBtn,
             };
 
-           
             var cancelBtn = new Button
             {
                 Text = "Cancel",
@@ -169,12 +139,11 @@ namespace comprehensure
                 BackgroundColor = Colors.Transparent,
                 Stroke = Color.FromArgb("#CBDCEB"),
                 StrokeThickness = 1.5,
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(26) },
+                StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(26) },
                 Content = cancelBtn,
             };
 
-         
-            var gradientBand = new Border
+            var gradientBar = new Border
             {
                 HeightRequest = 6,
                 Stroke = Colors.Transparent,
@@ -187,10 +156,9 @@ namespace comprehensure
                     },
                     new Point(0, 0), new Point(1, 0)
                 ),
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(36, 36, 0, 0) },
+                StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(36, 36, 0, 0) },
             };
 
-      
             var iconChip = new Border
             {
                 BackgroundColor = Color.FromArgb("#D6EAFF"),
@@ -199,7 +167,7 @@ namespace comprehensure
                 HeightRequest = 64,
                 WidthRequest = 64,
                 HorizontalOptions = LayoutOptions.Center,
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(32) },
+                StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(32) },
                 Content = new Label
                 {
                     Text = "\U0001F6AA",
@@ -209,23 +177,22 @@ namespace comprehensure
                 },
             };
 
-       
             var card = new Border
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                WidthRequest = 380,
+                WidthRequest = 360,
                 BackgroundColor = Colors.White,
                 Stroke = Color.FromArgb("#CBDCEB"),
                 StrokeThickness = 1,
-                StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(36) },
+                StrokeShape = new RoundRectangle { CornerRadius = new CornerRadius(36) },
                 Shadow = new Shadow { Brush = new SolidColorBrush(Color.FromArgb("#0F2D4A")), Offset = new Point(0, 16), Radius = 48, Opacity = 0.15f },
                 Content = new VerticalStackLayout
                 {
                     Spacing = 0,
                     Children =
                     {
-                        gradientBand,
+                        gradientBar,
                         new VerticalStackLayout
                         {
                             Spacing = 20,
@@ -250,18 +217,26 @@ namespace comprehensure
                                     LineHeight = 1.6,
                                     LineBreakMode = LineBreakMode.WordWrap,
                                 },
-                                new BoxView { HeightRequest = 1, BackgroundColor = Color.FromArgb("#D6EAFF"), Margin = new Thickness(0, 4) },
-                                new VerticalStackLayout { Spacing = 12, Children = { yesBorder, cancelBorder } },
+                                new BoxView
+                                {
+                                    HeightRequest = 1,
+                                    BackgroundColor = Color.FromArgb("#D6EAFF"),
+                                    Margin = new Thickness(0, 4),
+                                },
+                                new VerticalStackLayout
+                                {
+                                    Spacing = 12,
+                                    Children = { confirmBorder, cancelBorder }
+                                },
                             },
                         },
                     },
                 },
             };
 
-        
             var overlay = new Grid
             {
-                BackgroundColor = Color.FromArgb("#60000000"),
+                BackgroundColor = Color.FromArgb("#80000000"),
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill,
                 IsVisible = false,
