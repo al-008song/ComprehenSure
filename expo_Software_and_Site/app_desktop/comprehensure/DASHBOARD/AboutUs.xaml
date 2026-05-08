@@ -7,7 +7,6 @@
 
     <Grid>
 
-        <!-- Background decorative blobs -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse
                 Fill="White"
@@ -30,12 +29,8 @@
             <VerticalStackLayout Spacing="20" Padding="20,32,20,56"
                                  HorizontalOptions="Fill">
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  TOP BAR — back + title               -->
-                <!-- ══════════════════════════════════════ -->
                 <Grid ColumnDefinitions="Auto, *" ColumnSpacing="14" HorizontalOptions="Fill">
 
-                    <!-- Back button -->
                     <Border Grid.Column="0"
                             BackgroundColor="White" Stroke="#BDD4E8" StrokeThickness="1"
                             VerticalOptions="Center">
@@ -56,7 +51,6 @@
                                 Padding="18,0" />
                     </Border>
 
-                    <!-- Page title -->
                     <Label Grid.Column="1"
                            Text="ALL ABOUT US"
                            FontSize="26" FontAttributes="Bold"
@@ -66,9 +60,7 @@
                            VerticalOptions="Center" />
                 </Grid>
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  SECTION LABEL                        -->
-                <!-- ══════════════════════════════════════ -->
+
                 <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                     <Label Text="OUR TEAM"
                            FontSize="11" FontAttributes="Bold"
@@ -79,9 +71,6 @@
                              HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  VERTICAL MEMBER CARD LIST            -->
-                <!-- ══════════════════════════════════════ -->
                 <Border BackgroundColor="White"
                         Stroke="#C4D8EC" StrokeThickness="1"
                         Padding="20,28"
@@ -95,9 +84,6 @@
 
                     <VerticalStackLayout Spacing="16" HorizontalOptions="Fill">
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Fren — Leader              -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1.5"
@@ -111,7 +97,6 @@
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnMemberTapped" CommandParameter="Fren" />
                                 </Border.GestureRecognizers>
-                                <!-- Horizontal layout: avatar left, text right -->
                                 <Grid ColumnDefinitions="Auto, *" ColumnSpacing="16"
                                       Padding="16,0" VerticalOptions="Center">
                                     <Border Grid.Column="0"
@@ -137,7 +122,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Fren -->
                             <Border x:Name="Desc_Fren"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -155,12 +139,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Franz                      -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1.5"
@@ -199,7 +179,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Franz -->
                             <Border x:Name="Desc_Franz"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -217,12 +196,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Abbey                      -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1.5"
@@ -261,7 +236,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Abbey -->
                             <Border x:Name="Desc_Abbey"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -279,12 +253,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Japlyn                     -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1"
@@ -323,7 +293,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Japlyn -->
                             <Border x:Name="Desc_Japlyn"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -341,12 +310,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  York                       -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1"
@@ -385,7 +350,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — York -->
                             <Border x:Name="Desc_York"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -403,12 +367,9 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Abram                      -->
-                        <!-- ─────────────────────────── -->
+   
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1"
@@ -447,7 +408,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Abram -->
                             <Border x:Name="Desc_Abram"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -465,12 +425,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Charly                     -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1"
@@ -509,7 +465,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Charly -->
                             <Border x:Name="Desc_Charly"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -527,12 +482,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Daniel                     -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1"
@@ -571,7 +522,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Daniel -->
                             <Border x:Name="Desc_Daniel"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"
@@ -589,12 +539,8 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" Color="#E0EBF5" HorizontalOptions="Fill" Margin="0,4" />
 
-                        <!-- ─────────────────────────── -->
-                        <!--  Megan                      -->
-                        <!-- ─────────────────────────── -->
                         <VerticalStackLayout Spacing="0" HorizontalOptions="Fill">
                             <Border BackgroundColor="#D9EEFF"
                                     Stroke="#A8C8E8" StrokeThickness="1"
@@ -633,7 +579,6 @@
                                     </VerticalStackLayout>
                                 </Grid>
                             </Border>
-                            <!-- Inline description — Megan -->
                             <Border x:Name="Desc_Megan"
                                     IsVisible="False"
                                     BackgroundColor="#EAF4FF"

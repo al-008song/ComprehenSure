@@ -7,7 +7,6 @@
 
     <Grid>
 
-        <!-- Background decorative blobs -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse Fill="White"   WidthRequest="580" HeightRequest="440"
                      HorizontalOptions="Start" VerticalOptions="Start"
@@ -28,7 +27,6 @@
                            HorizontalOptions="Center"
                            Margin="0,6,0,0" />
 
-                <!-- ── Heading ── -->
                 <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                     <Label Text="Create Account"
                            FontSize="34" FontAttributes="Bold"
@@ -39,7 +37,6 @@
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
 
-                <!-- ── Form card ── -->
                 <Border BackgroundColor="White"
                         Padding="36,32"
                         Stroke="#CBDCEB" StrokeThickness="1">
@@ -52,7 +49,6 @@
 
                     <VerticalStackLayout Spacing="16">
 
-                        <!-- Email field -->
                         <VerticalStackLayout Spacing="6">
                             <Label Text="EMAIL ADDRESS"
                                    FontSize="10" FontAttributes="Bold"
@@ -75,7 +71,6 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Password field -->
                         <VerticalStackLayout Spacing="6">
                             <Label Text="PASSWORD"
                                    FontSize="10" FontAttributes="Bold"
@@ -86,7 +81,6 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="20" />
                                 </Border.StrokeShape>
-                                <!-- Grid lets the eye button float over the right edge of the Entry -->
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -114,7 +108,6 @@
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Password hint -->
                         <Border BackgroundColor="#FFF8DC"
                                 Stroke="#E8C547" StrokeThickness="1"
                                 Padding="16,12">
@@ -130,10 +123,8 @@
                             </HorizontalStackLayout>
                         </Border>
 
-                        <!-- Divider -->
                         <BoxView HeightRequest="1" BackgroundColor="#EBF4FF" Margin="0,4" />
 
-                        <!-- Sign up button -->
                         <Border BackgroundColor="#0F2D4A"
                                 Stroke="Transparent" StrokeThickness="0">
                             <Border.StrokeShape>
@@ -156,7 +147,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- ── Login link ── -->
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                     <Label Text="Already have an account?"
                            TextColor="#6B8CAE" FontSize="14" />

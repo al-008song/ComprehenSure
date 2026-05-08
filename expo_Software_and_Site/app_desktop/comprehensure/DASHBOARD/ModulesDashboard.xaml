@@ -8,7 +8,6 @@
 
     <Grid>
 
-        <!-- Background decorative blobs -->
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
             <Ellipse Fill="White"    WidthRequest="580" HeightRequest="440"
                      HorizontalOptions="Start" VerticalOptions="Start"
@@ -21,12 +20,9 @@
         <ScrollView VerticalOptions="FillAndExpand">
             <VerticalStackLayout Padding="40,36,40,56" Spacing="28">
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  HEADER BAR                           -->
-                <!-- ══════════════════════════════════════ -->
+   
                 <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="16">
 
-                    <!-- Back button -->
                     <Border Grid.Column="0"
                             BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
                             VerticalOptions="Center">
@@ -47,7 +43,6 @@
                                 Padding="20,0" />
                     </Border>
 
-                    <!-- Title + subtitle -->
                     <VerticalStackLayout Grid.Column="1"
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"
@@ -64,13 +59,11 @@
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
 
-                    <!-- Spacer to balance back button -->
                     <BoxView Grid.Column="2" WidthRequest="90" BackgroundColor="Transparent" />
                 </Grid>
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  DIFFICULTY LEGEND                    -->
-                <!-- ══════════════════════════════════════ -->
+
+                
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
                     <Border Padding="14,8" BackgroundColor="#E8F5E9" Stroke="#A5D6A7" StrokeThickness="1">
                         <Border.StrokeShape>
@@ -92,9 +85,7 @@
                     </Border>
                 </HorizontalStackLayout>
 
-                <!-- ══════════════════════════════════════ -->
-                <!--  MODULE CARDS GRID                    -->
-                <!-- ══════════════════════════════════════ -->
+                
                 <FlexLayout
                     AlignContent="Start"
                     AlignItems="Start"
@@ -102,9 +93,8 @@
                     JustifyContent="Center"
                     Wrap="Wrap">
 
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 1 – Easy                                   -->
-                    <!-- ══════════════════════════════════════════════════ -->
+
+
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -121,14 +111,14 @@
                             <Shadow Brush="#0F2D4A" Offset="0,8" Radius="24" Opacity="0.07" />
                         </Border.Shadow>
 
-                        <!-- Stacking grid: card content sits below the lock overlay -->
+
                         <Grid>
 
-                            <!-- ── Card Content ── -->
+
                             <Grid RowDefinitions="Auto, *, Auto, Auto"
                                   Padding="24,24,24,28" RowSpacing="14">
 
-                                <!-- Thumbnail -->
+
                                 <Border Grid.Row="0" HeightRequest="130"
                                         BackgroundColor="Transparent" StrokeThickness="0">
                                     <Border.StrokeShape>
@@ -138,7 +128,6 @@
                                            HorizontalOptions="Fill" VerticalOptions="Fill"/>
                                 </Border>
 
-                                <!-- Info -->
                                 <VerticalStackLayout Grid.Row="1" Spacing="6" VerticalOptions="Center">
                                     <Border Padding="10,5" BackgroundColor="#E8F5E9"
                                             Stroke="#A5D6A7" StrokeThickness="1"
@@ -155,7 +144,6 @@
                                            TextColor="#0F2D4A" LineBreakMode="WordWrap" />
                                 </VerticalStackLayout>
 
-                                <!-- START READING button -->
                                 <Border Grid.Row="2" BackgroundColor="#0F2D4A"
                                         Stroke="Transparent" StrokeThickness="0">
                                     <Border.StrokeShape>
@@ -172,7 +160,6 @@
                                             CharacterSpacing="1.0" />
                                 </Border>
 
-                                <!-- Progress bar + percentage -->
                                 <Grid Grid.Row="3" ColumnDefinitions="*, Auto" ColumnSpacing="8">
                                     <ProgressBar Grid.Column="0"
                                                  Progress="{Binding Module1Progress}"
@@ -187,7 +174,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay (Module 1 – no previous module) ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule1Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -202,10 +188,6 @@
 
                         </Grid>
                     </Border>
-
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 2 – Easy                                   -->
-                    <!-- ══════════════════════════════════════════════════ -->
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -224,7 +206,6 @@
 
                         <Grid>
 
-                            <!-- ── Card Content ── -->
                             <Grid RowDefinitions="Auto, *, Auto, Auto"
                                   Padding="24,24,24,28" RowSpacing="14">
 
@@ -283,7 +264,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule2Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -302,10 +282,7 @@
 
                         </Grid>
                     </Border>
-
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 3 – Easy                                   -->
-                    <!-- ══════════════════════════════════════════════════ -->
+   
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -382,7 +359,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule3Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -402,9 +378,8 @@
                         </Grid>
                     </Border>
 
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 4 – Average                                -->
-                    <!-- ══════════════════════════════════════════════════ -->
+                    
+                    
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -481,7 +456,7 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
+
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule4Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -501,9 +476,8 @@
                         </Grid>
                     </Border>
 
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 5 – Average                                -->
-                    <!-- ══════════════════════════════════════════════════ -->
+
+                   
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -580,7 +554,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule5Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -600,9 +573,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 6 – Average                                -->
-                    <!-- ══════════════════════════════════════════════════ -->
+          
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -679,7 +650,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule6Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -699,9 +669,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 7 – Intermediate                           -->
-                    <!-- ══════════════════════════════════════════════════ -->
+
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -778,7 +746,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule7Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />
@@ -798,9 +765,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- ══════════════════════════════════════════════════ -->
-                    <!-- MODULE 8 – Intermediate                           -->
-                    <!-- ══════════════════════════════════════════════════ -->
+                
                     <Border Margin="12" WidthRequest="300" BackgroundColor="White"
                             Stroke="#CBDCEB" StrokeThickness="1">
                         <Border.GestureRecognizers>
@@ -877,7 +842,6 @@
                                 </Grid>
                             </Grid>
 
-                            <!-- ── Lock Overlay ── -->
                             <BoxView Color="#C8F2F6FB"
                                      IsVisible="{Binding IsModule8Locked}"
                                      HorizontalOptions="Fill" VerticalOptions="Fill" />

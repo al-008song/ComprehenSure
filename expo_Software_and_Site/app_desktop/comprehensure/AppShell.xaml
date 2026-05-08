@@ -45,12 +45,9 @@
         </Grid>
     </Shell.FlyoutHeader>
 
-    <!-- Default landing page — must be first so Shell loads it on startup -->
     <ShellContent Shell.FlyoutItemIsVisible="False" Title="Login" ContentTemplate="{DataTemplate local:LoginPage}" Route="Login" />
 
-    <!-- ══════════════════════════════════════════════════ -->
-    <!--  FLYOUT ITEMS                                      -->
-    <!-- ══════════════════════════════════════════════════ -->
+
 
     <FlyoutItem Title="Dashboard" Icon="home.png">
         <Shell.ItemTemplate>
@@ -124,17 +121,11 @@
         <ShellContent ContentTemplate="{DataTemplate dashboard:ModulesDashboard}" Route="ModuleDashboard" />
     </FlyoutItem>
 
-
-    <!-- ══════════════════════════════════════════════════ -->
-    <!--  HIDDEN SHELL CONTENTS                            -->
-    <!-- ══════════════════════════════════════════════════ -->
     <ShellContent Shell.FlyoutItemIsVisible="False" Title="SignUp"   ContentTemplate="{DataTemplate local:SignUpPage}"      Route="SignUpPage" />
     <ShellContent Shell.FlyoutItemIsVisible="False" Title="Username" ContentTemplate="{DataTemplate dashboard:UsernameReq}" Route="UsernameReq" />
     <ShellContent Shell.FlyoutItemIsVisible="False" Title="MainPage" ContentTemplate="{DataTemplate local:MainPage}"        Route="MainPage" />
 
-    <!-- ══════════════════════════════════════════════════ -->
-    <!--  FLYOUT FOOTER — Log Out                          -->
-    <!-- ══════════════════════════════════════════════════ -->
+
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="14,0,14,32" Spacing="0">
             <BoxView HeightRequest="1" BackgroundColor="#CBDCEB" Margin="4,0,4,14" />
