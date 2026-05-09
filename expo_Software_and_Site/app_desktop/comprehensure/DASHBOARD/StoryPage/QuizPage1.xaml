@@ -1,103 +1,147 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="comprehensure.DASHBOARD.StoryPage.QuizPage1"
-             BackgroundColor="#F2F6FB"
-             Shell.NavBarIsVisible="False">
+<ContentPage
+    x:Class="comprehensure.DASHBOARD.StoryPage.QuizPage1"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    BackgroundColor="#F2F6FB"
+    Shell.NavBarIsVisible="False">
 
     <Grid>
 
-        <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
-            <Ellipse Fill="White"   WidthRequest="580" HeightRequest="440"
-                     HorizontalOptions="Start" VerticalOptions="Start"
-                     Margin="-140,-110,0,0" Opacity="0.75" />
-            <Ellipse Fill="#D6EAFF" WidthRequest="460" HeightRequest="380"
-                     HorizontalOptions="End" VerticalOptions="End"
-                     Margin="0,0,-110,-60" Opacity="0.45" />
+        <Grid
+            HorizontalOptions="Fill"
+            InputTransparent="True"
+            VerticalOptions="Fill">
+            <Ellipse
+                Margin="-140,-110,0,0"
+                Fill="White"
+                HeightRequest="440"
+                HorizontalOptions="Start"
+                Opacity="0.75"
+                VerticalOptions="Start"
+                WidthRequest="580" />
+            <Ellipse
+                Margin="0,0,-110,-60"
+                Fill="#D6EAFF"
+                HeightRequest="380"
+                HorizontalOptions="End"
+                Opacity="0.45"
+                VerticalOptions="End"
+                WidthRequest="460" />
         </Grid>
 
         <ScrollView>
-            <VerticalStackLayout Spacing="24" Padding="40,36,40,56"
-                                 HorizontalOptions="Center"
-                                 MaximumWidthRequest="720">
+            <VerticalStackLayout
+                Padding="40,36,40,56"
+                HorizontalOptions="Center"
+                MaximumWidthRequest="720"
+                Spacing="24">
 
                 <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14">
 
 
-                    <Border Grid.Column="0"
-                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
-                            VerticalOptions="Center">
+                    <Border
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB"
+                        StrokeThickness="1"
+                        VerticalOptions="Center">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.07" />
+                            <Shadow
+                                Brush="#0F2D4A"
+                                Opacity="0.07"
+                                Radius="12"
+                                Offset="0,4" />
                         </Border.Shadow>
-                        <Button Text="← Back"
-                                Clicked="OnBackClicked"
-                                BackgroundColor="Transparent"
-                                TextColor="#0F2D4A"
-                                BorderWidth="0"
-                                FontAttributes="Bold"
-                                FontSize="13"
-                                HeightRequest="44"
-                                Padding="20,0" />
+                        <Button
+                            Padding="20,0"
+                            BackgroundColor="Transparent"
+                            BorderWidth="0"
+                            Clicked="OnBackClicked"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HeightRequest="44"
+                            Text="← Back"
+                            TextColor="#0F2D4A" />
                     </Border>
 
-                    <VerticalStackLayout Grid.Column="1"
-                                         HorizontalOptions="Center"
-                                         VerticalOptions="Center"
-                                         Spacing="2">
-                        <Label Text="MODULE 1"
-                               FontSize="10" FontAttributes="Bold"
-                               TextColor="#2E6BA8" CharacterSpacing="2.2"
-                               HorizontalOptions="Center" />
-                        <Label Text="Comprehension Quiz"
-                               FontSize="20" FontAttributes="Bold"
-                               TextColor="#0F2D4A"
-                               HorizontalOptions="Center" />
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        Spacing="2"
+                        VerticalOptions="Center">
+                        <Label
+                            CharacterSpacing="2.2"
+                            FontAttributes="Bold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="MODULE 1"
+                            TextColor="#2E6BA8" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Text="Comprehension Quiz"
+                            TextColor="#0F2D4A" />
                     </VerticalStackLayout>
 
-                    <Border Grid.Column="2"
-                            Padding="14,8" BackgroundColor="#E8F5E9"
-                            Stroke="#A5D6A7" StrokeThickness="1"
-                            VerticalOptions="Center">
+                    <Border
+                        Grid.Column="2"
+                        Padding="14,8"
+                        BackgroundColor="#E8F5E9"
+                        Stroke="#A5D6A7"
+                        StrokeThickness="1"
+                        VerticalOptions="Center">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
-                        <Label Text="Easy" FontSize="12"
-                               FontAttributes="Bold" TextColor="#2E7D32" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Text="Easy"
+                            TextColor="#2E7D32" />
                     </Border>
                 </Grid>
 
-  
+
                 <VerticalStackLayout Spacing="6">
                     <Grid ColumnDefinitions="*, Auto">
-                        <Label Grid.Column="0"
-                               x:Name="QuestionNumberLabel"
-                               Text="{Binding QuestionNumber}"
-                               FontSize="12" FontAttributes="Bold"
-                               TextColor="#6B8CAE" />
-                        <Label Grid.Column="1"
-                               x:Name="ProgressPercent"
-                               Text="0%"
-                               FontSize="12" FontAttributes="Bold"
-                               TextColor="#2E6BA8" />
+                        <Label
+                            x:Name="QuestionNumberLabel"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Text="{Binding QuestionNumber}"
+                            TextColor="#6B8CAE" />
+                        <Label
+                            x:Name="ProgressPercent"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            Text="0%"
+                            TextColor="#2E6BA8" />
                     </Grid>
 
-                    <Border BackgroundColor="#E2EAF4"
-                            Stroke="Transparent" StrokeThickness="0"
-                            HeightRequest="8">
+                    <Border
+                        BackgroundColor="#E2EAF4"
+                        HeightRequest="8"
+                        Stroke="Transparent"
+                        StrokeThickness="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="4" />
                         </Border.StrokeShape>
 
-                        <Border x:Name="ProgressFill"
-                                BackgroundColor="#0F2D4A"
-                                Stroke="Transparent" StrokeThickness="0"
-                                HeightRequest="8"
-                                HorizontalOptions="Start"
-                                WidthRequest="0">
+                        <Border
+                            x:Name="ProgressFill"
+                            BackgroundColor="#0F2D4A"
+                            HeightRequest="8"
+                            HorizontalOptions="Start"
+                            Stroke="Transparent"
+                            StrokeThickness="0"
+                            WidthRequest="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="4" />
                             </Border.StrokeShape>
@@ -106,248 +150,361 @@
                 </VerticalStackLayout>
 
 
-                
-                <Border BackgroundColor="White"
-                        Stroke="#CBDCEB" StrokeThickness="1"
-                        Padding="44,40">
+
+                <Border
+                    Padding="44,40"
+                    BackgroundColor="White"
+                    Stroke="#CBDCEB"
+                    StrokeThickness="1">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="36" />
                     </Border.StrokeShape>
                     <Border.Shadow>
-                        <Shadow Brush="#0F2D4A" Offset="0,10" Radius="32" Opacity="0.07" />
+                        <Shadow
+                            Brush="#0F2D4A"
+                            Opacity="0.07"
+                            Radius="32"
+                            Offset="0,10" />
                     </Border.Shadow>
 
                     <VerticalStackLayout Spacing="8">
 
-                        <Label Text="&#x201C;"
-                               FontSize="72" TextColor="#2E6BA8"
-                               Opacity="0.18"
-                               Margin="0,-20,0,-28"
-                               HorizontalOptions="Start" />
+                        <Label
+                            Margin="0,-20,0,-28"
+                            FontSize="72"
+                            HorizontalOptions="Start"
+                            Opacity="0.18"
+                            Text="&#x201C;"
+                            TextColor="#2E6BA8" />
 
-                        <Label x:Name="QuestionText"
-                               Text="{Binding Mainquestion}"
-                               FontSize="17"
-                               TextColor="#1A2E42"
-                               LineHeight="1.85"
-                               HorizontalTextAlignment="Start"
-                               VerticalOptions="Start" />
+                        <Label
+                            x:Name="QuestionText"
+                            FontSize="17"
+                            HorizontalTextAlignment="Start"
+                            LineHeight="1.85"
+                            Text="{Binding Mainquestion}"
+                            TextColor="#1A2E42"
+                            VerticalOptions="Start" />
 
 
-                        <Label Text="&#x201D;"
-                               FontSize="72" TextColor="#2E6BA8"
-                               Opacity="0.18"
-                               Margin="0,-28,0,-16"
-                               HorizontalOptions="End" />
+                        <Label
+                            Margin="0,-28,0,-16"
+                            FontSize="72"
+                            HorizontalOptions="End"
+                            Opacity="0.18"
+                            Text="&#x201D;"
+                            TextColor="#2E6BA8" />
                     </VerticalStackLayout>
                 </Border>
 
 
-                
+
                 <VerticalStackLayout x:Name="OptionsContainer" Spacing="14">
 
-                    <Border x:Name="BorderA"
-                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
-                            Padding="20,16">
+                    <Border
+                        x:Name="BorderA"
+                        Padding="20,16"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB"
+                        StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="26" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.05" />
+                            <Shadow
+                                Brush="#0F2D4A"
+                                Opacity="0.05"
+                                Radius="12"
+                                Offset="0,4" />
                         </Border.Shadow>
                         <Grid ColumnDefinitions="34,*" ColumnSpacing="16">
 
-                            <Border Grid.Column="0" x:Name="CircleA"
-                                    HeightRequest="34" WidthRequest="34"
-                                    BackgroundColor="Transparent"
-                                    Stroke="#CBDCEB" StrokeThickness="1.5"
-                                    VerticalOptions="Center">
+                            <Border
+                                x:Name="CircleA"
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                HeightRequest="34"
+                                Stroke="#CBDCEB"
+                                StrokeThickness="1.5"
+                                VerticalOptions="Center"
+                                WidthRequest="34">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="17" />
                                 </Border.StrokeShape>
-                                <Label Text="A" FontSize="13" FontAttributes="Bold"
-                                       TextColor="#2E6BA8"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"
+                                    Text="A"
+                                    TextColor="#2E6BA8"
+                                    VerticalOptions="Center" />
                             </Border>
-                            <Label Grid.Column="1" x:Name="BtnA" Text="{Binding Ch1bt}"
-                                   VerticalOptions="Center"
-                                   FontSize="15" TextColor="#1A2E42"
-                                   LineBreakMode="WordWrap" />
+                            <Label
+                                x:Name="BtnA"
+                                Grid.Column="1"
+                                FontSize="15"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Ch1bt}"
+                                TextColor="#1A2E42"
+                                VerticalOptions="Center" />
                         </Grid>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnOptionClicked" CommandParameter="A" />
+                            <TapGestureRecognizer CommandParameter="A" Tapped="OnOptionClicked" />
                         </Border.GestureRecognizers>
                     </Border>
 
 
-                    <Border x:Name="BorderB"
-                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
-                            Padding="20,16">
+                    <Border
+                        x:Name="BorderB"
+                        Padding="20,16"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB"
+                        StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="26" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.05" />
+                            <Shadow
+                                Brush="#0F2D4A"
+                                Opacity="0.05"
+                                Radius="12"
+                                Offset="0,4" />
                         </Border.Shadow>
                         <Grid ColumnDefinitions="34,*" ColumnSpacing="16">
-                            <Border Grid.Column="0" x:Name="CircleB"
-                                    HeightRequest="34" WidthRequest="34"
-                                    BackgroundColor="Transparent"
-                                    Stroke="#CBDCEB" StrokeThickness="1.5"
-                                    VerticalOptions="Center">
+                            <Border
+                                x:Name="CircleB"
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                HeightRequest="34"
+                                Stroke="#CBDCEB"
+                                StrokeThickness="1.5"
+                                VerticalOptions="Center"
+                                WidthRequest="34">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="17" />
                                 </Border.StrokeShape>
-                                <Label Text="B" FontSize="13" FontAttributes="Bold"
-                                       TextColor="#2E6BA8"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"
+                                    Text="B"
+                                    TextColor="#2E6BA8"
+                                    VerticalOptions="Center" />
                             </Border>
-                            <Label Grid.Column="1" x:Name="BtnB" Text="{Binding Ch2bt}"
-                                   VerticalOptions="Center"
-                                   FontSize="15" TextColor="#1A2E42"
-                                   LineBreakMode="WordWrap" />
+                            <Label
+                                x:Name="BtnB"
+                                Grid.Column="1"
+                                FontSize="15"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Ch2bt}"
+                                TextColor="#1A2E42"
+                                VerticalOptions="Center" />
                         </Grid>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnOptionClicked" CommandParameter="B" />
+                            <TapGestureRecognizer CommandParameter="B" Tapped="OnOptionClicked" />
                         </Border.GestureRecognizers>
                     </Border>
 
 
-                    <Border x:Name="BorderC"
-                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
-                            Padding="20,16">
+                    <Border
+                        x:Name="BorderC"
+                        Padding="20,16"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB"
+                        StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="26" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.05" />
+                            <Shadow
+                                Brush="#0F2D4A"
+                                Opacity="0.05"
+                                Radius="12"
+                                Offset="0,4" />
                         </Border.Shadow>
                         <Grid ColumnDefinitions="34,*" ColumnSpacing="16">
-                            <Border Grid.Column="0" x:Name="CircleC"
-                                    HeightRequest="34" WidthRequest="34"
-                                    BackgroundColor="Transparent"
-                                    Stroke="#CBDCEB" StrokeThickness="1.5"
-                                    VerticalOptions="Center">
+                            <Border
+                                x:Name="CircleC"
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                HeightRequest="34"
+                                Stroke="#CBDCEB"
+                                StrokeThickness="1.5"
+                                VerticalOptions="Center"
+                                WidthRequest="34">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="17" />
                                 </Border.StrokeShape>
-                                <Label Text="C" FontSize="13" FontAttributes="Bold"
-                                       TextColor="#2E6BA8"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"
+                                    Text="C"
+                                    TextColor="#2E6BA8"
+                                    VerticalOptions="Center" />
                             </Border>
-                            <Label Grid.Column="1" x:Name="BtnC" Text="{Binding Ch3bt}"
-                                   VerticalOptions="Center"
-                                   FontSize="15" TextColor="#1A2E42"
-                                   LineBreakMode="WordWrap" />
+                            <Label
+                                x:Name="BtnC"
+                                Grid.Column="1"
+                                FontSize="15"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Ch3bt}"
+                                TextColor="#1A2E42"
+                                VerticalOptions="Center" />
                         </Grid>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnOptionClicked" CommandParameter="C" />
+                            <TapGestureRecognizer CommandParameter="C" Tapped="OnOptionClicked" />
                         </Border.GestureRecognizers>
                     </Border>
 
 
-                    <Border x:Name="BorderD"
-                            BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
-                            Padding="20,16">
+                    <Border
+                        x:Name="BorderD"
+                        Padding="20,16"
+                        BackgroundColor="White"
+                        Stroke="#CBDCEB"
+                        StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="26" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.05" />
+                            <Shadow
+                                Brush="#0F2D4A"
+                                Opacity="0.05"
+                                Radius="12"
+                                Offset="0,4" />
                         </Border.Shadow>
                         <Grid ColumnDefinitions="34,*" ColumnSpacing="16">
-                            <Border Grid.Column="0" x:Name="CircleD"
-                                    HeightRequest="34" WidthRequest="34"
-                                    BackgroundColor="Transparent"
-                                    Stroke="#CBDCEB" StrokeThickness="1.5"
-                                    VerticalOptions="Center">
+                            <Border
+                                x:Name="CircleD"
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                HeightRequest="34"
+                                Stroke="#CBDCEB"
+                                StrokeThickness="1.5"
+                                VerticalOptions="Center"
+                                WidthRequest="34">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="17" />
                                 </Border.StrokeShape>
-                                <Label Text="D" FontSize="13" FontAttributes="Bold"
-                                       TextColor="#2E6BA8"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="Center"
+                                    Text="D"
+                                    TextColor="#2E6BA8"
+                                    VerticalOptions="Center" />
                             </Border>
-                            <Label Grid.Column="1" x:Name="BtnD" Text="{Binding Ch4bt}"
-                                   VerticalOptions="Center"
-                                   FontSize="15" TextColor="#1A2E42"
-                                   LineBreakMode="WordWrap" />
+                            <Label
+                                x:Name="BtnD"
+                                Grid.Column="1"
+                                FontSize="15"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Ch4bt}"
+                                TextColor="#1A2E42"
+                                VerticalOptions="Center" />
                         </Grid>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnOptionClicked" CommandParameter="D" />
+                            <TapGestureRecognizer CommandParameter="D" Tapped="OnOptionClicked" />
                         </Border.GestureRecognizers>
                     </Border>
 
                 </VerticalStackLayout>
 
-    
+
                 <Grid ColumnDefinitions="*, Auto" ColumnSpacing="16">
 
 
-                    <Border Grid.Column="1"
-                            BackgroundColor="#0F2D4A"
-                            Stroke="Transparent" StrokeThickness="0">
+                    <Border
+                        Grid.Column="1"
+                        BackgroundColor="#0F2D4A"
+                        Stroke="Transparent"
+                        StrokeThickness="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="26" />
                         </Border.StrokeShape>
                         <Border.Shadow>
-                            <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.22" />
+                            <Shadow
+                                Brush="#0F2D4A"
+                                Opacity="0.22"
+                                Radius="16"
+                                Offset="0,6" />
                         </Border.Shadow>
-                        <Button x:Name="NextButton"
-                                Text="Next  ▶"
-                                Clicked="OnNextClicked"
-                                IsEnabled="False"
-                                BackgroundColor="Transparent"
-                                TextColor="White"
-                                BorderWidth="0"
-                                FontAttributes="Bold" FontSize="13"
-                                HeightRequest="52" Padding="22,0" />
+                        <Button
+                            x:Name="NextButton"
+                            Padding="22,0"
+                            BackgroundColor="Transparent"
+                            BorderWidth="0"
+                            Clicked="OnNextClicked"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HeightRequest="52"
+                            IsEnabled="False"
+                            Text="Next  ▶"
+                            TextColor="White" />
                     </Border>
                 </Grid>
 
-                <Border x:Name="CompleteBanner"
-                        IsVisible="False"
-                        Stroke="#E8C547" StrokeThickness="1.5">
+                <Border
+                    x:Name="CompleteBanner"
+                    IsVisible="False"
+                    Stroke="#E8C547"
+                    StrokeThickness="1.5">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="#FFF8DC" Offset="0" />
-                            <GradientStop Color="#FAF0CA" Offset="1" />
+                            <GradientStop Offset="0" Color="#FFF8DC" />
+                            <GradientStop Offset="1" Color="#FAF0CA" />
                         </LinearGradientBrush>
                     </Border.Background>
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="28" />
                     </Border.StrokeShape>
-                    <Grid ColumnDefinitions="*, Auto" Padding="28,20" ColumnSpacing="16">
-                        <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                            <Label Text="Quiz Complete!"
-                                   FontSize="15" FontAttributes="Bold"
-                                   TextColor="#0F2D4A" />
-                            <Label x:Name="FinalScoreLabel"
-                                   Text="You scored 0 out of 0"
-                                   FontSize="13" TextColor="#6B8CAE" />
+                    <Grid
+                        Padding="28,20"
+                        ColumnDefinitions="*, Auto"
+                        ColumnSpacing="16">
+                        <VerticalStackLayout
+                            Grid.Column="0"
+                            Spacing="4"
+                            VerticalOptions="Center">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                Text="Quiz Complete!"
+                                TextColor="#0F2D4A" />
+                            <Label
+                                x:Name="FinalScoreLabel"
+                                FontSize="13"
+                                Text="You scored 0 out of 0"
+                                TextColor="#6B8CAE" />
                         </VerticalStackLayout>
-                        <Border Grid.Column="1"
-                                BackgroundColor="#0F2D4A"
-                                Stroke="Transparent" StrokeThickness="0"
-                                VerticalOptions="Center">
+                        <Border
+                            Grid.Column="1"
+                            BackgroundColor="#0F2D4A"
+                            Stroke="Transparent"
+                            StrokeThickness="0"
+                            VerticalOptions="Center">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="22" />
                             </Border.StrokeShape>
                             <Border.Shadow>
-                                <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
+                                <Shadow
+                                    Brush="#0F2D4A"
+                                    Opacity="0.22"
+                                    Radius="14"
+                                    Offset="0,5" />
                             </Border.Shadow>
-                            <Button Text="FINISH  →"
-                                    Clicked="OnFinishClicked"
-                                    BackgroundColor="Transparent"
-                                    TextColor="White"
-                                    BorderWidth="0"
-                                    FontAttributes="Bold" FontSize="13"
-                                    CharacterSpacing="0.8"
-                                    HeightRequest="48" Padding="22,0" />
+                            <Button
+                                Padding="22,0"
+                                BackgroundColor="Transparent"
+                                BorderWidth="0"
+                                CharacterSpacing="0.8"
+                                Clicked="OnFinishClicked"
+                                FontAttributes="Bold"
+                                FontSize="13"
+                                HeightRequest="48"
+                                Text="FINISH  →"
+                                TextColor="White" />
                         </Border>
                     </Grid>
                 </Border>
@@ -356,32 +513,41 @@
         </ScrollView>
 
 
-        <Grid x:Name="PopupOverlay"
-              IsVisible="False"
-              BackgroundColor="#80000000"
-              HorizontalOptions="Fill"
-              VerticalOptions="Fill">
+        <Grid
+            x:Name="PopupOverlay"
+            BackgroundColor="#80000000"
+            HorizontalOptions="Fill"
+            IsVisible="False"
+            VerticalOptions="Fill">
 
-            <Border HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    WidthRequest="400"
-                    BackgroundColor="White"
-                    Stroke="#CBDCEB"
-                    StrokeThickness="1">
+            <Border
+                BackgroundColor="White"
+                HorizontalOptions="Center"
+                Stroke="#CBDCEB"
+                StrokeThickness="1"
+                VerticalOptions="Center"
+                WidthRequest="400">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="36" />
                 </Border.StrokeShape>
                 <Border.Shadow>
-                    <Shadow Brush="#0F2D4A" Offset="0,16" Radius="48" Opacity="0.18" />
+                    <Shadow
+                        Brush="#0F2D4A"
+                        Opacity="0.18"
+                        Radius="48"
+                        Offset="0,16" />
                 </Border.Shadow>
 
                 <VerticalStackLayout Spacing="0">
 
-                        <Border HeightRequest="6" Stroke="Transparent" StrokeThickness="0">
+                    <Border
+                        HeightRequest="6"
+                        Stroke="Transparent"
+                        StrokeThickness="0">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#0F2D4A" Offset="0" />
-                                <GradientStop Color="#2E6BA8" Offset="1" />
+                                <GradientStop Offset="0" Color="#0F2D4A" />
+                                <GradientStop Offset="1" Color="#2E6BA8" />
                             </LinearGradientBrush>
                         </Border.Background>
                         <Border.StrokeShape>
@@ -389,56 +555,75 @@
                         </Border.StrokeShape>
                     </Border>
 
-                    <VerticalStackLayout Spacing="20" Padding="36,28,36,32">
+                    <VerticalStackLayout Padding="36,28,36,32" Spacing="20">
 
 
-                        <Label Text="Leave Quiz?"
-                               FontSize="22" FontAttributes="Bold"
-                               TextColor="#0F2D4A"
-                               HorizontalOptions="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            Text="Leave Quiz?"
+                            TextColor="#0F2D4A" />
 
 
-                        <Label Text="Your quiz progress won't be saved. Are you sure you want to go back?"
-                               FontSize="14" TextColor="#6B8CAE"
-                               HorizontalTextAlignment="Center"
-                               LineHeight="1.6"
-                               LineBreakMode="WordWrap" />
+                        <Label
+                            FontSize="14"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap"
+                            LineHeight="1.6"
+                            Text="Your quiz progress won't be saved. Are you sure you want to go back?"
+                            TextColor="#6B8CAE" />
 
 
-                        <BoxView HeightRequest="1" BackgroundColor="#EBF4FF" Margin="0,4" />
+                        <BoxView
+                            Margin="0,4"
+                            BackgroundColor="#EBF4FF"
+                            HeightRequest="1" />
 
 
                         <VerticalStackLayout Spacing="12">
 
-                            <Border BackgroundColor="#0F2D4A"
-                                    Stroke="Transparent" StrokeThickness="0">
+                            <Border
+                                BackgroundColor="#0F2D4A"
+                                Stroke="Transparent"
+                                StrokeThickness="0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="26" />
                                 </Border.StrokeShape>
                                 <Border.Shadow>
-                                    <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.22" />
+                                    <Shadow
+                                        Brush="#0F2D4A"
+                                        Opacity="0.22"
+                                        Radius="16"
+                                        Offset="0,6" />
                                 </Border.Shadow>
-                                <Button Text="Yes, leave quiz"
-                                        Clicked="OnPopupConfirm"
-                                        BackgroundColor="Transparent"
-                                        TextColor="White"
-                                        BorderWidth="0"
-                                        FontAttributes="Bold" FontSize="14"
-                                        HeightRequest="52" />
+                                <Button
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="0"
+                                    Clicked="OnPopupConfirm"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HeightRequest="52"
+                                    Text="Yes, leave quiz"
+                                    TextColor="White" />
                             </Border>
 
-                            <Border BackgroundColor="Transparent"
-                                    Stroke="#CBDCEB" StrokeThickness="1.5">
+                            <Border
+                                BackgroundColor="Transparent"
+                                Stroke="#CBDCEB"
+                                StrokeThickness="1.5">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="26" />
                                 </Border.StrokeShape>
-                                <Button Text="Keep answering"
-                                        Clicked="OnPopupCancel"
-                                        BackgroundColor="Transparent"
-                                        TextColor="#0F2D4A"
-                                        BorderWidth="0"
-                                        FontAttributes="Bold" FontSize="14"
-                                        HeightRequest="52" />
+                                <Button
+                                    BackgroundColor="Transparent"
+                                    BorderWidth="0"
+                                    Clicked="OnPopupCancel"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HeightRequest="52"
+                                    Text="Keep answering"
+                                    TextColor="#0F2D4A" />
                             </Border>
 
                         </VerticalStackLayout>

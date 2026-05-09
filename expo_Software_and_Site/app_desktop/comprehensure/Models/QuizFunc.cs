@@ -92,7 +92,7 @@ namespace comprehensure.Models
         }
 
 
-        /// <summary>Saves storypageprogN = 80 and UID to Firestore.</summary>
+       
         public static async Task SaveProgressAsync(int storyNumber, int progress)
         {
             if (!ProgressFields.TryGetValue(storyNumber, out string fieldName)) return;
@@ -145,10 +145,7 @@ namespace comprehensure.Models
                 await UnlockNextModuleAsync(uid, storyNumber + 1);
         }
 
-        /// <summary>
-        /// Sets islockedmodule{moduleNumber} = false in Firestore.
-        /// Only called internally when the previous module's score qualifies.
-        /// </summary>
+
         public static async Task UnlockNextModuleAsync(string uid, int moduleNumber)
         {
             string lockField = $"islockedmodule{moduleNumber}";
