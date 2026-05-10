@@ -144,9 +144,50 @@
 
                 </Grid>
 
+
+                <Border Margin="24,0,24,12"
+                        BackgroundColor="#0D1528"
+                        Stroke="#1E3A6B" StrokeThickness="1.5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="18"/>
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="14,0" ColumnSpacing="8">
+                        <Label Grid.Column="0" Text="🔍" FontSize="16" VerticalOptions="Center" TextColor="#4A6A9A"/>
+                        <Entry x:Name="SearchEntry"
+                               Grid.Column="1"
+                               Placeholder="Search all words..."
+                               PlaceholderColor="#4A6A9A"
+                               TextColor="#E8F0FF"
+                               BackgroundColor="Transparent"
+                               FontSize="14"
+                               HeightRequest="46"
+                               TextChanged="OnSearchTextChanged"/>
+                        <Button x:Name="ClearSearchBtn"
+                                Grid.Column="2"
+                                Text="✕"
+                                FontSize="13"
+                                TextColor="#4A6A9A"
+                                BackgroundColor="Transparent"
+                                BorderWidth="0"
+                                HeightRequest="36"
+                                WidthRequest="36"
+                                Padding="0"
+                                IsVisible="False"
+                                Clicked="OnClearSearchClicked"/>
+                    </Grid>
+                </Border>
+
+                <Label x:Name="NoResultsLabel"
+                       Text="No words found."
+                       FontSize="14"
+                       TextColor="#4A6A9A"
+                       HorizontalOptions="Center"
+                       Margin="0,4,0,8"
+                       IsVisible="False"/>
+
                 <VerticalStackLayout x:Name="EasyPanel" Spacing="16" Padding="24,0">
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCarved" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -190,7 +231,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardConfident" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -234,7 +275,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCozy" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -278,7 +319,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCreaking" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -322,7 +363,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCurious" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -366,7 +407,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDecoded" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -410,7 +451,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDetermined" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -454,7 +495,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDusty" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -498,7 +539,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardExpedition" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -542,7 +583,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFaded" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -586,7 +627,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFading" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -630,7 +671,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFogged" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -674,7 +715,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFrustrated" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -718,7 +759,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardHarmony" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -762,7 +803,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardMaze" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -806,7 +847,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardNarrow" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -850,7 +891,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardObserve" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -894,7 +935,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardObserving" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -938,7 +979,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardOrganized" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -982,7 +1023,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPassage" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1026,7 +1067,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPatient" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1070,7 +1111,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPatterns" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1114,7 +1155,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPreserve" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1158,7 +1199,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardQualities" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1202,7 +1243,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardShorthand" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1246,7 +1287,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardSteady" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1290,7 +1331,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardTension" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1334,7 +1375,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardUnusual" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1381,7 +1422,7 @@
 
                 <VerticalStackLayout x:Name="AvgPanel" IsVisible="False" Spacing="16" Padding="24,0">
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardAlignment" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1425,7 +1466,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardAnticipation" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1469,7 +1510,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardArchive" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1513,7 +1554,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCalculation" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1557,7 +1598,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCalculations" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1601,7 +1642,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardCaretaker" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1645,7 +1686,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardChaotic" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1689,7 +1730,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardClarity" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1733,7 +1774,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardComparison" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1777,7 +1818,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardConsistent" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1821,7 +1862,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardConstellations" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1865,7 +1906,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDeliberate" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1909,7 +1950,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDisciplined" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1953,7 +1994,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardExtraordinary" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -1997,7 +2038,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFascinated" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2041,7 +2082,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardGesturing" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2085,7 +2126,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardGradually" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2129,7 +2170,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardHorizon" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2173,7 +2214,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardInterconnected" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2217,7 +2258,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardIntervals" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2261,7 +2302,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardInvisible" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2305,7 +2346,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardObservation" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2349,7 +2390,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardParchment" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2393,7 +2434,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPrecise" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2437,7 +2478,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPrecisely" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2481,7 +2522,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPreserved" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2525,7 +2566,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardResponsibility" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2569,7 +2610,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardRhythm" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2613,7 +2654,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardTransformation" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2660,7 +2701,7 @@
 
                 <VerticalStackLayout x:Name="IntPanel" IsVisible="False" Spacing="16" Padding="24,0">
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardArbiters" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2704,7 +2745,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardConsequence" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2748,7 +2789,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDefied" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2792,7 +2833,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDelicate" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2836,7 +2877,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardDismantle" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2880,7 +2921,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardEngraved" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2924,7 +2965,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFascination" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -2968,7 +3009,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardForesight" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3012,7 +3053,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardFracture" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3056,7 +3097,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardInvestigations" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3100,7 +3141,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardLedger" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3144,7 +3185,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPrecision" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3188,7 +3229,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardPredictable" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3232,7 +3273,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardResolve" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3276,7 +3317,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardSurrendered" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3320,7 +3361,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardSuspended" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3364,7 +3405,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardTranslucent" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3408,7 +3449,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardUnnaturally" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3452,7 +3493,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardUnsettled" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3496,7 +3537,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardVaulted" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3540,7 +3581,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardVulnerability" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -3584,7 +3625,7 @@
                         </Grid>
                     </Border>
 
-                    <Border BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
+                    <Border x:Name="CardWithheld" BackgroundColor="#0D1528" Stroke="#1E3A6B" StrokeThickness="1" Padding="0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>

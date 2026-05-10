@@ -4,9 +4,11 @@ public partial class DictionaryPage7 : ContentPage
 {
     private Button? _activeButton;
     private CancellationTokenSource? _cts;
+    private Dictionary<string, Border> _wordCards = new();
 
     public DictionaryPage7()
     {
+        InitializeComponent();
         Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
         Shell.SetNavBarIsVisible(this, false);
         Shell.SetNavBarHasShadow(this, false);
@@ -15,19 +17,75 @@ public partial class DictionaryPage7 : ContentPage
             IsVisible = false,
             IsEnabled = false
         });
-        InitializeComponent();
+
+        _wordCards = new Dictionary<string, Border>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "anonymity", CardAnonymity },
+            { "arbiters", CardArbiters },
+            { "cataloged", CardCataloged },
+            { "complicity", CardComplicity },
+            { "consequence", CardConsequence },
+            { "deliberate", CardDeliberate },
+            { "dismantle", CardDismantle },
+            { "endured", CardEndured },
+            { "foresight", CardForesight },
+            { "fracture", CardFracture },
+            { "hierarchy", CardHierarchy },
+            { "implicated", CardImplicated },
+            { "ledger", CardLedger },
+            { "retaliation", CardRetaliation },
+            { "surrendered", CardSurrendered },
+            { "transformation", CardTransformation },
+            { "withheld", CardWithheld },
+        };
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
     }
+
+    // ── Search ────────────────────────────────────────────────────────────────
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var query = e.NewTextValue?.Trim() ?? "";
+
+        ClearSearchBtn.IsVisible = query.Length > 0;
+
+        if (string.IsNullOrEmpty(query))
+        {
+            foreach (var card in _wordCards.Values)
+                card.IsVisible = true;
+            NoResultsLabel.IsVisible = false;
+            return;
+        }
+
+        int visibleCount = 0;
+        foreach (var kvp in _wordCards)
+        {
+            bool match = kvp.Key.Contains(query, StringComparison.OrdinalIgnoreCase);
+            kvp.Value.IsVisible = match;
+            if (match) visibleCount++;
+        }
+
+        NoResultsLabel.IsVisible = visibleCount == 0;
+    }
+
+    private void OnClearSearchClicked(object sender, EventArgs e)
+    {
+        SearchEntry.Text = "";
+        SearchEntry.Focus();
+    }
+
+    // ── Navigation ────────────────────────────────────────────────────────────
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
+
+    // ── Text-to-Speech ────────────────────────────────────────────────────────
 
     private async void OnSpeakClicked(object sender, EventArgs e)
     {

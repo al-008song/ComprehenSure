@@ -45,7 +45,7 @@
       "A": "It moved faster than other clocks.",
       "B": "It stopped working at certain times.",
       "C": "It followed a winding path and paused at points.",
-      "D": ". It made ticking sounds in different tones."
+      "D": "It made ticking sounds in different tones."
     },
     "answer": "C"
   },
@@ -62,7 +62,7 @@
   {
     "question": "What kind of messages did the clock reveal?",
     "choices": {
-      "A": ". Instructions for fixing clocks.",
+      "A": "Instructions for fixing clocks.",
       "B": "Encouragements about patience and careful thinking.",
       "C": "Warnings about future events.",
       "D": "Stories about Mr. Alden's past."

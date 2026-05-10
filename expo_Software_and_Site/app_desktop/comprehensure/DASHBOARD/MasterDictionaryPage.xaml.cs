@@ -7,6 +7,12 @@ public partial class MasterDictionaryPage : ContentPage
     private Button? _activeButton;
     private CancellationTokenSource? _cts;
 
+    // word (lowercase) → (card Border, panel name)
+    private readonly Dictionary<string, (Border Card, string Panel)> _wordCards = new(StringComparer.OrdinalIgnoreCase);
+
+    // tracks which panel is active while searching
+    private string _activeTab = "Easy";
+
     public MasterDictionaryPage()
     {
         InitializeComponent();
@@ -18,13 +24,96 @@ public partial class MasterDictionaryPage : ContentPage
             IsVisible = false,
             IsEnabled = false
         });
+
+        // Register all word cards with their panel
+        foreach (var (word, card) in EasyWords()) _wordCards[word] = (card, "Easy");
+        foreach (var (word, card) in AvgWords())  _wordCards[word] = (card, "Average");
+        foreach (var (word, card) in IntWords())  _wordCards[word] = (card, "Intermediate");
     }
 
-    private async void OnBackClicked(object sender, EventArgs e)
+    // ── Word card registrations ───────────────────────────────────────────────
+
+    private IEnumerable<(string, Border)> EasyWords() => new[]
     {
-        await Navigation.PopAsync();
+        ("Carved",     CardCarved),    ("Confident",  CardConfident), ("Cozy",      CardCozy),
+        ("Creaking",   CardCreaking),  ("Curious",    CardCurious),   ("Decoded",   CardDecoded),
+        ("Determined", CardDetermined),("Dusty",      CardDusty),     ("Expedition",CardExpedition),
+        ("Faded",      CardFaded),     ("Fading",     CardFading),    ("Fogged",    CardFogged),
+        ("Frustrated", CardFrustrated),("Harmony",    CardHarmony),   ("Maze",      CardMaze),
+        ("Narrow",     CardNarrow),    ("Observe",    CardObserve),   ("Observing", CardObserving),
+        ("Organized",  CardOrganized), ("Passage",    CardPassage),   ("Patient",   CardPatient),
+        ("Patterns",   CardPatterns),  ("Preserve",   CardPreserve),  ("Qualities", CardQualities),
+        ("Shorthand",  CardShorthand), ("Steady",     CardSteady),    ("Tension",   CardTension),
+        ("Unusual",    CardUnusual),
+    };
+
+    private IEnumerable<(string, Border)> AvgWords() => new[]
+    {
+        ("Alignment",      CardAlignment),     ("Anticipation",  CardAnticipation), ("Archive",         CardArchive),
+        ("Calculation",    CardCalculation),   ("Calculations",  CardCalculations), ("Caretaker",       CardCaretaker),
+        ("Chaotic",        CardChaotic),       ("Clarity",       CardClarity),      ("Comparison",      CardComparison),
+        ("Consistent",     CardConsistent),    ("Constellations",CardConstellations),("Deliberate",     CardDeliberate),
+        ("Disciplined",    CardDisciplined),   ("Extraordinary", CardExtraordinary),("Fascinated",      CardFascinated),
+        ("Gesturing",      CardGesturing),     ("Gradually",     CardGradually),    ("Horizon",         CardHorizon),
+        ("Interconnected", CardInterconnected),("Intervals",     CardIntervals),    ("Invisible",       CardInvisible),
+        ("Observation",    CardObservation),   ("Parchment",     CardParchment),    ("Precise",         CardPrecise),
+        ("Precisely",      CardPrecisely),     ("Preserved",     CardPreserved),    ("Responsibility",  CardResponsibility),
+        ("Rhythm",         CardRhythm),        ("Transformation",CardTransformation),
+    };
+
+    private IEnumerable<(string, Border)> IntWords() => new[]
+    {
+        ("Arbiters",     CardArbiters),     ("Consequence",  CardConsequence),  ("Defied",       CardDefied),
+        ("Delicate",     CardDelicate),     ("Dismantle",    CardDismantle),    ("Engraved",     CardEngraved),
+        ("Fascination",  CardFascination),  ("Foresight",    CardForesight),    ("Fracture",     CardFracture),
+        ("Investigations",CardInvestigations),("Ledger",     CardLedger),       ("Precision",    CardPrecision),
+        ("Predictable",  CardPredictable),  ("Resolve",      CardResolve),      ("Surrendered",  CardSurrendered),
+        ("Suspended",    CardSuspended),    ("Translucent",  CardTranslucent),  ("Unnaturally",  CardUnnaturally),
+        ("Unsettled",    CardUnsettled),    ("Vaulted",      CardVaulted),      ("Vulnerability",CardVulnerability),
+        ("Withheld",     CardWithheld),
+    };
+
+    // ── Search ────────────────────────────────────────────────────────────────
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var query = e.NewTextValue?.Trim() ?? "";
+        ClearSearchBtn.IsVisible = query.Length > 0;
+
+        if (string.IsNullOrEmpty(query))
+        {
+            // Restore all cards visible, re-apply active tab visibility
+            foreach (var entry in _wordCards.Values)
+                entry.Card.IsVisible = true;
+
+            NoResultsLabel.IsVisible = false;
+            SwitchTab(_activeTab); // restore panel visibility
+            return;
+        }
+
+        // While searching: show all three panels so results from any tab appear
+        EasyPanel.IsVisible = true;
+        AvgPanel.IsVisible  = true;
+        IntPanel.IsVisible  = true;
+
+        int visibleCount = 0;
+        foreach (var kvp in _wordCards)
+        {
+            bool match = kvp.Key.Contains(query, StringComparison.OrdinalIgnoreCase);
+            kvp.Value.Card.IsVisible = match;
+            if (match) visibleCount++;
+        }
+
+        NoResultsLabel.IsVisible = visibleCount == 0;
     }
 
+    private void OnClearSearchClicked(object sender, EventArgs e)
+    {
+        SearchEntry.Text = "";
+        SearchEntry.Focus();
+    }
+
+    // ── Tabs ──────────────────────────────────────────────────────────────────
 
     private void OnEasyTabClicked(object sender, EventArgs e) => SwitchTab("Easy");
     private void OnAvgTabClicked(object sender, EventArgs e)  => SwitchTab("Average");
@@ -32,6 +121,12 @@ public partial class MasterDictionaryPage : ContentPage
 
     private void SwitchTab(string tab)
     {
+        _activeTab = tab;
+
+        // If user is actively searching, don't change panel visibility
+        if (!string.IsNullOrEmpty(SearchEntry?.Text))
+            return;
+
         EasyPanel.IsVisible = tab == "Easy";
         AvgPanel.IsVisible  = tab == "Average";
         IntPanel.IsVisible  = tab == "Intermediate";
@@ -71,6 +166,14 @@ public partial class MasterDictionaryPage : ContentPage
         btn.TextColor          = Color.FromArgb("#4A6A9A");
     }
 
+    // ── Navigation ────────────────────────────────────────────────────────────
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
+    // ── Text-to-Speech ────────────────────────────────────────────────────────
 
     private async void OnSpeakClicked(object sender, EventArgs e)
     {
