@@ -17,7 +17,6 @@ public partial class QuizPage2 : ContentPage
         Shell.SetNavBarIsVisible(this, false);
         Shell.SetNavBarHasShadow(this, false);
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior
-
         {
             IsVisible = false,
             IsEnabled = false
@@ -29,9 +28,7 @@ public partial class QuizPage2 : ContentPage
         base.OnAppearing();
         await _viewModel.LoadQuestions();
         UpdateProgress();
-
     }
-
 
     protected override void OnSizeAllocated(double width, double height)
     {
@@ -123,7 +120,7 @@ public partial class QuizPage2 : ContentPage
 
     private async void OnFinishClicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("/ModulesDashboard");
     }
 
     private void OnBackClicked(object sender, EventArgs e)
@@ -146,7 +143,7 @@ public partial class QuizPage2 : ContentPage
     {
         if (_viewModel == null || _viewModel.TotalQuestions == 0) return;
 
-        int current = _viewModel.CurrentQuestionIndex + 1; // expose this in VM, see note below
+        int current = _viewModel.CurrentQuestionIndex + 1;
         int total = _viewModel.TotalQuestions;
 
         double ratio = Math.Clamp((double)current / total, 0, 1);
@@ -158,14 +155,24 @@ public partial class QuizPage2 : ContentPage
 
     private void ShowCompleteBanner()
     {
-        FinalScoreLabel.Text = $"You scored {_viewModel.Score} out of {_viewModel.TotalQuestions}";
+        int score = _viewModel.Score;
+        int total = _viewModel.TotalQuestions;
+        double ratio = total > 0 ? (double)score / total : 0;
 
+        QuestionCard.IsVisible = false;
         OptionsContainer.IsVisible = false;
+        NextButtonRow.IsVisible = false;
         CompleteBanner.IsVisible = true;
         NextButton.IsEnabled = false;
+
+        FinalScoreLabel.Text = $"{score} / {total}";
+        ScoreMessageLabel.Text = ratio >= 0.8
+            ? "Excellent work! You have a strong grasp of the story. 🎉"
+            : ratio >= 0.5
+                ? "Good effort! Review the story to strengthen your understanding."
+                : "Keep practicing! Re-read the story and try again.";
 
         ProgressPercent.Text = "100%";
         ProgressFill.WidthRequest = _trackWidth;
     }
-
 }

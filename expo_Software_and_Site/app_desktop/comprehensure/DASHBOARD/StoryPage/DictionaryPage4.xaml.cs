@@ -4,6 +4,7 @@ public partial class DictionaryPage4 : ContentPage
 {
     private Button? _activeButton;
     private CancellationTokenSource? _cts;
+    private Dictionary<string, Border> _wordCards = new();
 
     public DictionaryPage4()
     {
@@ -16,18 +17,75 @@ public partial class DictionaryPage4 : ContentPage
             IsVisible = false,
             IsEnabled = false
         });
+
+        _wordCards = new Dictionary<string, Border>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "algorithms", CardAlgorithms },
+            { "calculation", CardCalculation },
+            { "complex", CardComplex },
+            { "confined", CardConfined },
+            { "deliberate", CardDeliberate },
+            { "eccentric", CardEccentric },
+            { "extraordinary", CardExtraordinary },
+            { "formula", CardFormula },
+            { "gradually", CardGradually },
+            { "intervals", CardIntervals },
+            { "observation", CardObservation },
+            { "patterns", CardPatterns },
+            { "perception", CardPerception },
+            { "rhythm", CardRhythm },
+            { "sequence", CardSequence },
+            { "structure", CardStructure },
+            { "symmetry", CardSymmetry },
+        };
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-
     }
+
+    // ── Search ────────────────────────────────────────────────────────────────
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var query = e.NewTextValue?.Trim() ?? "";
+
+        ClearSearchBtn.IsVisible = query.Length > 0;
+
+        if (string.IsNullOrEmpty(query))
+        {
+            foreach (var card in _wordCards.Values)
+                card.IsVisible = true;
+            NoResultsLabel.IsVisible = false;
+            return;
+        }
+
+        int visibleCount = 0;
+        foreach (var kvp in _wordCards)
+        {
+            bool match = kvp.Key.Contains(query, StringComparison.OrdinalIgnoreCase);
+            kvp.Value.IsVisible = match;
+            if (match) visibleCount++;
+        }
+
+        NoResultsLabel.IsVisible = visibleCount == 0;
+    }
+
+    private void OnClearSearchClicked(object sender, EventArgs e)
+    {
+        SearchEntry.Text = "";
+        SearchEntry.Focus();
+    }
+
+    // ── Navigation ────────────────────────────────────────────────────────────
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
     }
+
+    // ── Text-to-Speech ────────────────────────────────────────────────────────
 
     private async void OnSpeakClicked(object sender, EventArgs e)
     {
