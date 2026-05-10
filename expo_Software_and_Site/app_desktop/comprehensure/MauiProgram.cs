@@ -88,7 +88,7 @@ namespace comprehensure
             var app = builder.Build();
 
             var authClient = app.Services.GetRequiredService<FirebaseAuthClient>();
-            GhostUserChecker.Initialize(authClient);
+            GhostUserChecker.Initialize(authClient, apiKey);
 
             return app;
         }
