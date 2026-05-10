@@ -5,8 +5,6 @@
              BackgroundColor="#F2F6FB"
              Shell.NavBarIsVisible="False">
 
-
-
     <Grid>
 
         <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
@@ -18,17 +16,14 @@
             <BoxView BackgroundColor="#6B8CAE" Opacity="0.30"
                      HorizontalOptions="Fill" VerticalOptions="Fill" />
         </Grid>
-
+        
         <ScrollView>
-
-
 
             <VerticalStackLayout Spacing="8" Padding="40,14,40,16"
                                  HorizontalOptions="Center"
                                  MaximumWidthRequest="720">
 
                 <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="14">
-
 
                     <Border Grid.Column="0"
                             BackgroundColor="White" Stroke="#CBDCEB" StrokeThickness="1"
@@ -39,7 +34,7 @@
                         <Border.Shadow>
                             <Shadow Brush="#0F2D4A" Offset="0,4" Radius="12" Opacity="0.08" />
                         </Border.Shadow>
-                        <Button Text="← Back"
+                        <Button Text="&#x2190; Back"
                                 Clicked="OnBackClicked"
                                 BackgroundColor="Transparent"
                                 TextColor="#0F2D4A"
@@ -76,6 +71,7 @@
                     </Border>
                 </Grid>
 
+
                 <VerticalStackLayout Spacing="6">
                     <Grid ColumnDefinitions="*, Auto">
                         <Label Grid.Column="0"
@@ -109,10 +105,13 @@
                     </Border>
                 </VerticalStackLayout>
 
+
                 <Border BackgroundColor="White"
                         Stroke="#CBDCEB" StrokeThickness="1"
                         Padding="32,24"
+                        MinimumHeightRequest="220"
                         HeightRequest="380">
+
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="28" />
                     </Border.StrokeShape>
@@ -120,28 +119,33 @@
                         <Shadow Brush="#0F2D4A" Offset="0,10" Radius="32" Opacity="0.10" />
                     </Border.Shadow>
 
-                    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+                    <Grid RowDefinitions="Auto, *, Auto">
 
-                        <Label Text="&#x201C;"
+                        <Label Grid.Row="0"
+                               Text="&#x201C;"
                                FontSize="48" TextColor="#0F2D4A"
                                Opacity="0.30"
                                Margin="0,-10,0,-18"
                                HorizontalOptions="Start" />
 
-                        <Label x:Name="StoryLabel"
-                               FontSize="15"
-                               TextColor="#0F2D4A"
-                               LineHeight="1.75"
-                               HorizontalTextAlignment="Start"
-                               VerticalOptions="Start" />
+                        <ScrollView Grid.Row="1"
+                                    VerticalScrollBarVisibility="Default">
+                            <Label x:Name="StoryLabel"
+                                   FontSize="15"
+                                   TextColor="#0F2D4A"
+                                   LineHeight="1.75"
+                                   HorizontalTextAlignment="Start"
+                                   VerticalOptions="Start" />
+                        </ScrollView>
 
-                        <Label Text="&#x201D;"
+                        <Label Grid.Row="2"
+                               Text="&#x201D;"
                                FontSize="48" TextColor="#0F2D4A"
                                Opacity="0.30"
                                Margin="0,-18,0,-10"
                                HorizontalOptions="End" />
 
-                    </VerticalStackLayout>
+                    </Grid>
                 </Border>
 
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
@@ -156,7 +160,7 @@
                             <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.22" />
                         </Border.Shadow>
                         <Button x:Name="PrevBtn"
-                                Text="◀  Prev"
+                                Text="&#x25C0;  Prev"
                                 Clicked="OnPrevClicked"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
@@ -210,7 +214,7 @@
                             <Shadow Brush="#0F2D4A" Offset="0,6" Radius="16" Opacity="0.22" />
                         </Border.Shadow>
                         <Button x:Name="NextBtn"
-                                Text="Next  ▶"
+                                Text="Next  &#x25B6;"
                                 Clicked="OnNextClicked"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
@@ -236,7 +240,7 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="22"/>
                             </Border.StrokeShape>
-                            <Label Text="📖" FontSize="20"
+                            <Label Text="&#x1F4D6;" FontSize="20"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"/>
                         </Border>
@@ -255,7 +259,7 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="18"/>
                             </Border.StrokeShape>
-                            <Label Text="→" FontSize="16" FontAttributes="Bold"
+                            <Label Text="&#x2192;" FontSize="16" FontAttributes="Bold"
                                    TextColor="White"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"/>
@@ -280,7 +284,7 @@
                     </Border.StrokeShape>
                     <Grid ColumnDefinitions="*, Auto" Padding="28,20" ColumnSpacing="16">
                         <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                            <Label Text="🎉 Story Complete!"
+                            <Label Text="&#x1F389; Story Complete!"
                                    FontSize="15" FontAttributes="Bold"
                                    TextColor="#0F2D4A" />
                             <Label Text="Test your comprehension now."
@@ -296,7 +300,7 @@
                             <Border.Shadow>
                                 <Shadow Brush="#0F2D4A" Offset="0,5" Radius="14" Opacity="0.22" />
                             </Border.Shadow>
-                            <Button Text="GO TO QUIZ  →"
+                            <Button Text="GO TO QUIZ  &#x2192;"
                                     Clicked="OnGoToQuizClicked"
                                     BackgroundColor="Transparent"
                                     TextColor="White"
@@ -364,7 +368,7 @@
                                TextColor="#0F2D4A"
                                HorizontalOptions="Center" />
 
-                        <Label Text="Your progress on this page won't be saved. Are you sure you want to go back to the modules?"
+                        <Label Text="Your progress on this page won&#x2019;t be saved. Are you sure you want to go back to the modules?"
                                FontSize="14" TextColor="#6B8CAE"
                                HorizontalTextAlignment="Center"
                                LineHeight="1.6"

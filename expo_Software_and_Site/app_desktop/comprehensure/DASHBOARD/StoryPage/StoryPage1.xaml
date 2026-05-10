@@ -109,6 +109,7 @@
                 <Border BackgroundColor="White"
                         Stroke="#CBDCEB" StrokeThickness="1"
                         Padding="32,24"
+                        MinimumHeightRequest="220"
                         HeightRequest="380">
 
                     <Border.StrokeShape>
@@ -118,28 +119,33 @@
                         <Shadow Brush="#0F2D4A" Offset="0,10" Radius="32" Opacity="0.10" />
                     </Border.Shadow>
 
-                    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+                    <Grid RowDefinitions="Auto, *, Auto">
 
-                        <Label Text="&#x201C;"
+                        <Label Grid.Row="0"
+                               Text="&#x201C;"
                                FontSize="48" TextColor="#0F2D4A"
                                Opacity="0.30"
                                Margin="0,-10,0,-18"
                                HorizontalOptions="Start" />
 
-                        <Label x:Name="StoryLabel"
-                               FontSize="15"
-                               TextColor="#0F2D4A"
-                               LineHeight="1.75"
-                               HorizontalTextAlignment="Start"
-                               VerticalOptions="Start" />
+                        <ScrollView Grid.Row="1"
+                                    VerticalScrollBarVisibility="Default">
+                            <Label x:Name="StoryLabel"
+                                   FontSize="15"
+                                   TextColor="#0F2D4A"
+                                   LineHeight="1.75"
+                                   HorizontalTextAlignment="Start"
+                                   VerticalOptions="Start" />
+                        </ScrollView>
 
-                        <Label Text="&#x201D;"
+                        <Label Grid.Row="2"
+                               Text="&#x201D;"
                                FontSize="48" TextColor="#0F2D4A"
                                Opacity="0.30"
                                Margin="0,-18,0,-10"
                                HorizontalOptions="End" />
 
-                    </VerticalStackLayout>
+                    </Grid>
                 </Border>
 
                 <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
