@@ -185,6 +185,11 @@ namespace comprehensure.DataBaseControl.Models
 
                 string uid = result.User.Uid;
 
+                Preferences.Default.Set("SavedUserUid",   uid);
+                Preferences.Default.Set("SavedUserEmail", emailcl);
+
+                await GhostUserChecker.CheckAndHandleGhostUserAsync();
+
                 if (UserCache.IsCached(uid))
                 {
                     await Shell.Current.DisplayAlert("Login Complete", "Welcome back, " + UserCache.Username, "OK");

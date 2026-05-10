@@ -55,6 +55,7 @@ namespace comprehensure.DataBaseControl.Models
 
             try
             {
+                await Task.Delay(3500);
                 var result = await _authClient.CreateUserWithEmailAndPasswordAsync(emailcl, passwordcl);
                 await Shell.Current.GoToAsync($"///UsernameReq?email={emailcl}&uid={result.User.Uid}");
             }

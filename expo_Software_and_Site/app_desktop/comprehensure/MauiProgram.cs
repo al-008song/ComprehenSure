@@ -85,7 +85,12 @@ namespace comprehensure
             builder.Services.AddTransient<QuizPage7>(); // ADDED
             builder.Services.AddTransient<QuizPage8>(); // ADDED
 
-            return builder.Build();
+            var app = builder.Build();
+
+            var authClient = app.Services.GetRequiredService<FirebaseAuthClient>();
+            GhostUserChecker.Initialize(authClient);
+
+            return app;
         }
 
         private static string LoadApiKey()

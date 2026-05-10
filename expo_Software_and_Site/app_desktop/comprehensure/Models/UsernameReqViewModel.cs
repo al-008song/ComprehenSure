@@ -51,21 +51,21 @@ namespace comprehensure.DataBaseControl.Models
         {
             // FIX:thank god may documentation
             // instead of silently killing navigation and kicking back to MainPage.
-            _ = UsernameExists(_username);
+            // _ = UsernameExists(_username); breaks alot lol
+
+            if (string.IsNullOrWhiteSpace(_username))
+            {
+                await Shell.Current.DisplayAlert("Missing Username", "Please enter a username.", "OK");
+                return;
+            }
 
             try
             {
-                if (string.IsNullOrWhiteSpace(_username))
-                {
-                    await Shell.Current.DisplayAlert("Missing Username", "Please enter a username.", "OK");
-                    return;
-                }
-
                 bool emailAlreadyExists = await EmailExists(UserEmail);
                 if (emailAlreadyExists)
                     return;
 
-            
+                await UsernameExists(_username);
             }
             catch (Exception ex)
             {
@@ -73,7 +73,7 @@ namespace comprehensure.DataBaseControl.Models
             }
         }
 
-    
+
         private async Task<bool> EmailExists(string email)
         {
             string url  = $"{BaseUrl}:runQuery";
@@ -143,11 +143,7 @@ namespace comprehensure.DataBaseControl.Models
                                 stProp.TryGetProperty("integerValue", out var stVal))
                                 int.TryParse(stVal.GetString(), out scoreOfTotal);
 
-                            await Shell.Current.DisplayAlert(
-                                "Account Found",
-                                $"An account with this email already exists (username: \"{existingUsername}\"). Logging you in.",
-                                "OK"
-                            );
+                            
 
                             Preferences.Default.Set("SavedUserUid",   existingUid);
                             Preferences.Default.Set("SavedUserEmail", email);

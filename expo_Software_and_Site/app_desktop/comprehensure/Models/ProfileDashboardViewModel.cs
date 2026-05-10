@@ -14,10 +14,10 @@ public class ProfileDashboardViewModel : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? name = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-    // ── Callback wired by the View to show the success popup ──────
+   
     public Action<string>? OnSaveSuccess { get; set; }
 
-    // ── Callback wired by the View to show the no-change popup ───
+   
     public Action? OnNoChange { get; set; }
 
     private readonly string _projectId = "comprehensuredb-f9f7c";
