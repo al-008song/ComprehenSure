@@ -51,7 +51,7 @@ namespace comprehensure.DataBaseControl.Models
         public bool firstlogin = false;
 
         [ObservableProperty]
-        private double _strokeOffset = 100;
+        private double _strokeOffset = 0;
 
         [ObservableProperty]
         private double _accountComprehension;
@@ -102,9 +102,22 @@ namespace comprehensure.DataBaseControl.Models
             await toast.Show(cancellationTokenSource.Token);
         }
 
+        private System.Threading.Timer _ghostCheckTimer;
+
         public MainDashboardViewModel()
         {
             _ = CalculateProgress();
+            _ghostCheckTimer = new System.Threading.Timer(
+                async _ => await RunPeriodicGhostCheckAsync(),
+                null,
+                TimeSpan.FromMinutes(1),
+                TimeSpan.FromMinutes(1)
+            );
+        }
+
+        private async Task RunPeriodicGhostCheckAsync()
+        {
+            await GhostUserChecker.CheckAndHandleGhostUserAsync();
         }
 
         private static int ReadFirestoreInt(JsonElement integerValueElement)
@@ -133,6 +146,8 @@ namespace comprehensure.DataBaseControl.Models
 
         public async Task OnAppearing()
         {
+            await GhostUserChecker.CheckAndHandleGhostUserAsync(); 
+           
             await Task.Delay(650);
 
             bool redirected = await RedirectIfNoUsername();
@@ -427,7 +442,7 @@ namespace comprehensure.DataBaseControl.Models
         {
             valuecheck();
           
-            StrokeOffset = -AccountComprehension * 0.392;
+            StrokeOffset = -AccountComprehension * 0.25133;
             DisplayPercentage = $"{(int)Math.Round(AccountComprehension)}%";
         }
 

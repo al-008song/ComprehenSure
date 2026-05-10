@@ -8,7 +8,10 @@
 
     <Grid>
 
-        <Grid HorizontalOptions="Fill" VerticalOptions="Fill" InputTransparent="True">
+        <Grid
+            HorizontalOptions="Fill"
+            InputTransparent="True"
+            VerticalOptions="Fill">
             <Ellipse
                 Margin="-80,-80,0,0"
                 Fill="White"
@@ -117,7 +120,10 @@
                                     Source="user.png" />
                             </Border>
 
-                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <VerticalStackLayout
+                                Grid.Column="1"
+                                Spacing="2"
+                                VerticalOptions="Center">
                                 <Label
                                     CharacterSpacing="2.0"
                                     FontAttributes="Bold"
@@ -168,7 +174,7 @@
                                             Fill="Transparent"
                                             Rotation="-90"
                                             Stroke="#D6EAFF"
-                                            StrokeDashArray="100,100"
+                                            StrokeDashArray="25.133,25.133"
                                             StrokeDashOffset="{Binding StrokeOffset}"
                                             StrokeThickness="10" />
                                         <Label
@@ -335,14 +341,26 @@
                                 Text="📚"
                                 VerticalOptions="Center" />
                         </Border>
-                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                            <Label Text="MASTER DICTIONARY"
-                                   FontSize="10" FontAttributes="Bold"
-                                   TextColor="#4A90D9" CharacterSpacing="2.0"/>
-                            <Label Text="All words from Modules 1–8"
-                                   FontSize="12" TextColor="#4A6A9A"/>
-                            <HorizontalStackLayout Spacing="6" Margin="0,4,0,0">
-                                <Border BackgroundColor="#1B4A1B" Stroke="#2E7D32" StrokeThickness="1" Padding="7,3">
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="2"
+                            VerticalOptions="Center">
+                            <Label
+                                CharacterSpacing="2.0"
+                                FontAttributes="Bold"
+                                FontSize="10"
+                                Text="MASTER DICTIONARY"
+                                TextColor="#4A90D9" />
+                            <Label
+                                FontSize="12"
+                                Text="All words from Modules 1–8"
+                                TextColor="#4A6A9A" />
+                            <HorizontalStackLayout Margin="0,4,0,0" Spacing="6">
+                                <Border
+                                    Padding="7,3"
+                                    BackgroundColor="#1B4A1B"
+                                    Stroke="#2E7D32"
+                                    StrokeThickness="1">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10" />
                                     </Border.StrokeShape>
