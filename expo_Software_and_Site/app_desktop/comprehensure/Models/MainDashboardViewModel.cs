@@ -102,17 +102,12 @@ namespace comprehensure.DataBaseControl.Models
             await toast.Show(cancellationTokenSource.Token);
         }
 
-        private System.Threading.Timer _ghostCheckTimer;
+   
 
         public MainDashboardViewModel()
         {
             _ = CalculateProgress();
-            _ghostCheckTimer = new System.Threading.Timer(
-                async _ => await RunPeriodicGhostCheckAsync(),
-                null,
-                TimeSpan.FromMinutes(1),
-                TimeSpan.FromMinutes(1)
-            );
+            
         }
 
         private async Task RunPeriodicGhostCheckAsync()
@@ -146,7 +141,7 @@ namespace comprehensure.DataBaseControl.Models
 
         public async Task OnAppearing()
         {
-            await GhostUserChecker.CheckAndHandleGhostUserAsync(); 
+           // await GhostUserChecker.CheckAndHandleGhostUserAsync(); 
            
             await Task.Delay(650);
 

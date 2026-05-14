@@ -14,6 +14,8 @@ namespace comprehensure.Models
     {
         private const string ProjectId = "comprehensuredb-f9f7c";
 
+
+
         private static string FirestoreBase =>
             $"https://firestore.googleapis.com/v1/projects/{ProjectId}/databases/(default)/documents";
 
@@ -21,17 +23,20 @@ namespace comprehensure.Models
         private static FirebaseAuthClient _authClient;
         private static string _apiKey;
 
-        public static void Initialize(FirebaseAuthClient authClient, string apiKey)
+        public static string Initialize(FirebaseAuthClient authClient, string apiKey)
         {
             _authClient = authClient;
             _apiKey = apiKey;
+            return _apiKey;
         }
+        
 
         public static async Task CheckAndHandleGhostUserAsync()
         {
+
             string uid   = Preferences.Default.Get("SavedUserUid",   "");
             string email = Preferences.Default.Get("SavedUserEmail", "");
-
+            await Shell.Current.DisplayAlert("Ghostdelete", "method for check is firing", "ok"); // firing
             if (string.IsNullOrWhiteSpace(uid) || string.IsNullOrWhiteSpace(email))
                 return;
 
@@ -39,10 +44,11 @@ namespace comprehensure.Models
                 return;
 
             string idToken = await GetIdTokenAsync();
-
+            await Shell.Current.DisplayAlert("Ghostdelete",idToken, "ok");
             if (string.IsNullOrWhiteSpace(idToken))
             {
                 System.Diagnostics.Debug.WriteLine($"[GhostUserChecker] Could not get token — skipping.");
+                await Shell.Current.DisplayAlert("Ghostdelete","No tokenfound","ok");
                 return;
             }
 
@@ -50,6 +56,7 @@ namespace comprehensure.Models
 
             if (!authUserExists)
             {
+                await Shell.Current.DisplayAlert("Ghostdelete", "ACCOUNT NOT FOUND", "ok");
                 System.Diagnostics.Debug.WriteLine($"[GhostUserChecker] Firebase Auth: user {uid} not found — purging.");
                 await PurgeAndRedirectAsync(uid, idToken);
                 return;
@@ -68,7 +75,9 @@ namespace comprehensure.Models
         {
             try
             {
+               
                 return await _authClient.User.GetIdTokenAsync(forceRefresh: true);
+                
             }
             catch (Exception ex)
             {

@@ -22,6 +22,7 @@ namespace comprehensure.DataBaseControl
             Preferences.Default.Set(KeyHasUsername,  true);
             Preferences.Default.Set(KeyScoreOfTotal, scoreOfTotal);
             Preferences.Default.Set(KeyModules, moduleFinished);
+            Preferences.Default.Set(KeyAccountComprehension, AccountComprehension);
         }
 
         public static void SetHasUsername(bool value)        => Preferences.Default.Set(KeyHasUsername,         value);
