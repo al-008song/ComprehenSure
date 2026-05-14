@@ -31,10 +31,10 @@
         </Grid>
 
         <ScrollView>
-            <VerticalStackLayout Padding="18,20,18,40" Spacing="16">
+            <VerticalStackLayout Padding="16,14,16,36" Spacing="12">
 
                 <Border
-                    Padding="20,18"
+                    Padding="16,14"
                     BackgroundColor="White"
                     Stroke="#CBDCEB"
                     StrokeThickness="1">
@@ -49,10 +49,16 @@
                             Offset="0,6" />
                     </Border.Shadow>
 
-                    <VerticalStackLayout Spacing="16">
+                    <VerticalStackLayout Spacing="8">
 
-                        <Grid ColumnDefinitions="*, Auto">
+                        <Grid
+                            ColumnDefinitions="*, Auto"
+                            ColumnSpacing="12"
+                            RowDefinitions="Auto, Auto"
+                            RowSpacing="0">
+
                             <Label
+                                Grid.Row="0"
                                 Grid.Column="0"
                                 CharacterSpacing="2.5"
                                 FontAttributes="Bold"
@@ -61,7 +67,9 @@
                                 TextColor="#0F2D4A"
                                 VerticalOptions="Center" />
                             <Border
+                                Grid.Row="0"
                                 Grid.Column="1"
+                                HorizontalOptions="End"
                                 BackgroundColor="Transparent"
                                 Stroke="Transparent"
                                 StrokeThickness="0">
@@ -77,16 +85,76 @@
                                 </Border.GestureRecognizers>
                                 <ImageButton
                                     Command="{Binding ProfileDashboardCommand}"
-                                    HeightRequest="28"
+                                    HeightRequest="26"
                                     Opacity="0.45"
                                     Source="settings.png"
                                     VerticalOptions="Center"
-                                    WidthRequest="28" />
+                                    WidthRequest="26" />
                             </Border>
+
+                            <Grid
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                ColumnDefinitions="*, Auto"
+                                ColumnSpacing="10"
+                                Margin="0,6,0,0">
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    Spacing="2"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        CharacterSpacing="1.2"
+                                        FontAttributes="Bold"
+                                        FontSize="22"
+                                        Text="{Binding ScoreDisplay}"
+                                        TextColor="#0F2D4A" />
+                                    <Label
+                                        CharacterSpacing="1.4"
+                                        FontAttributes="Bold"
+                                        FontSize="9"
+                                        Text="TOTAL SCORE"
+                                        TextColor="#6B8CAE" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    Spacing="4">
+                                    <Grid HeightRequest="64" WidthRequest="64">
+                                        <Ellipse
+                                            Fill="Transparent"
+                                            Stroke="#0F2D4A"
+                                            StrokeThickness="7" />
+                                        <Ellipse
+                                            x:Name="DashboardProgressCircle"
+                                            Fill="Transparent"
+                                            Rotation="-90"
+                                            Stroke="#D6EAFF"
+                                            StrokeDashArray="25.133,25.133"
+                                            StrokeDashOffset="{Binding StrokeOffset}"
+                                            StrokeThickness="7" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="13"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding DisplayPercentage}"
+                                            TextColor="#0F2D4A"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                    <Label
+                                        CharacterSpacing="1.4"
+                                        FontAttributes="Bold"
+                                        FontSize="8"
+                                        HorizontalOptions="Center"
+                                        Text="PROGRESS"
+                                        TextColor="#6B8CAE" />
+                                </VerticalStackLayout>
+                            </Grid>
+
                         </Grid>
 
                         <Grid
-                            ColumnDefinitions="Auto, *, Auto"
+                            ColumnDefinitions="Auto, *"
                             ColumnSpacing="14"
                             VerticalOptions="Center">
 
@@ -96,7 +164,8 @@
                                 HeightRequest="56"
                                 Stroke="#CBDCEB"
                                 StrokeThickness="2"
-                                WidthRequest="56">
+                                WidthRequest="56"
+                                VerticalOptions="Center">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="28" />
                                 </Border.StrokeShape>
@@ -122,78 +191,22 @@
 
                             <VerticalStackLayout
                                 Grid.Column="1"
-                                Spacing="2"
+                                Spacing="4"
                                 VerticalOptions="Center">
                                 <Label
                                     CharacterSpacing="2.0"
                                     FontAttributes="Bold"
-                                    FontSize="11"
+                                    FontSize="10"
                                     Text="WELCOME BACK,"
                                     TextColor="#0F2D4A" />
                                 <Label
                                     FontAttributes="Bold"
-                                    FontSize="22"
+                                    FontSize="19"
                                     LineBreakMode="TailTruncation"
+                                    MaxLines="1"
                                     Text="{Binding UsernameEdit}"
                                     TextColor="#0F2D4A" />
                             </VerticalStackLayout>
-
-                            <Grid
-                                Grid.Column="2"
-                                ColumnDefinitions="Auto, Auto"
-                                ColumnSpacing="12"
-                                VerticalOptions="Center">
-                                <VerticalStackLayout
-                                    Grid.Column="0"
-                                    Spacing="2"
-                                    VerticalOptions="Center">
-                                    <Label
-                                        CharacterSpacing="1.2"
-                                        FontAttributes="Bold"
-                                        FontSize="14"
-                                        Text="{Binding ScoreDisplay}"
-                                        TextColor="#0F2D4A" />
-                                    <Label
-                                        CharacterSpacing="1.4"
-                                        FontAttributes="Bold"
-                                        FontSize="8"
-                                        Text="SCORE"
-                                        TextColor="#6B8CAE" />
-                                </VerticalStackLayout>
-                                <VerticalStackLayout
-                                    Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    Spacing="4">
-                                    <Grid HeightRequest="90" WidthRequest="90">
-                                        <Ellipse
-                                            Fill="Transparent"
-                                            Stroke="#0F2D4A"
-                                            StrokeThickness="10" />
-                                        <Ellipse
-                                            x:Name="DashboardProgressCircle"
-                                            Fill="Transparent"
-                                            Rotation="-90"
-                                            Stroke="#D6EAFF"
-                                            StrokeDashArray="25.133,25.133"
-                                            StrokeDashOffset="{Binding StrokeOffset}"
-                                            StrokeThickness="10" />
-                                        <Label
-                                            FontAttributes="Bold"
-                                            FontSize="19"
-                                            HorizontalOptions="Center"
-                                            Text="{Binding DisplayPercentage}"
-                                            TextColor="#0F2D4A"
-                                            VerticalOptions="Center" />
-                                    </Grid>
-                                    <Label
-                                        CharacterSpacing="1.4"
-                                        FontAttributes="Bold"
-                                        FontSize="8"
-                                        HorizontalOptions="Center"
-                                        Text="PROGRESS"
-                                        TextColor="#6B8CAE" />
-                                </VerticalStackLayout>
-                            </Grid>
 
                         </Grid>
 
@@ -251,7 +264,7 @@
                             CharacterSpacing="3.5"
                             Command="{Binding modulesCommand}"
                             FontAttributes="Bold"
-                            FontSize="22"
+                            FontSize="18"
                             HeightRequest="70"
                             Text="📚  MODULES"
                             TextColor="White" />
@@ -285,7 +298,7 @@
                         CharacterSpacing="2.0"
                         Command="{Binding AboutUsCommand}"
                         FontAttributes="Bold"
-                        FontSize="20"
+                        FontSize="17"
                         HeightRequest="70"
                         Text="ABOUT US"
                         TextColor="White" />
@@ -355,8 +368,14 @@
                                 FontSize="12"
                                 Text="All words from Modules 1–8"
                                 TextColor="#4A6A9A" />
-                            <HorizontalStackLayout Margin="0,4,0,0" Spacing="6">
+                            <FlexLayout
+                                Margin="0,4,0,0"
+                                Wrap="Wrap"
+                                Direction="Row"
+                                JustifyContent="Start"
+                                AlignItems="Center">
                                 <Border
+                                    Margin="0,0,6,4"
                                     Padding="7,3"
                                     BackgroundColor="#1B4A1B"
                                     Stroke="#2E7D32"
@@ -371,6 +390,7 @@
                                         TextColor="#A5D6A7" />
                                 </Border>
                                 <Border
+                                    Margin="0,0,6,4"
                                     Padding="7,3"
                                     BackgroundColor="#3D3200"
                                     Stroke="#F9A825"
@@ -385,6 +405,7 @@
                                         TextColor="#FFE082" />
                                 </Border>
                                 <Border
+                                    Margin="0,0,0,4"
                                     Padding="7,3"
                                     BackgroundColor="#4A0F0F"
                                     Stroke="#C62828"
@@ -398,7 +419,7 @@
                                         Text="🔴 Intermediate"
                                         TextColor="#EF9A9A" />
                                 </Border>
-                            </HorizontalStackLayout>
+                            </FlexLayout>
                         </VerticalStackLayout>
                     </Grid>
                 </Border>
@@ -437,11 +458,11 @@
                         TextColor="#E65100" />
                 </Border>
 
-                <Grid ColumnDefinitions="*, *" ColumnSpacing="14">
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
 
                     <Border
                         Grid.Column="0"
-                        Padding="0,0,0,20"
+                        Padding="0,0,0,14"
                         BackgroundColor="White"
                         IsEnabled="{Binding IsMinigameUnlocked}"
                         Opacity="{Binding MinigameOpacity}"
@@ -466,7 +487,7 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="0">
                             <Border
-                                HeightRequest="160"
+                                HeightRequest="95"
                                 Stroke="Transparent"
                                 StrokeThickness="0">
                                 <Border.StrokeShape>
@@ -479,18 +500,18 @@
                                     VerticalOptions="Fill" />
                             </Border>
                             <VerticalStackLayout
-                                Margin="14,12,14,0"
+                                Margin="10,10,10,0"
                                 HorizontalOptions="Center"
-                                Spacing="8">
+                                Spacing="6">
                                 <Label
-                                    CharacterSpacing="1.2"
+                                    CharacterSpacing="1.0"
                                     FontAttributes="Bold"
-                                    FontSize="13"
+                                    FontSize="12"
                                     HorizontalOptions="Center"
                                     Text="SYNONYM HUNT"
                                     TextColor="#0F2D4A" />
                                 <Label
-                                    FontSize="11"
+                                    FontSize="10"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
                                     Text="Match words with the same meaning"
@@ -535,7 +556,7 @@
 
                     <Border
                         Grid.Column="1"
-                        Padding="0,0,0,20"
+                        Padding="0,0,0,14"
                         BackgroundColor="White"
                         IsEnabled="{Binding IsMinigameUnlocked}"
                         Opacity="{Binding MinigameOpacity}"
@@ -560,7 +581,7 @@
                         </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="0">
                             <Border
-                                HeightRequest="160"
+                                HeightRequest="95"
                                 Stroke="Transparent"
                                 StrokeThickness="0">
                                 <Border.StrokeShape>
@@ -573,18 +594,18 @@
                                     VerticalOptions="Fill" />
                             </Border>
                             <VerticalStackLayout
-                                Margin="14,12,14,0"
+                                Margin="10,10,10,0"
                                 HorizontalOptions="Center"
-                                Spacing="8">
+                                Spacing="6">
                                 <Label
-                                    CharacterSpacing="1.2"
+                                    CharacterSpacing="1.0"
                                     FontAttributes="Bold"
-                                    FontSize="13"
+                                    FontSize="12"
                                     HorizontalOptions="Center"
                                     Text="4 PICS 1 THEME"
                                     TextColor="#0F2D4A" />
                                 <Label
-                                    FontSize="11"
+                                    FontSize="10"
                                     HorizontalTextAlignment="Center"
                                     LineBreakMode="WordWrap"
                                     Text="Guess the theme from four image clues"
@@ -629,7 +650,7 @@
                 </Grid>
 
                 <Border
-                    Padding="20,22"
+                    Padding="16,16"
                     BackgroundColor="White"
                     Stroke="#CBDCEB"
                     StrokeThickness="1">
