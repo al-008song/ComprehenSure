@@ -84,11 +84,13 @@ namespace comprehensure
             builder.Services.AddTransient<QuizPage6>(); // ADDED
             builder.Services.AddTransient<QuizPage7>(); // ADDED
             builder.Services.AddTransient<QuizPage8>(); // ADDED
-
+            
             var app = builder.Build();
 
             var authClient = app.Services.GetRequiredService<FirebaseAuthClient>();
-            GhostUserChecker.Initialize(authClient, apiKey);
+            GhostUserChecker.Initialize(authClient, apiKey); // todo fix this one asap 
+            // does not even load because api key does not 
+            // load untill below 
 
             return app;
         }
@@ -108,6 +110,9 @@ namespace comprehensure
                 System.Diagnostics.Debug.WriteLine($"Failed to load API key: {ex.Message}");
                 return string.Empty;
             }
+
         }
+
     }
+
 }
