@@ -593,7 +593,7 @@
           if (!downloads.android && name.endsWith('.apk')) {
             downloads.android = { url: asset.browser_download_url, label: asset.name };
           }
-          if (!downloads.windows && name.endsWith('.exe')) {
+          if (!downloads.windows && name.endsWith('.zip')) {
             downloads.windows = { url: asset.browser_download_url, label: asset.name };
           }
         }
