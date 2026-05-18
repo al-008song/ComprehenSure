@@ -1,14 +1,14 @@
 namespace comprehensure.DASHBOARD.StoryPage;
 
-public partial class QuizPage5 : ContentPage
+public partial class QuizPage2 : ContentPage
 {
-    private readonly QuizPage5ViewModel _viewModel;
+    private readonly QuizPage2ViewModel _viewModel;
     private string _selectedAnswer = "";
     private bool _isProcessing = false;
 
     private double _trackWidth = 0;
 
-    public QuizPage5(QuizPage5ViewModel viewModel)
+    public QuizPage2(QuizPage2ViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;

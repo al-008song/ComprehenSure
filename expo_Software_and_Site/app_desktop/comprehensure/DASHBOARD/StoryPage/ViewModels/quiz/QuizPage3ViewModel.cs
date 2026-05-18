@@ -36,6 +36,7 @@ namespace comprehensure.DASHBOARD.StoryPage
             string json = await reader.ReadToEndAsync();
             var loaded = JsonSerializer.Deserialize<List<QuizItem>>(json);
             _questions = loaded.OrderBy(_ => _rng.Next()).ToList();
+            _locked = false; // ensure clean state on load
             ShowQuestion(CurrentIndex);
         }
 
@@ -57,6 +58,11 @@ namespace comprehensure.DASHBOARD.StoryPage
 
         public bool CheckAnswer(string selectedKey)
         {
+            // _locked prevents the same question from being scored twice
+            // (e.g. double-tap on Next), which caused scores like 11/10
+            if (_locked) return false;
+            _locked = true;
+
             string selectedText = selectedKey switch
             {
                 "A" => Ch1bt, "B" => Ch2bt, "C" => Ch3bt, "D" => Ch4bt, _ => ""
@@ -71,6 +77,9 @@ namespace comprehensure.DASHBOARD.StoryPage
             if (_questions == null) return false;
             CurrentIndex++;
             if (CurrentIndex >= _questions.Count) return false;
+
+            // Unlock so the next question can be answered and scored
+            _locked = false;
             ShowQuestion(CurrentIndex);
             return true;
         }
