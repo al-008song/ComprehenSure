@@ -24,10 +24,7 @@ namespace comprehensure
             public string Password { get; set; }
         }
 
-        /// <summary>
-        /// Toggles the password field between masked and plain-text,
-        /// and swaps the eye icon to match the current state.
-        /// </summary>
+      
         private void OnLoginTogglePasswordClicked(object sender, EventArgs e)
         {
             _isPasswordVisible = !_isPasswordVisible;
