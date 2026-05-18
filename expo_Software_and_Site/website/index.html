@@ -280,13 +280,23 @@
     .dl-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
     .dl-btn{
       display:flex;align-items:center;gap:8px;
-      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-      color:var(--muted2);padding:10px 18px;border-radius:9px;
-      font-weight:600;font-size:.84rem;cursor:not-allowed;
-      opacity:.5;pointer-events:none;
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);
+      color:var(--offwhite);padding:10px 18px;border-radius:9px;
+      font-weight:600;font-size:.84rem;cursor:pointer;
+      opacity:1;pointer-events:auto;
+      transition:border-color .2s,background .2s,transform .15s,opacity .2s;
+      text-decoration:none;
+    }
+    .dl-btn:hover:not(.dl-btn--loading){
+      border-color:rgba(255,255,255,.25);
+      background:rgba(255,255,255,.07);
+      transform:translateY(-2px);
+    }
+    .dl-btn--loading{
+      opacity:.5;cursor:not-allowed;pointer-events:none;
     }
     .dl-btn-icon{font-size:1.15rem;}
-    .dl-btn small{display:block;font-size:.66rem;font-weight:400;color:var(--muted2);}
+    .dl-btn small{display:block;font-size:.66rem;font-weight:400;color:var(--muted);}
 
     footer {
       position:relative;z-index:1;
@@ -496,8 +506,8 @@
     <h2>Start for free today</h2>
     <p>Available on Windows and Android. Your progress syncs across all your devices.</p>
     <div class="dl-btns">
-      <div class="dl-btn"><span class="dl-btn-icon">🪟</span><div><small>Download for</small>Windows</div></div>
-      <div class="dl-btn"><span class="dl-btn-icon">🤖</span><div><small>Download for</small>Android</div></div>
+      <a id="btn-windows" class="dl-btn dl-btn--loading" href="#"><span class="dl-btn-icon">🪟</span><div><small id="lbl-windows">Checking...</small>Windows</div></a>
+      <a id="btn-android" class="dl-btn dl-btn--loading" href="#"><span class="dl-btn-icon">🤖</span><div><small id="lbl-android">Checking...</small>Android</div></a>
     </div>
   </div>
 </section>
@@ -568,7 +578,47 @@
     });
   });
 
+  const REPO = 'School-account-10/ComprehenSure';
+  const downloads = { windows: null, android: null };
 
+  async function fetchLatestReleases() {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${REPO}/releases`);
+      if (!res.ok) throw new Error();
+      const releases = await res.json();
+
+      for (const release of releases) {
+        for (const asset of release.assets) {
+          const name = asset.name.toLowerCase();
+          if (!downloads.android && name.endsWith('.apk')) {
+            downloads.android = { url: asset.browser_download_url, label: asset.name };
+          }
+          if (!downloads.windows && name.endsWith('.zip')) {
+            downloads.windows = { url: asset.browser_download_url, label: asset.name };
+          }
+        }
+        if (downloads.android && downloads.windows) break;
+      }
+    } catch (_) {}
+
+    applyToButton('btn-android', 'lbl-android', downloads.android);
+    applyToButton('btn-windows', 'lbl-windows', downloads.windows);
+  }
+
+  function applyToButton(btnId, lblId, data) {
+    const btn = document.getElementById(btnId);
+    const lbl = document.getElementById(lblId);
+    if (data) {
+      btn.href = data.url;
+      btn.download = data.label;
+      btn.classList.remove('dl-btn--loading');
+      lbl.textContent = 'Download for';
+    } else {
+      lbl.textContent = 'Not available';
+    }
+  }
+
+  fetchLatestReleases();
 </script>
 </body>
 </html>
