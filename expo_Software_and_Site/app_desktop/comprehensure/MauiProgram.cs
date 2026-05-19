@@ -88,7 +88,7 @@ namespace comprehensure
             var app = builder.Build();
 
             var authClient = app.Services.GetRequiredService<FirebaseAuthClient>();
-            GhostUserChecker.Initialize(authClient, apiKey); // todo fix this one asap 
+            //GhostUserChecker.Initialize(authClient, apiKey); // todo fix this one asap update will not work at all 
             // does not even load because api key does not 
             // load untill below 
 

@@ -110,6 +110,10 @@ namespace comprehensure.DataBaseControl.Models
                 for (int i = 1; i <= 8; i++)
                     SetProgress(i, prog[i]);
             }
+            catch (System.Net.Http.HttpRequestException)
+            {
+                System.Diagnostics.Debug.WriteLine($"network error");
+            }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"[ModulesDashboardViewModel:Load] {ex.Message}");

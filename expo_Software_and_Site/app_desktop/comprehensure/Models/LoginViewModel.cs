@@ -188,7 +188,7 @@ namespace comprehensure.DataBaseControl.Models
                 Preferences.Default.Set("SavedUserUid",   uid);
                 Preferences.Default.Set("SavedUserEmail", emailcl);
 
-                await GhostUserChecker.CheckAndHandleGhostUserAsync();
+              
 
                 if (UserCache.IsCached(uid))
                 {
