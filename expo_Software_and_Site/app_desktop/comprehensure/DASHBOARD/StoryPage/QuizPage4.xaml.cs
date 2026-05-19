@@ -4,6 +4,7 @@ public partial class QuizPage4 : ContentPage
 {
     private readonly QuizPage4ViewModel _viewModel;
     private string _selectedAnswer = "";
+    private bool _isProcessing = false;
 
     private double _trackWidth = 0;
 
@@ -99,10 +100,15 @@ public partial class QuizPage4 : ContentPage
 
     private async void OnNextClicked(object sender, EventArgs e)
     {
+        // Guard against double-taps / re-entry which caused 11/10 scores
+        if (_isProcessing) return;
+        _isProcessing = true;
+
+        NextButton.IsEnabled = false;
+
         _viewModel.CheckAnswer(_selectedAnswer);
 
         _selectedAnswer = "";
-        NextButton.IsEnabled = false;
         ResetOptionStyles();
 
         bool hasNext = _viewModel.NextQuestion();
@@ -116,6 +122,8 @@ public partial class QuizPage4 : ContentPage
         {
             UpdateProgress();
         }
+
+        _isProcessing = false;
     }
 
     private async void OnFinishClicked(object sender, EventArgs e)
