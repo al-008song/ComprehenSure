@@ -110,11 +110,7 @@ namespace comprehensure.DataBaseControl.Models
             
         }
 
-        private async Task RunPeriodicGhostCheckAsync()
-        {
-            await GhostUserChecker.CheckAndHandleGhostUserAsync();
-        }
-
+     
         private static int ReadFirestoreInt(JsonElement integerValueElement)
         {
             if (integerValueElement.ValueKind == JsonValueKind.String)
@@ -252,6 +248,10 @@ namespace comprehensure.DataBaseControl.Models
                     _cachedUsername = username;
                 }
 
+                return false;
+            }
+            catch (System.Net.Http.HttpRequestException)
+            {
                 return false;
             }
             catch
